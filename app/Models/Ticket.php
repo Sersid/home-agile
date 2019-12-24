@@ -7,7 +7,19 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Ticket
+ * Ticket model
+ * @property integer id
+ * @property integer created_at
+ * @property integer updated_at
+ * @property integer deleted_at
+ * @property string  title
+ * @property string  description
+ * @property integer term
+ * @property integer executor_id
+ * @property integer priority
+ * @property integer status
+ * @property integer created_user_id
+ * @property integer updated_user_id
  * @package App\Models
  */
 class Ticket extends Model
@@ -78,7 +90,7 @@ class Ticket extends Model
                 ],
                 self::STATUS_ARCHIVE => [
                     'name' => 'В архиве',
-                ]
+                ],
             ];
         }
         return $statuses;

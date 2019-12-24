@@ -2,23 +2,28 @@
 
 namespace App\Http\Controllers\Ticket\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Ticket;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\View\View;
 
 /**
  * Class TicketController
  * @package App\Http\Controllers\Ticket\Admin
  */
-class TicketController extends Controller
+class TicketController extends BaseController
 {
     /**
-     * Display a listing of the resource.
-     * @return Response
+     * @return Factory|View
      */
     public function index()
     {
-        //
+        $tickets = Ticket::query()
+            ->select(['id', 'title', 'created_at'])
+            ->orderBy('id', 'desc')
+            ->paginate(25);
+        return view('ticket.admin.index', compact('tickets'));
     }
 
     /**
@@ -43,27 +48,16 @@ class TicketController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     *
-     * @return Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param int $id
      *
-     * @return Response
+     * @return Factory|View
      */
     public function edit($id)
     {
-        //
+        $ticket = Ticket::query()->findOrFail($id);
+        return view('ticket.admin.edit', compact('ticket'));
     }
 
     /**
