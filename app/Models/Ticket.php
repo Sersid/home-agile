@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Ticket
@@ -10,6 +12,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Ticket extends Model
 {
+    use SoftDeletes;
+
     // низкий приоритет
     const PRIORITY_LOW = 100;
     // средний приоритет
@@ -27,8 +31,6 @@ class Ticket extends Model
     const STATUS_DONE = 400;
     // статус "В архиве"
     const STATUS_ARCHIVE = 500;
-    // статус "Удалён"
-    const STATUS_DELETED = 1000;
 
     /**
      * Приоритеты
@@ -63,7 +65,7 @@ class Ticket extends Model
         if (is_null($statuses)) {
             $statuses = [
                 self::STATUS_NEW => [
-                    'name' => 'Начальный',
+                    'name' => 'Новый',
                 ],
                 self::STATUS_IN_WORK => [
                     'name' => 'В работе',
@@ -76,12 +78,18 @@ class Ticket extends Model
                 ],
                 self::STATUS_ARCHIVE => [
                     'name' => 'В архиве',
-                ],
-                self::STATUS_DELETED => [
-                    'name' => 'Удалён',
-                ],
+                ]
             ];
         }
         return $statuses;
+    }
+
+    /**
+     * Author
+     * @return HasOne
+     */
+    public function author()
+    {
+        return $this->hasOne(User::class, 'id', 'created_user_id');
     }
 }
