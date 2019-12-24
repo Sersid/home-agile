@@ -2,25 +2,27 @@
 
 namespace App\Http\Controllers\Ticket;
 
-use App\Http\Controllers\Controller;
 use App\Models\Ticket;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\View\View;
 
 /**
  * Class TicketController
  * @package App\Http\Controllers
  */
-class TicketController extends Controller
+class TicketController extends BaseController
 {
     /**
-     * Display a listing of the resource.
-     * @return Response
+     * @return Factory|View
      */
     public function index()
     {
-        // dd(Ticket::all());
-        dd(Ticket::query()->where(['status' => Ticket::STATUS_NEW])->get());
+        $tickets = Ticket::query()
+            ->where(['status' => Ticket::STATUS_NEW])
+            ->get();
+        return view('ticket.index', compact('tickets'));
     }
 
     /**

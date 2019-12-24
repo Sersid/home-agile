@@ -33,6 +33,6 @@ Route::get(
     }
 );
 
-Route::group(['namespace' => 'ticket', 'prefix' => 'ticket'], function () {
+Route::group(['namespace' => 'ticket'], function () {
     Route::resource('ticket', 'TicketController')->names('ticket');
 });
