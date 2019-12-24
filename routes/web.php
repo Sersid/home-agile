@@ -25,3 +25,10 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')
     ->name('home');
+
+Route::get(
+    '/smartadmin',
+    function () {
+        return view('smartadmin');
+    }
+);
