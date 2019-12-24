@@ -1,80 +1,114 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <title>{{ config('app.name', 'Laravel') }}</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no, minimal-ui">
+    <!-- Call App Mode on ios devices -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <!-- Remove Tap Highlight on Windows Phone IE -->
+    <meta name="msapplication-tap-highlight" content="no">
+    <!-- Place favicon.ico in the root directory -->
+    <!--    <link rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-touch-icon.png">-->
+    <!--    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon/favicon-32x32.png">-->
+    <!--    <link rel="mask-icon" href="img/favicon/safari-pinned-tab.svg" color="#5bbad5">-->
+    <!--    <link rel="stylesheet" media="screen, print" href="css/your_styles.css">-->
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
+    <!-- Styles -->
+    <link href="{{ asset('css/vendors.bundle.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/app.bundle.css') }}" rel="stylesheet">
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
+<div class="mod-bg-1 header-function-fixed" id="app">
+    <!-- BEGIN Page Wrapper -->
+    <div class="page-wrapper">
+        <div class="page-inner">
+            <!-- BEGIN Left Aside -->
+            <aside class="page-sidebar">
+                <div class="page-logo">
+                    <a class="page-logo-link press-scale-down d-flex align-items-center position-relative" data-target="#modal-shortcut" data-toggle="modal" href="#">
+                        <i class="fal fa-users"></i>
+                        <span class="page-logo-text mr-1">{{ config('app.name', 'Laravel') }}</span>
+                        <i class="fal fa-angle-down d-inline-block ml-1 fs-lg color-primary-300"></i>
+                    </a>
                 </div>
+                <!-- BEGIN PRIMARY NAVIGATION -->
+                <nav class="primary-nav">
+                    <ul class="nav-menu">
+                        <li>
+                            <a href="#" title="Application Intel">
+                                <i class="fal fa-clipboard-list"></i>
+                                <span class="nav-link-text">Agile</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- END PRIMARY NAVIGATION -->
+            </aside>
+            <!-- END Left Aside -->
+            <div class="page-content-wrapper">
+                <!-- BEGIN Page Header -->
+                <header class="page-header" role="banner">
+                    <!-- DOC: nav menu layout change shortcut -->
+                    <div class="hidden-md-down dropdown-icon-menu position-relative">
+                        <a class="header-btn btn js-waves-off" data-action="toggle" data-class="nav-function-hidden" href="#" title="Hide Navigation">
+                            <i class="ni ni-menu"></i>
+                        </a>
+                        <ul>
+                            <li>
+                                <a class="btn js-waves-off" data-action="toggle" data-class="nav-function-minify" href="#" title="Minify Navigation">
+                                    <i class="ni ni-minify-nav"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="btn js-waves-off" data-action="toggle" data-class="nav-function-fixed" href="#" title="Lock Navigation">
+                                    <i class="ni ni-lock-nav"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- DOC: mobile button appears during mobile width -->
+                    <div class="hidden-lg-up">
+                        <a class="header-btn btn press-scale-down" data-action="toggle" data-class="mobile-nav-on" href="#">
+                            <i class="ni ni-menu"></i>
+                        </a>
+                    </div>
+                    <div class="ml-auto d-flex">
+                        <!-- app settings -->
+                        <div class="hidden-md-down">
+                            <a class="header-icon" href="#">
+                                <i class="fal fa-cog"></i>
+                            </a>
+                        </div>
+                        <!-- app notification -->
+                        <div>
+                            <a class="header-icon" data-toggle="dropdown" href="#" title="You got 11 notifications">
+                                <i class="fal fa-bell"></i>
+                                <span class="badge badge-icon">11</span>
+                            </a>
+                        </div>
+                        <!-- app user menu -->
+                        <div>
+                            <a class="header-icon d-flex align-items-center justify-content-center ml-2" data-toggle="dropdown" href="#" title="drlantern@gotbootstrap.com">
+                                <img alt="Dr. Codex Lantern" class="profile-image rounded-circle" src="img/demo/avatars/avatar-admin.png">
+                            </a>
+                        </div>
+                    </div>
+                </header>
+                <!-- END Page Header -->
+                <!-- the #js-page-content id is needed for some plugins to initialize -->
+                <main class="page-content">
+                    @yield('content')
+                </main>
+                <!-- this overlay is activated only when mobile menu is triggered -->
             </div>
-        </nav>
-
-        <main class="py-4">
-            @yield('content')
-        </main>
+        </div>
     </div>
+    <!-- END Page Wrapper -->
+</div>
 </body>
 </html>
