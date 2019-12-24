@@ -39,4 +39,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * User tickets
+     */
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class, 'created_user_id');
+    }
 }
