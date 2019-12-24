@@ -26,17 +26,10 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')
     ->name('home');
 
-Route::get(
-    '/smartadmin',
-    function () {
-        return view('smartadmin');
-    }
-);
-
 Route::group(['namespace' => 'Ticket'], function () {
     Route::resource('ticket', 'TicketController')->names('ticket');
 });
 
-Route::group(['namespace' => 'Ticket\Admin', 'prefix' => 'admin/ticket'], function () {
+Route::group(['namespace' => 'Ticket\Admin', 'prefix' => 'admin'], function () {
     Route::resource('ticket', 'TicketController')->names('admin.ticket');
 });
