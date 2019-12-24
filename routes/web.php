@@ -32,3 +32,5 @@ Route::get(
         return view('smartadmin');
     }
 );
+
+Route::resource('ticket', 'TicketController');
