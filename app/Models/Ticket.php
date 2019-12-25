@@ -8,18 +8,18 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Ticket model
- * @property integer id
- * @property integer created_at
- * @property integer updated_at
- * @property integer deleted_at
- * @property string  title
- * @property string  description
- * @property integer term
- * @property integer executor_id
- * @property integer priority
- * @property integer status
- * @property integer created_user_id
- * @property integer updated_user_id
+ * @property integer $id
+ * @property string  $created_at
+ * @property string  $updated_at
+ * @property string  $deleted_at
+ * @property string  $title
+ * @property string  $description
+ * @property string  $term
+ * @property integer $executor_id
+ * @property integer $priority
+ * @property integer $status
+ * @property integer $created_user_id
+ * @property integer $updated_user_id
  * @package App\Models
  */
 class Ticket extends Model
@@ -45,26 +45,32 @@ class Ticket extends Model
     const STATUS_ARCHIVE = 500;
 
     /**
+     * @var array
+     */
+    protected $fillable = ['title'];
+
+    /**
+     * @var array
+     */
+    protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
+
+    /**
      * Приоритеты
      * @return array
      */
     public static function getPriorities(): array
     {
-        static $priorities;
-        if (is_null($priorities)) {
-            $priorities = [
-                self::PRIORITY_LOW => [
-                    'name' => 'Низкий',
-                ],
-                self::PRIORITY_MEDIUM => [
-                    'name' => 'Средний',
-                ],
-                self::PRIORITY_HIGH => [
-                    'name' => 'Высокий',
-                ],
-            ];
-        }
-        return $priorities;
+        return [
+            self::PRIORITY_LOW => [
+                'name' => 'Низкий',
+            ],
+            self::PRIORITY_MEDIUM => [
+                'name' => 'Средний',
+            ],
+            self::PRIORITY_HIGH => [
+                'name' => 'Высокий',
+            ],
+        ];
     }
 
     /**
@@ -73,27 +79,23 @@ class Ticket extends Model
      */
     public static function getStatuses(): array
     {
-        static $statuses;
-        if (is_null($statuses)) {
-            $statuses = [
-                self::STATUS_NEW => [
-                    'name' => 'Новый',
-                ],
-                self::STATUS_IN_WORK => [
-                    'name' => 'В работе',
-                ],
-                self::STATUS_BLOCKED => [
-                    'name' => 'Заблокирован',
-                ],
-                self::STATUS_DONE => [
-                    'name' => 'Выполнен',
-                ],
-                self::STATUS_ARCHIVE => [
-                    'name' => 'В архиве',
-                ],
-            ];
-        }
-        return $statuses;
+        return [
+            self::STATUS_NEW => [
+                'name' => 'Новый',
+            ],
+            self::STATUS_IN_WORK => [
+                'name' => 'В работе',
+            ],
+            self::STATUS_BLOCKED => [
+                'name' => 'Заблокирован',
+            ],
+            self::STATUS_DONE => [
+                'name' => 'Выполнен',
+            ],
+            self::STATUS_ARCHIVE => [
+                'name' => 'В архиве',
+            ],
+        ];
     }
 
     /**
@@ -103,5 +105,23 @@ class Ticket extends Model
     public function author()
     {
         return $this->hasOne(User::class, 'id', 'created_user_id');
+    }
+
+    /**
+     * Executor
+     * @return HasOne
+     */
+    public function executor()
+    {
+        return $this->hasOne(User::class, 'id', 'executor_id');
+    }
+
+    /**
+     * Redactor
+     * @return HasOne
+     */
+    public function redactor()
+    {
+        return $this->hasOne(User::class, 'id', 'updated_user_id');
     }
 }

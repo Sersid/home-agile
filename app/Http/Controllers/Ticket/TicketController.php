@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Ticket;
 
+use App\Http\Requests\TicketRequest;
 use App\Models\Ticket;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
@@ -37,13 +38,13 @@ class TicketController extends BaseController
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param TicketRequest $request
      *
-     * @return Response
+     * @return void
      */
-    public function store(Request $request)
+    public function store(TicketRequest $request)
     {
-        //
+        dd($request->all());
     }
 
     /**

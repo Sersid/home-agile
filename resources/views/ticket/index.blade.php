@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    <app-wishes></app-wishes>
     <table>
         <tbody>
         @foreach($tickets as $ticket)

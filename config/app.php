@@ -176,6 +176,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         // Laravel IDE helper
         \Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+        // Eloquent Model Generator
+        \Krlove\EloquentModelGenerator\Provider\GeneratorServiceProvider::class
     ],
 
     /*
