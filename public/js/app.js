@@ -2084,8 +2084,7 @@ __webpack_require__.r(__webpack_exports__);
     Wishes: _components_ticket_Wishes__WEBPACK_IMPORTED_MODULE_1__["default"],
     Comments: _components_ticket_Comments__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
-  created: function created() {
-    this.fetchUsers();
+  created: function created() {//this.fetchUsers();
   },
   methods: {
     fetchUsers: function fetchUsers() {
@@ -2471,7 +2470,7 @@ __webpack_require__.r(__webpack_exports__);
     fetch: function fetch() {
       var _this = this;
 
-      axios.get('wishes').then(function (response) {
+      axios.get('new-tickets').then(function (response) {
         _this.tickets = response.data;
       })["finally"](function () {
         _this.showTicketsLoader = false;
@@ -2485,7 +2484,7 @@ __webpack_require__.r(__webpack_exports__);
       if (!this.$v.$invalid) {
         this.showButtonLoader = true;
         this.errors = [];
-        axios.post('wishes', {
+        axios.post('ticket', {
           name: this.name
         }).then(function (response) {
           _this2.tickets.unshift(response.data);
@@ -67854,463 +67853,426 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c(
+    "div",
+    { staticClass: "mod-bg-1 header-function-fixed", attrs: { id: "app" } },
+    [
+      _c("div", { staticClass: "page-wrapper" }, [
+        _c("div", { staticClass: "page-inner" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "page-content-wrapper" }, [
+            _vm._m(1),
+            _vm._v(" "),
+            _c(
+              "main",
+              { staticClass: "page-content" },
+              [_vm._m(2), _vm._v(" "), _c("wishes"), _vm._v(" "), _vm._m(3)],
+              1
+            )
+          ])
+        ])
+      ])
+    ]
+  )
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "mod-bg-1 header-function-fixed", attrs: { id: "app" } },
-      [
-        _c("div", { staticClass: "page-wrapper" }, [
-          _c("div", { staticClass: "page-inner" }, [
-            _c("aside", { staticClass: "page-sidebar" }, [
-              _c("div", { staticClass: "page-logo" }, [
-                _c(
-                  "a",
-                  {
-                    staticClass:
-                      "page-logo-link press-scale-down d-flex align-items-center position-relative",
-                    attrs: {
-                      "data-target": "#modal-shortcut",
-                      "data-toggle": "modal",
-                      href: "#"
-                    }
-                  },
-                  [
-                    _c("i", { staticClass: "fal fa-users" }),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "page-logo-text mr-1" }, [
-                      _vm._v("Sidorovs")
-                    ]),
-                    _vm._v(" "),
-                    _c("i", {
-                      staticClass:
-                        "fal fa-angle-down d-inline-block ml-1 fs-lg color-primary-300"
-                    })
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("nav", { staticClass: "primary-nav" }, [
-                _c("ul", { staticClass: "nav-menu" }, [
-                  _c("li", [
-                    _c(
-                      "a",
-                      { attrs: { href: "#", title: "Application Intel" } },
-                      [
-                        _c("i", { staticClass: "fal fa-clipboard-list" }),
-                        _vm._v(" "),
-                        _c("span", { staticClass: "nav-link-text" }, [
-                          _vm._v("Доска")
-                        ])
-                      ]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("li", [
-                    _c(
-                      "a",
-                      { attrs: { href: "#", title: "Application Intel" } },
-                      [
-                        _c("i", { staticClass: "fal fa-car" }),
-                        _vm._v(" "),
-                        _c("span", { staticClass: "nav-link-text" }, [
-                          _vm._v("Где машина?")
-                        ])
-                      ]
-                    )
-                  ])
-                ])
-              ])
+    return _c("aside", { staticClass: "page-sidebar" }, [
+      _c("div", { staticClass: "page-logo" }, [
+        _c(
+          "a",
+          {
+            staticClass:
+              "page-logo-link press-scale-down d-flex align-items-center position-relative",
+            attrs: {
+              "data-target": "#modal-shortcut",
+              "data-toggle": "modal",
+              href: "#"
+            }
+          },
+          [
+            _c("i", { staticClass: "fal fa-users" }),
+            _vm._v(" "),
+            _c("span", { staticClass: "page-logo-text mr-1" }, [
+              _vm._v("Sidorovs")
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "page-content-wrapper" }, [
-              _c(
-                "header",
-                { staticClass: "page-header", attrs: { role: "banner" } },
-                [
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "hidden-md-down dropdown-icon-menu position-relative"
-                    },
-                    [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "header-btn btn js-waves-off",
-                          attrs: {
-                            "data-action": "toggle",
-                            "data-class": "nav-function-hidden",
-                            href: "#",
-                            title: "Hide Navigation"
-                          }
-                        },
-                        [_c("i", { staticClass: "ni ni-menu" })]
-                      ),
-                      _vm._v(" "),
-                      _c("ul", [
-                        _c("li", [
-                          _c(
-                            "a",
-                            {
-                              staticClass: "btn js-waves-off",
-                              attrs: {
-                                "data-action": "toggle",
-                                "data-class": "nav-function-minify",
-                                href: "#",
-                                title: "Minify Navigation"
-                              }
-                            },
-                            [_c("i", { staticClass: "ni ni-minify-nav" })]
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("li", [
-                          _c(
-                            "a",
-                            {
-                              staticClass: "btn js-waves-off",
-                              attrs: {
-                                "data-action": "toggle",
-                                "data-class": "nav-function-fixed",
-                                href: "#",
-                                title: "Lock Navigation"
-                              }
-                            },
-                            [_c("i", { staticClass: "ni ni-lock-nav" })]
-                          )
-                        ])
-                      ])
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "hidden-lg-up" }, [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "header-btn btn press-scale-down",
-                        attrs: {
-                          "data-action": "toggle",
-                          "data-class": "mobile-nav-on",
-                          href: "#"
-                        }
-                      },
-                      [_c("i", { staticClass: "ni ni-menu" })]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "ml-auto d-flex" }, [
-                    _c("div", { staticClass: "hidden-md-down" }, [
-                      _c(
-                        "a",
-                        { staticClass: "header-icon", attrs: { href: "#" } },
-                        [_c("i", { staticClass: "fal fa-cog" })]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "header-icon",
-                          attrs: {
-                            "data-toggle": "dropdown",
-                            href: "#",
-                            title: "You got 11 notifications"
-                          }
-                        },
-                        [
-                          _c("i", { staticClass: "fal fa-bell" }),
-                          _vm._v(" "),
-                          _c("span", { staticClass: "badge badge-icon" }, [
-                            _vm._v("11")
-                          ])
-                        ]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", [
-                      _c(
-                        "a",
-                        {
-                          staticClass:
-                            "header-icon d-flex align-items-center justify-content-center ml-2",
-                          attrs: {
-                            "data-toggle": "dropdown",
-                            href: "#",
-                            title: "drlantern@gotbootstrap.com"
-                          }
-                        },
-                        [
-                          _c("img", {
-                            staticClass: "profile-image rounded-circle",
-                            attrs: {
-                              alt: "Dr. Codex Lantern",
-                              src: "img/demo/avatars/avatar-admin.png"
-                            }
-                          })
-                        ]
-                      )
-                    ])
-                  ])
-                ]
-              ),
+            _c("i", {
+              staticClass:
+                "fal fa-angle-down d-inline-block ml-1 fs-lg color-primary-300"
+            })
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _c("nav", { staticClass: "primary-nav" }, [
+        _c("ul", { staticClass: "nav-menu" }, [
+          _c("li", [
+            _c("a", { attrs: { href: "#", title: "Application Intel" } }, [
+              _c("i", { staticClass: "fal fa-clipboard-list" }),
               _vm._v(" "),
-              _c("main", { staticClass: "page-content" }, [
-                _c("div", { staticClass: "subheader" }, [
-                  _c("h1", { staticClass: "subheader-title" }, [
-                    _vm._v("\n                                Главная "),
-                    _c("span", { staticClass: "fw-300" }, [_vm._v("страница")])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-xl-12" }, [
-                    _c("div", { staticClass: "panel" }, [
-                      _c("div", { staticClass: "panel-hdr" }, [
-                        _c("h2", [
-                          _c("a", { attrs: { href: "#" } }, [
-                            _vm._v("#ticket-15")
-                          ]),
-                          _vm._v(" "),
-                          _c("span", { staticClass: "fw-300" }, [
-                            _c("i", [_vm._v("Просмотр тикета")])
-                          ])
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "panel-container show" }, [
-                        _c("div", { staticClass: "panel-content" }, [
-                          _c("div", { staticClass: "mb-2" }, [
-                            _c(
-                              "div",
-                              {
-                                staticClass:
-                                  "d-flex justify-content-between mb-2"
-                              },
-                              [
-                                _c("h3", [_vm._v("Lorem ipsum.")]),
-                                _vm._v(" "),
-                                _c("span", { staticClass: "ml-2 mr-2" }, [
-                                  _c(
-                                    "button",
-                                    {
-                                      staticClass:
-                                        "btn btn-outline-success dropdown-toggle",
-                                      attrs: { type: "button" }
-                                    },
-                                    [_vm._v("Сделана")]
-                                  )
-                                ])
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c("div", [
-                              _vm._v(
-                                "\n                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab alias\n                                                    asperiores beatae culpa cumque enim explicabo fugiat illo illum in iste\n                                                    laboriosam necessitatibus neque nostrum optio perferendis provident quae\n                                                    quam quis quisquam quod, sequi tempora tempore temporibus velit. Amet\n                                                    autem doloremque doloribus eos explicabo mollitia officia officiis\n                                                    provident ratione voluptate? A ad, alias, animi consectetur consequatur\n                                                    cupiditate dicta dolore dolorem eaque inventore molestiae neque nobis\n                                                    optio quos recusandae tempore voluptas. Adipisci atque eos fuga\n                                                    molestiae sequi, tempora voluptatum. Accusantium blanditiis cupiditate\n                                                    dolore doloremque dolores dolorum eos, fugit ipsa ipsam, iste itaque\n                                                    labore molestiae, nam odit porro quam rerum sequi ullam.\n                                                "
-                              )
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "mb-1 text-danger" }, [
-                            _c("span", [
-                              _c("i", { staticClass: "fal fa-stopwatch" })
-                            ]),
-                            _vm._v(" "),
-                            _c("span", [_vm._v("01 января 2020")])
-                          ]),
-                          _vm._v(" "),
-                          _c("span", [
-                            _c("a", {
-                              staticClass:
-                                "profile-image-md rounded-circle d-inline-block",
-                              staticStyle: {
-                                "background-image":
-                                  "url('img/demo/avatars/avatar-g.png')",
-                                "background-size": "cover"
-                              },
-                              attrs: { href: "#" }
-                            })
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "panel-content border-faded border-left-0 border-right-0 border-bottom-0 bg-faded"
-                          },
-                          [
-                            _c("textarea", {
-                              staticClass:
-                                "form-control rounded-top border-bottom-left-radius-0 border-bottom-right-radius-0 border",
-                              attrs: {
-                                placeholder: "Добавить комментарий",
-                                rows: "2"
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass:
-                                  "d-flex justify-content-end py-2 px-2 bg-white border border-top-0 rounded-bottom"
-                              },
-                              [
-                                _c(
-                                  "button",
-                                  {
-                                    staticClass: "btn btn-icon fs-lg mr-2",
-                                    attrs: { type: "button" }
-                                  },
-                                  [_c("i", { staticClass: "fal fa-paperclip" })]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "button",
-                                  {
-                                    staticClass:
-                                      "btn btn-primary btn-sm ml-auto ml-sm-0"
-                                  },
-                                  [
-                                    _vm._v(
-                                      "Отправить\n                                                "
-                                    )
-                                  ]
-                                )
-                              ]
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "panel-content border-faded border-left-0 border-right-0 border-bottom-0 p-0 pb-3"
-                          },
-                          [
-                            _c("div", { staticClass: "d-flex flex-column" }, [
-                              _c(
-                                "div",
-                                {
-                                  staticClass: "d-flex flex-row px-3 pt-3 pb-2"
-                                },
-                                [
-                                  _c("span", [
-                                    _c("a", {
-                                      staticClass:
-                                        "profile-image rounded-circle d-inline-block",
-                                      staticStyle: {
-                                        "background-image":
-                                          "url('img/demo/avatars/avatar-j.png')"
-                                      },
-                                      attrs: { href: "#" }
-                                    })
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "ml-3" }, [
-                                    _c("div", [
-                                      _c(
-                                        "a",
-                                        {
-                                          staticClass: "fw-700 text-dark",
-                                          attrs: {
-                                            href: "#",
-                                            title: "Lisa Hatchensen"
-                                          }
-                                        },
-                                        [
-                                          _vm._v(
-                                            "Lisa\n                                                                Hatchensen"
-                                          )
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "span",
-                                        {
-                                          staticClass: "fs-nano text-muted mt-1"
-                                        },
-                                        [_vm._v("5 mins ago")]
-                                      )
-                                    ]),
-                                    _vm._v(
-                                      "\n                                                        Hey did you meet the new board of director? He's a bit of a geek\n                                                        if you ask me...anyway here is the report you requested. I am\n                                                        off to launch with Lisa and Andrew, you wanna join?\n                                                        Hey did you meet the new board of director? He's a bit of a geek\n                                                        if you ask me...anyway here is the report you requested. I am\n                                                        off to launch with Lisa and Andrew, you wanna join?\n                                                        Hey did you meet the new board of director? He's a bit of a geek\n                                                        if you ask me...anyway here is the report you requested. I am\n                                                        off to launch with Lisa and Andrew, you wanna join?\n                                                    "
-                                    )
-                                  ])
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                {
-                                  staticClass: "d-flex flex-row px-3 pt-3 pb-2"
-                                },
-                                [
-                                  _c("span", [
-                                    _c("a", {
-                                      staticClass:
-                                        "profile-image rounded-circle d-inline-block",
-                                      staticStyle: {
-                                        "background-image":
-                                          "url('img/demo/avatars/avatar-j.png')"
-                                      },
-                                      attrs: { href: "#" }
-                                    })
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "ml-3" }, [
-                                    _c("div", [
-                                      _c(
-                                        "a",
-                                        {
-                                          staticClass: "fw-700 text-dark",
-                                          attrs: {
-                                            href: "#",
-                                            title: "Lisa Hatchensen"
-                                          }
-                                        },
-                                        [
-                                          _vm._v(
-                                            "Lisa\n                                                                Hatchensen"
-                                          )
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "span",
-                                        {
-                                          staticClass: "fs-nano text-muted mt-1"
-                                        },
-                                        [_vm._v("5 mins ago")]
-                                      )
-                                    ]),
-                                    _vm._v(
-                                      "\n                                                        Hey did you meet the new board of director? He's a bit of a geek\n                                                        if you ask me...anyway here is the report you requested. I am\n                                                        off to launch with Lisa and Andrew, you wanna join?\n                                                        Hey did you meet the new board of director? He's a bit of a geek\n                                                        if you ask me...anyway here is the report you requested. I am\n                                                        off to launch with Lisa and Andrew, you wanna join?\n                                                        Hey did you meet the new board of director? He's a bit of a geek\n                                                        if you ask me...anyway here is the report you requested. I am\n                                                        off to launch with Lisa and Andrew, you wanna join?\n                                                    "
-                                    )
-                                  ])
-                                ]
-                              )
-                            ])
-                          ]
-                        )
-                      ])
-                    ])
-                  ])
-                ])
+              _c("span", { staticClass: "nav-link-text" }, [_vm._v("Доска")])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _c("a", { attrs: { href: "#", title: "Application Intel" } }, [
+              _c("i", { staticClass: "fal fa-car" }),
+              _vm._v(" "),
+              _c("span", { staticClass: "nav-link-text" }, [
+                _vm._v("Где машина?")
               ])
             ])
           ])
         ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "header",
+      { staticClass: "page-header", attrs: { role: "banner" } },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "hidden-md-down dropdown-icon-menu position-relative"
+          },
+          [
+            _c(
+              "a",
+              {
+                staticClass: "header-btn btn js-waves-off",
+                attrs: {
+                  "data-action": "toggle",
+                  "data-class": "nav-function-hidden",
+                  href: "#",
+                  title: "Hide Navigation"
+                }
+              },
+              [_c("i", { staticClass: "ni ni-menu" })]
+            ),
+            _vm._v(" "),
+            _c("ul", [
+              _c("li", [
+                _c(
+                  "a",
+                  {
+                    staticClass: "btn js-waves-off",
+                    attrs: {
+                      "data-action": "toggle",
+                      "data-class": "nav-function-minify",
+                      href: "#",
+                      title: "Minify Navigation"
+                    }
+                  },
+                  [_c("i", { staticClass: "ni ni-minify-nav" })]
+                )
+              ]),
+              _vm._v(" "),
+              _c("li", [
+                _c(
+                  "a",
+                  {
+                    staticClass: "btn js-waves-off",
+                    attrs: {
+                      "data-action": "toggle",
+                      "data-class": "nav-function-fixed",
+                      href: "#",
+                      title: "Lock Navigation"
+                    }
+                  },
+                  [_c("i", { staticClass: "ni ni-lock-nav" })]
+                )
+              ])
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "hidden-lg-up" }, [
+          _c(
+            "a",
+            {
+              staticClass: "header-btn btn press-scale-down",
+              attrs: {
+                "data-action": "toggle",
+                "data-class": "mobile-nav-on",
+                href: "#"
+              }
+            },
+            [_c("i", { staticClass: "ni ni-menu" })]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "ml-auto d-flex" }, [
+          _c("div", { staticClass: "hidden-md-down" }, [
+            _c("a", { staticClass: "header-icon", attrs: { href: "#" } }, [
+              _c("i", { staticClass: "fal fa-cog" })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", [
+            _c(
+              "a",
+              {
+                staticClass: "header-icon",
+                attrs: {
+                  "data-toggle": "dropdown",
+                  href: "#",
+                  title: "You got 11 notifications"
+                }
+              },
+              [
+                _c("i", { staticClass: "fal fa-bell" }),
+                _vm._v(" "),
+                _c("span", { staticClass: "badge badge-icon" }, [_vm._v("11")])
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", [
+            _c(
+              "a",
+              {
+                staticClass:
+                  "header-icon d-flex align-items-center justify-content-center ml-2",
+                attrs: {
+                  "data-toggle": "dropdown",
+                  href: "#",
+                  title: "drlantern@gotbootstrap.com"
+                }
+              },
+              [
+                _c("img", {
+                  staticClass: "profile-image rounded-circle",
+                  attrs: {
+                    alt: "Dr. Codex Lantern",
+                    src: "img/demo/avatars/avatar-admin.png"
+                  }
+                })
+              ]
+            )
+          ])
+        ])
       ]
     )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "subheader" }, [
+      _c("h1", { staticClass: "subheader-title" }, [
+        _vm._v("\n                                Главная "),
+        _c("span", { staticClass: "fw-300" }, [_vm._v("страница")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-xl-12" }, [
+        _c("div", { staticClass: "panel" }, [
+          _c("div", { staticClass: "panel-hdr" }, [
+            _c("h2", [
+              _c("a", { attrs: { href: "#" } }, [_vm._v("#ticket-15")]),
+              _vm._v(" "),
+              _c("span", { staticClass: "fw-300" }, [
+                _c("i", [_vm._v("Просмотр тикета")])
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "panel-container show" }, [
+            _c("div", { staticClass: "panel-content" }, [
+              _c("div", { staticClass: "mb-2" }, [
+                _c(
+                  "div",
+                  { staticClass: "d-flex justify-content-between mb-2" },
+                  [
+                    _c("h3", [_vm._v("Lorem ipsum.")]),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "ml-2 mr-2" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass:
+                            "btn btn-outline-success dropdown-toggle",
+                          attrs: { type: "button" }
+                        },
+                        [_vm._v("Сделана")]
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c("div", [
+                  _vm._v(
+                    "\n                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab alias\n                                                    asperiores beatae culpa cumque enim explicabo fugiat illo illum in iste\n                                                    laboriosam necessitatibus neque nostrum optio perferendis provident quae\n                                                    quam quis quisquam quod, sequi tempora tempore temporibus velit. Amet\n                                                    autem doloremque doloribus eos explicabo mollitia officia officiis\n                                                    provident ratione voluptate? A ad, alias, animi consectetur consequatur\n                                                    cupiditate dicta dolore dolorem eaque inventore molestiae neque nobis\n                                                    optio quos recusandae tempore voluptas. Adipisci atque eos fuga\n                                                    molestiae sequi, tempora voluptatum. Accusantium blanditiis cupiditate\n                                                    dolore doloremque dolores dolorum eos, fugit ipsa ipsam, iste itaque\n                                                    labore molestiae, nam odit porro quam rerum sequi ullam.\n                                                "
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "mb-1 text-danger" }, [
+                _c("span", [_c("i", { staticClass: "fal fa-stopwatch" })]),
+                _vm._v(" "),
+                _c("span", [_vm._v("01 января 2020")])
+              ]),
+              _vm._v(" "),
+              _c("span", [
+                _c("a", {
+                  staticClass: "profile-image-md rounded-circle d-inline-block",
+                  staticStyle: {
+                    "background-image": "url('img/demo/avatars/avatar-g.png')",
+                    "background-size": "cover"
+                  },
+                  attrs: { href: "#" }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass:
+                  "panel-content border-faded border-left-0 border-right-0 border-bottom-0 bg-faded"
+              },
+              [
+                _c("textarea", {
+                  staticClass:
+                    "form-control rounded-top border-bottom-left-radius-0 border-bottom-right-radius-0 border",
+                  attrs: { placeholder: "Добавить комментарий", rows: "2" }
+                }),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "d-flex justify-content-end py-2 px-2 bg-white border border-top-0 rounded-bottom"
+                  },
+                  [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-icon fs-lg mr-2",
+                        attrs: { type: "button" }
+                      },
+                      [_c("i", { staticClass: "fal fa-paperclip" })]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      { staticClass: "btn btn-primary btn-sm ml-auto ml-sm-0" },
+                      [
+                        _vm._v(
+                          "Отправить\n                                                "
+                        )
+                      ]
+                    )
+                  ]
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass:
+                  "panel-content border-faded border-left-0 border-right-0 border-bottom-0 p-0 pb-3"
+              },
+              [
+                _c("div", { staticClass: "d-flex flex-column" }, [
+                  _c("div", { staticClass: "d-flex flex-row px-3 pt-3 pb-2" }, [
+                    _c("span", [
+                      _c("a", {
+                        staticClass:
+                          "profile-image rounded-circle d-inline-block",
+                        staticStyle: {
+                          "background-image":
+                            "url('img/demo/avatars/avatar-j.png')"
+                        },
+                        attrs: { href: "#" }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "ml-3" }, [
+                      _c("div", [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "fw-700 text-dark",
+                            attrs: { href: "#", title: "Lisa Hatchensen" }
+                          },
+                          [
+                            _vm._v(
+                              "Lisa\n                                                                Hatchensen"
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "fs-nano text-muted mt-1" }, [
+                          _vm._v("5 mins ago")
+                        ])
+                      ]),
+                      _vm._v(
+                        "\n                                                        Hey did you meet the new board of director? He's a bit of a geek\n                                                        if you ask me...anyway here is the report you requested. I am\n                                                        off to launch with Lisa and Andrew, you wanna join?\n                                                        Hey did you meet the new board of director? He's a bit of a geek\n                                                        if you ask me...anyway here is the report you requested. I am\n                                                        off to launch with Lisa and Andrew, you wanna join?\n                                                        Hey did you meet the new board of director? He's a bit of a geek\n                                                        if you ask me...anyway here is the report you requested. I am\n                                                        off to launch with Lisa and Andrew, you wanna join?\n                                                    "
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "d-flex flex-row px-3 pt-3 pb-2" }, [
+                    _c("span", [
+                      _c("a", {
+                        staticClass:
+                          "profile-image rounded-circle d-inline-block",
+                        staticStyle: {
+                          "background-image":
+                            "url('img/demo/avatars/avatar-j.png')"
+                        },
+                        attrs: { href: "#" }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "ml-3" }, [
+                      _c("div", [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "fw-700 text-dark",
+                            attrs: { href: "#", title: "Lisa Hatchensen" }
+                          },
+                          [
+                            _vm._v(
+                              "Lisa\n                                                                Hatchensen"
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "fs-nano text-muted mt-1" }, [
+                          _vm._v("5 mins ago")
+                        ])
+                      ]),
+                      _vm._v(
+                        "\n                                                        Hey did you meet the new board of director? He's a bit of a geek\n                                                        if you ask me...anyway here is the report you requested. I am\n                                                        off to launch with Lisa and Andrew, you wanna join?\n                                                        Hey did you meet the new board of director? He's a bit of a geek\n                                                        if you ask me...anyway here is the report you requested. I am\n                                                        off to launch with Lisa and Andrew, you wanna join?\n                                                        Hey did you meet the new board of director? He's a bit of a geek\n                                                        if you ask me...anyway here is the report you requested. I am\n                                                        off to launch with Lisa and Andrew, you wanna join?\n                                                    "
+                      )
+                    ])
+                  ])
+                ])
+              ]
+            )
+          ])
+        ])
+      ])
+    ])
   }
 ]
 render._withStripped = true
@@ -68836,7 +68798,7 @@ var render = function() {
                 }
               },
               [
-                _c("span", [_vm._v(_vm._s(ticket.name))]),
+                _c("span", [_vm._v(_vm._s(ticket.title))]),
                 _vm._v(" "),
                 _c("user", { attrs: { id: ticket.created_user_id } })
               ],
@@ -84124,7 +84086,6 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('app-wishes', __webpack_require__(/*! ./components/ticket/Wishes.vue */ "./resources/js/components/ticket/Wishes.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -84132,15 +84093,15 @@ Vue.component('app-wishes', __webpack_require__(/*! ./components/ticket/Wishes.v
  */
 // Валидатор
 
-
-Vue.use(vuelidate__WEBPACK_IMPORTED_MODULE_0___default.a); // Подключение bootstrap
-
+ // Подключение bootstrap
 
 
-Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_1__["default"]); // Пользователи
+ // Пользователи
 
 
 
+Vue.use(vuelidate__WEBPACK_IMPORTED_MODULE_0___default.a);
+Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_1__["default"]);
 new Vue({
   el: '#app',
   store: _store__WEBPACK_IMPORTED_MODULE_3__["default"],
@@ -84180,6 +84141,7 @@ try {
 
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios.defaults.baseURL = '/api/';
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting

@@ -89,7 +89,7 @@
                                 Главная <span class='fw-300'>страница</span>
                             </h1>
                         </div>
-<!--                        <wishes></wishes>-->
+                        <wishes></wishes>
                         <div class="row">
                             <div class="col-xl-12">
                                 <div class="panel">
@@ -244,7 +244,7 @@
             Comments
         },
         created() {
-            this.fetchUsers();
+            //this.fetchUsers();
         },
         methods: {
             fetchUsers() {

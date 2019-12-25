@@ -36,7 +36,7 @@
                 :key="ticket.id"
                 @click.prevent="view(ticket.id)"
                 href="#">
-                <span>{{ ticket.name }}</span>
+                <span>{{ ticket.title }}</span>
                 <user :id="ticket.created_user_id"/>
             </a>
         </div>
@@ -78,7 +78,7 @@
         },
         methods: {
             fetch() {
-                axios.get('wishes').then(response => {
+                axios.get('new-tickets').then(response => {
                     this.tickets = response.data;
                 }).finally(() => {
                     this.showTicketsLoader = false;
@@ -89,7 +89,7 @@
                 if (!this.$v.$invalid) {
                     this.showButtonLoader = true;
                     this.errors = [];
-                    axios.post('wishes', {name: this.name})
+                    axios.post('ticket', {name: this.name})
                         .then(response => {
                             this.tickets.unshift(response.data);
                             this.name = '';

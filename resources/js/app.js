@@ -19,8 +19,6 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('app-wishes', require('./components/ticket/Wishes.vue').default);
-
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -29,16 +27,17 @@ Vue.component('app-wishes', require('./components/ticket/Wishes.vue').default);
 
 // Валидатор
 import Vuelidate from 'vuelidate';
-Vue.use(Vuelidate);
-
 // Подключение bootstrap
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-Vue.use(BootstrapVue);
-
 // Пользователи
 import store from './store'
 import App from './App.vue'
+
+Vue.use(Vuelidate);
+
+Vue.use(BootstrapVue);
+
 new Vue({
     el: '#app',
     store,
