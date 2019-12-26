@@ -2432,6 +2432,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2450,7 +2459,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       tickets: Array,
-      name: '',
+      title: '',
       showButtonLoader: false,
       showTicketsLoader: true,
       showModal: false,
@@ -2471,7 +2480,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.get('new-tickets').then(function (response) {
-        _this.tickets = response.data;
+        _this.tickets = response.data.data;
       })["finally"](function () {
         _this.showTicketsLoader = false;
       });
@@ -2485,15 +2494,15 @@ __webpack_require__.r(__webpack_exports__);
         this.showButtonLoader = true;
         this.errors = [];
         axios.post('ticket', {
-          name: this.name
+          title: this.title
         }).then(function (response) {
           _this2.tickets.unshift(response.data);
 
-          _this2.name = '';
+          _this2.title = '';
 
           _this2.$v.$reset();
         })["catch"](function (e) {
-          _this2.errors = e.response.data;
+          _this2.errors.push(e.response.data.message);
         })["finally"](function () {
           _this2.showButtonLoader = false;
         });
@@ -2505,7 +2514,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   validations: {
-    name: {
+    title: {
       required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__["required"]
     }
   },
@@ -68673,157 +68682,166 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("div", { staticClass: "panel-tag" }, [
-        _vm._v(
-          "\n        Добавь свое желание и оно обязательно сбудется :)\n    "
-        )
-      ]),
+  return _c("div", { staticClass: "panel" }, [
+    _c("div", { staticClass: "panel-hdr" }, [
+      _c("h2", [_vm._v("Новые тикеты")]),
       _vm._v(" "),
+      _c("div", { staticClass: "panel-toolbar" }, [
+        _vm.showTicketsLoader
+          ? _c("span", { staticClass: "spinner-border spinner-border-sm" }, [
+              _c("span", { staticClass: "sr-only" }, [_vm._v("Загрузка...")])
+            ])
+          : _vm._e()
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "panel-container" }, [
       _c(
-        "form",
-        {
-          on: {
-            submit: function($event) {
-              $event.preventDefault()
-              return _vm.add($event)
-            }
-          }
-        },
+        "div",
+        { staticClass: "panel-content" },
         [
-          _c("div", { staticClass: "input-group mb-3" }, [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.name,
-                  expression: "name"
-                }
-              ],
-              staticClass: "form-control form-control-lg",
-              class: { "is-invalid": _vm.$v.name.$error },
-              attrs: {
-                type: "text",
-                autofocus: "",
-                placeholder: "Я хочу...",
-                disabled: _vm.showButtonLoader
-              },
-              domProps: { value: _vm.name },
+          _c("div", { staticClass: "panel-tag" }, [
+            _vm._v(
+              "\n                Добавь свое желание и оно обязательно сбудется :)\n            "
+            )
+          ]),
+          _vm._v(" "),
+          _c(
+            "form",
+            {
               on: {
-                input: [
-                  function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.name = $event.target.value
-                  },
-                  function($event) {
-                    return _vm.$v.name.$touch()
-                  }
-                ]
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.add($event)
+                }
               }
-            }),
-            _vm._v(" "),
-            _c("div", { staticClass: "input-group-append" }, [
-              _c(
-                "button",
+            },
+            [
+              _c("div", { staticClass: "input-group mb-3" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.title,
+                      expression: "title"
+                    }
+                  ],
+                  staticClass: "form-control form-control-lg",
+                  class: { "is-invalid": _vm.$v.title.$error },
+                  attrs: {
+                    disabled: _vm.showButtonLoader,
+                    autofocus: "",
+                    placeholder: "Я хочу...",
+                    type: "text"
+                  },
+                  domProps: { value: _vm.title },
+                  on: {
+                    input: [
+                      function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.title = $event.target.value
+                      },
+                      function($event) {
+                        return _vm.$v.title.$touch()
+                      }
+                    ]
+                  }
+                }),
+                _vm._v(" "),
+                _c("div", { staticClass: "input-group-append" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { disabled: _vm.showButtonLoader, type: "submit" }
+                    },
+                    [
+                      _vm.showButtonLoader
+                        ? _c("b-spinner", {
+                            attrs: { label: "Загрузка...", small: "" }
+                          })
+                        : _vm._e(),
+                      _vm._v(
+                        "\n                            Добавить\n                        "
+                      )
+                    ],
+                    1
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _vm.$v.title.$error
+                ? _c(
+                    "div",
+                    {
+                      staticClass: "alert alert-danger   ",
+                      attrs: { role: "alert" }
+                    },
+                    [
+                      _vm._v(
+                        "\n                    Напиши хоть что-нибудь :(\n                "
+                      )
+                    ]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.errors.length > 0
+                ? _c(
+                    "div",
+                    {
+                      staticClass:
+                        "alert border-danger bg-transparent text-danger",
+                      attrs: { role: "alert" }
+                    },
+                    _vm._l(_vm.errors, function(error) {
+                      return _c("div", [_vm._v(_vm._s(error))])
+                    }),
+                    0
+                  )
+                : _vm._e()
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "list-group" },
+            _vm._l(_vm.tickets, function(ticket) {
+              return _c(
+                "a",
                 {
-                  staticClass: "btn btn-primary",
-                  attrs: { type: "submit", disabled: _vm.showButtonLoader }
+                  key: ticket.id,
+                  staticClass:
+                    "list-group-item list-group-item-action d-flex justify-content-between align-items-center",
+                  attrs: { href: "#" },
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.view(ticket.id)
+                    }
+                  }
                 },
                 [
-                  _vm.showButtonLoader
-                    ? _c("b-spinner", {
-                        attrs: { small: "", label: "Загрузка..." }
-                      })
-                    : _vm._e(),
-                  _vm._v("\n                    Добавить\n                ")
+                  _c("span", [_vm._v(_vm._s(ticket.title))]),
+                  _vm._v(" "),
+                  _c("user", { attrs: { id: ticket.created_user_id } })
                 ],
                 1
               )
-            ])
-          ]),
+            }),
+            0
+          ),
           _vm._v(" "),
-          !_vm.$v.name.required
-            ? _c("b-alert", { attrs: { variant: "danger" } }, [
-                _vm._v("Напиши хоть что-нибудь :(")
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.errors.length > 0
-            ? _c(
-                "b-alert",
-                { attrs: { variant: "danger" } },
-                _vm._l(_vm.errors, function(error) {
-                  return _c("div", [_vm._v(_vm._s(error.message))])
-                }),
-                0
-              )
-            : _vm._e()
+          _c("modal", { attrs: { "ticket-id": _vm.ticketId, id: "detail" } })
         ],
         1
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "list-group" },
-        [
-          _vm.showTicketsLoader
-            ? _c(
-                "span",
-                {
-                  staticClass:
-                    "list-group-item list-group-item-action align-items-center text-center"
-                },
-                [_vm._m(0)]
-              )
-            : _vm._e(),
-          _vm._v(" "),
-          _vm._l(_vm.tickets, function(ticket) {
-            return _c(
-              "a",
-              {
-                key: ticket.id,
-                staticClass:
-                  "list-group-item list-group-item-action d-flex justify-content-between align-items-center",
-                attrs: { href: "#" },
-                on: {
-                  click: function($event) {
-                    $event.preventDefault()
-                    return _vm.view(ticket.id)
-                  }
-                }
-              },
-              [
-                _c("span", [_vm._v(_vm._s(ticket.title))]),
-                _vm._v(" "),
-                _c("user", { attrs: { id: ticket.created_user_id } })
-              ],
-              1
-            )
-          })
-        ],
-        2
-      ),
-      _vm._v(" "),
-      _c("modal", { attrs: { id: "detail", "ticket-id": _vm.ticketId } })
-    ],
-    1
-  )
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "spinner-border spinner-border-sm" }, [
-      _c("span", { staticClass: "sr-only" }, [_vm._v("Загрузка...")])
+      )
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -84091,12 +84109,9 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-// Валидатор
-
- // Подключение bootstrap
 
 
- // Пользователи
+
 
 
 

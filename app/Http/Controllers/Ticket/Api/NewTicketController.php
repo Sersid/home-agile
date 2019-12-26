@@ -2,23 +2,21 @@
 
 namespace App\Http\Controllers\Ticket\Api;
 
-use App\Http\Controllers\Controller;
 use App\Repositories\TicketRepository;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 /**
  * Class TicketController
  * @package App\Http\Controllers\Ticket\Api
  */
-class NewTicketController extends Controller
+class NewTicketController extends BaseController
 {
     /**
      * Display a listing of the resource.
      *
      * @param TicketRepository $repository
      *
-     * @return Builder[]|Collection
+     * @return LengthAwarePaginator
      */
     public function index(TicketRepository $repository)
     {

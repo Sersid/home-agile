@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers\Ticket\Api;
 
-use App\Http\Controllers\Controller;
+use App\Http\Requests\TicketRequest;
 use App\Repositories\TicketRepository;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -13,18 +11,18 @@ use Illuminate\Http\Response;
  * Class TicketController
  * @package App\Http\Controllers\Ticket\Api
  */
-class TicketController extends Controller
+class TicketController extends BaseController
 {
     /**
      * Display a listing of the resource.
      *
      * @param TicketRepository $repository
      *
-     * @return Builder[]|Collection
+     * @return Response
      */
     public function index(TicketRepository $repository)
     {
-        return $repository->getNew();
+        //
     }
 
     /**
@@ -34,7 +32,7 @@ class TicketController extends Controller
      *
      * @return Response
      */
-    public function store(Request $request)
+    public function store(TicketRequest $request)
     {
         //
     }

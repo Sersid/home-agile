@@ -3,8 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Ticket;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 /**
  * Class TicketRepository
@@ -14,7 +13,7 @@ class TicketRepository extends BaseRepository
 {
     /**
      * Новые тикеты
-     * @return Builder[]|Collection
+     * @return LengthAwarePaginator
      */
     public function getNew()
     {
@@ -22,7 +21,7 @@ class TicketRepository extends BaseRepository
             ->select(['id', 'title', 'created_user_id'])
             ->where('status', Ticket::STATUS_NEW)
             ->orderBy('id', 'desc')
-            ->get();
+            ->paginate(20);
     }
 
     /**

@@ -25,12 +25,9 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-// Валидатор
 import Vuelidate from 'vuelidate';
-// Подключение bootstrap
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-// Пользователи
 import store from './store'
 import App from './App.vue'
 

@@ -1,46 +1,55 @@
 <template>
-    <div>
-        <div class="panel-tag">
-            Добавь свое желание и оно обязательно сбудется :)
-        </div>
-        <form @submit.prevent="add">
-            <div class="input-group mb-3">
-                <input type="text"
-                       autofocus
-                       placeholder="Я хочу..."
-                       class="form-control form-control-lg"
-                       v-model="name"
-                       @input="$v.name.$touch()"
-                       :disabled="showButtonLoader"
-                       :class="{'is-invalid':  $v.name.$error}"
-                >
-                <div class="input-group-append">
-                    <button type="submit" class="btn btn-primary" :disabled="showButtonLoader">
-                        <b-spinner v-if="showButtonLoader" small label="Загрузка..."></b-spinner>
-                        Добавить
-                    </button>
-                </div>
+    <div class="panel">
+        <div class="panel-hdr">
+            <h2>Новые тикеты</h2>
+            <div class="panel-toolbar">
+                <span v-if="showTicketsLoader" class="spinner-border spinner-border-sm"><span class="sr-only">Загрузка...</span></span>
             </div>
-            <b-alert variant="danger" v-if="!$v.name.required">Напиши хоть что-нибудь :(</b-alert>
-            <b-alert variant="danger" v-if="errors.length > 0">
-                <div v-for="error in errors">{{error.message}}</div>
-            </b-alert>
-        </form>
-        <div class="list-group">
-            <span v-if="showTicketsLoader" class="list-group-item list-group-item-action align-items-center text-center">
-                <span class="spinner-border spinner-border-sm"><span class="sr-only">Загрузка...</span></span>
-            </span>
-            <a
-                class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-                v-for="ticket in tickets"
-                :key="ticket.id"
-                @click.prevent="view(ticket.id)"
-                href="#">
-                <span>{{ ticket.title }}</span>
-                <user :id="ticket.created_user_id"/>
-            </a>
         </div>
-        <modal id="detail" :ticket-id="ticketId" />
+        <div class="panel-container">
+            <div class="panel-content">
+                <div class="panel-tag">
+                    Добавь свое желание и оно обязательно сбудется :)
+                </div>
+                <form @submit.prevent="add">
+                    <div class="input-group mb-3">
+                        <input :class="{'is-invalid':  $v.title.$error}"
+                               :disabled="showButtonLoader"
+                               @input="$v.title.$touch()"
+                               autofocus
+                               class="form-control form-control-lg"
+                               placeholder="Я хочу..."
+                               type="text"
+                               v-model="title"
+                        >
+                        <div class="input-group-append">
+                            <button :disabled="showButtonLoader" class="btn btn-primary" type="submit">
+                                <b-spinner label="Загрузка..." small v-if="showButtonLoader"></b-spinner>
+                                Добавить
+                            </button>
+                        </div>
+                    </div>
+                    <div v-if="$v.title.$error" class="alert alert-danger   " role="alert">
+                        Напиши хоть что-нибудь :(
+                    </div>
+                    <div v-if="errors.length > 0" class="alert border-danger bg-transparent text-danger" role="alert">
+                        <div v-for="error in errors">{{error}}</div>
+                    </div>
+                </form>
+                <div class="list-group">
+                    <a
+                            :key="ticket.id"
+                            @click.prevent="view(ticket.id)"
+                            class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                            href="#"
+                            v-for="ticket in tickets">
+                        <span>{{ ticket.title }}</span>
+                        <user :id="ticket.created_user_id"/>
+                    </a>
+                </div>
+                <modal :ticket-id="ticketId" id="detail"/>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -61,7 +70,7 @@
         data() {
             return {
                 tickets: Array,
-                name: '',
+                title: '',
                 showButtonLoader: false,
                 showTicketsLoader: true,
                 showModal: false,
@@ -79,7 +88,7 @@
         methods: {
             fetch() {
                 axios.get('new-tickets').then(response => {
-                    this.tickets = response.data;
+                    this.tickets = response.data.data;
                 }).finally(() => {
                     this.showTicketsLoader = false;
                 });
@@ -89,14 +98,14 @@
                 if (!this.$v.$invalid) {
                     this.showButtonLoader = true;
                     this.errors = [];
-                    axios.post('ticket', {name: this.name})
+                    axios.post('ticket', {title: this.title})
                         .then(response => {
                             this.tickets.unshift(response.data);
-                            this.name = '';
+                            this.title = '';
                             this.$v.$reset();
                         })
                         .catch(e => {
-                            this.errors = e.response.data;
+                            this.errors.push(e.response.data.message);
                         })
                         .finally(() => {
                             this.showButtonLoader = false;
@@ -109,7 +118,7 @@
             }
         },
         validations: {
-            name: {
+            title: {
                 required
             }
         },

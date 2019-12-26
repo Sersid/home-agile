@@ -19,8 +19,6 @@
     <!-- Styles -->
     <link href="{{ asset('css/vendors.bundle.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.bundle.css') }}" rel="stylesheet">
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
 </head>
 <body>
 <div class="mod-bg-1 header-function-fixed" id="app">
