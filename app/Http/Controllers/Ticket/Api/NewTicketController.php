@@ -20,6 +20,6 @@ class NewTicketController extends BaseController
      */
     public function index(TicketRepository $repository)
     {
-        return $repository->getNew();
+        return $repository->getLast();
     }
 }

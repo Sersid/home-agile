@@ -2441,6 +2441,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -2464,7 +2467,7 @@ __webpack_require__.r(__webpack_exports__);
       showTicketsLoader: true,
       showModal: false,
       ticketId: null,
-      errors: [],
+      error: {},
       interval: ''
     };
   },
@@ -2473,6 +2476,11 @@ __webpack_require__.r(__webpack_exports__);
 
     if (this.timer > 0) {
       this.interval = setInterval(this.fetch, this.timer);
+    }
+  },
+  computed: {
+    hasError: function hasError() {
+      return Object.keys(this.error).length !== 0;
     }
   },
   methods: {
@@ -2492,7 +2500,7 @@ __webpack_require__.r(__webpack_exports__);
 
       if (!this.$v.$invalid) {
         this.showButtonLoader = true;
-        this.errors = [];
+        this.error = {};
         axios.post('ticket', {
           title: this.title
         }).then(function (response) {
@@ -2502,7 +2510,7 @@ __webpack_require__.r(__webpack_exports__);
 
           _this2.$v.$reset();
         })["catch"](function (e) {
-          _this2.errors.push(e.response.data.message);
+          _this2.error = e.response.data;
         })["finally"](function () {
           _this2.showButtonLoader = false;
         });
@@ -68777,7 +68785,7 @@ var render = function() {
                 ? _c(
                     "div",
                     {
-                      staticClass: "alert alert-danger   ",
+                      staticClass: "alert alert-danger",
                       attrs: { role: "alert" }
                     },
                     [
@@ -68788,18 +68796,30 @@ var render = function() {
                   )
                 : _vm._e(),
               _vm._v(" "),
-              _vm.errors.length > 0
+              _vm.hasError
                 ? _c(
                     "div",
                     {
-                      staticClass:
-                        "alert border-danger bg-transparent text-danger",
+                      staticClass: "alert alert-danger",
                       attrs: { role: "alert" }
                     },
-                    _vm._l(_vm.errors, function(error) {
-                      return _c("div", [_vm._v(_vm._s(error))])
-                    }),
-                    0
+                    [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(_vm.error.message) +
+                          "\n                    "
+                      ),
+                      _vm._l(_vm.error.errors, function(field) {
+                        return _c(
+                          "div",
+                          _vm._l(field, function(err) {
+                            return _c("div", [_vm._v(_vm._s(err))])
+                          }),
+                          0
+                        )
+                      })
+                    ],
+                    2
                   )
                 : _vm._e()
             ]

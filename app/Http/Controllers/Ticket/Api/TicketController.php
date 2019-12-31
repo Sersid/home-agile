@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Ticket\Api;
 
 use App\Http\Requests\TicketRequest;
+use App\Models\Ticket;
 use App\Repositories\TicketRepository;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -28,13 +30,14 @@ class TicketController extends BaseController
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param TicketRequest $request
+     * @param Ticket        $ticket
      *
-     * @return Response
+     * @return Ticket|Model
      */
-    public function store(TicketRequest $request)
+    public function store(TicketRequest $request, Ticket $ticket)
     {
-        //
+        return $ticket->quickAdd($request->get('title'));
     }
 
     /**

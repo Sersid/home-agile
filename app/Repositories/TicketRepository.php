@@ -15,7 +15,7 @@ class TicketRepository extends BaseRepository
      * Новые тикеты
      * @return LengthAwarePaginator
      */
-    public function getNew()
+    public function getLast()
     {
         return $this->query()
             ->select(['id', 'title', 'created_user_id'])

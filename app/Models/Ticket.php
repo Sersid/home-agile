@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Eloquent;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -22,7 +23,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property integer $updated_user_id
  * @package App\Models
  */
-class Ticket extends Model
+class Ticket extends Eloquent
 {
     use SoftDeletes;
 
@@ -123,5 +124,19 @@ class Ticket extends Model
     public function redactor()
     {
         return $this->hasOne(User::class, 'id', 'updated_user_id');
+    }
+
+    /**
+     * @param string $title
+     *
+     * @return Ticket|Model
+     */
+    public function quickAdd(string $title)
+    {
+        return self::create([
+            'title' => $title,
+            'priority' => self::PRIORITY_LOW,
+            'status' => self::STATUS_NEW,
+        ]);
     }
 }

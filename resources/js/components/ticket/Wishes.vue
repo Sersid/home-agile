@@ -29,11 +29,14 @@
                             </button>
                         </div>
                     </div>
-                    <div v-if="$v.title.$error" class="alert alert-danger   " role="alert">
+                    <div v-if="$v.title.$error" class="alert alert-danger" role="alert">
                         Напиши хоть что-нибудь :(
                     </div>
-                    <div v-if="errors.length > 0" class="alert border-danger bg-transparent text-danger" role="alert">
-                        <div v-for="error in errors">{{error}}</div>
+                    <div v-if="hasError" class="alert alert-danger" role="alert">
+                        {{error.message}}
+                        <div v-for="field in error.errors">
+                            <div v-for="err in field">{{err}}</div>
+                        </div>
                     </div>
                 </form>
                 <div class="list-group">
@@ -75,7 +78,7 @@
                 showTicketsLoader: true,
                 showModal: false,
                 ticketId: null,
-                errors: [],
+                error: {},
                 interval: ''
             }
         },
@@ -83,6 +86,11 @@
             this.fetch();
             if (this.timer > 0) {
                 this.interval = setInterval(this.fetch, this.timer);
+            }
+        },
+        computed: {
+            hasError() {
+                return Object.keys(this.error).length !== 0;
             }
         },
         methods: {
@@ -97,7 +105,7 @@
                 this.$v.$touch();
                 if (!this.$v.$invalid) {
                     this.showButtonLoader = true;
-                    this.errors = [];
+                    this.error = {};
                     axios.post('ticket', {title: this.title})
                         .then(response => {
                             this.tickets.unshift(response.data);
@@ -105,7 +113,7 @@
                             this.$v.$reset();
                         })
                         .catch(e => {
-                            this.errors.push(e.response.data.message);
+                            this.error = e.response.data;
                         })
                         .finally(() => {
                             this.showButtonLoader = false;
