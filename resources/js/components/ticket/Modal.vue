@@ -15,21 +15,18 @@
             <div v-else>
                 <div class="card mb-g">
                     <div class="card-body p-3">
-                        <div>
-                            <div>
-                                <h5 class="text-info">
-                                    {{ticket.title}}
-                                    <small class="fs-nano mt-0 mb-2 text-muted">
-                                        Создала <a href="#">Маша</a> 31 января 2019 в 20:38,
-                                        обновил <a href="#">Сережа</a> 12 января в 16:15
-                                    </small>
-                                </h5>
-                                <span class="badge badge-info fw-n position-absolute pos-top pos-right mt-3 mr-3">New</span>
-                            </div>
-                            <div>{{ticket.description}}</div>
-                            <!--                        <div class="mt-2 text-danger"><span><i class="fal fa-stopwatch"></i></span> <span>01 января 2020</span></div>-->
-                            <!--                        <div class="mt-2"><a href="#" class="profile-image-md rounded-circle d-inline-block" style="background-image: url(img/demo/avatars/avatar-g.png); background-size: cover;"></a></div>-->
-                        </div>
+                        <h5 :class="'text-' + status.color">
+                            {{ticket.title}}
+                            <small class="fs-nano mt-0 mb-2 text-muted">
+                                Создала <a href="#">Маша</a> 31 января 2019 в 20:38,
+                                обновил <a href="#">Сережа</a> 12 января в 16:15
+                            </small>
+                        </h5>
+                        <span :class="'badge-' + status.color" class="badge fw-n position-absolute pos-top pos-right mt-3 mr-3">{{status.name}}</span>
+                        <div>{{ticket.description}}</div>
+                        <!--                        <div class="mt-2 text-danger"><span><i class="fal fa-stopwatch"></i></span> <span>01 января 2020</span></div>-->
+                        <!--                        <div
+                         class="mt-2"><a href="#" class="profile-image-md rounded-circle d-inline-block" style="background-image: url(img/demo/avatars/avatar-g.png); background-size: cover;"></a></div>-->
                     </div>
                 </div>
                 <div class="card mb-g">
@@ -120,6 +117,9 @@
         computed: {
             hasError() {
                 return this.error !== '';
+            },
+            status() {
+                return this.$store.state.statuses[this.ticket.status];
             }
         },
         methods: {

@@ -64,12 +64,15 @@ class Ticket extends Eloquent
         return [
             self::PRIORITY_LOW => [
                 'name' => 'Низкий',
+                'color' => 'secondary',
             ],
             self::PRIORITY_MEDIUM => [
                 'name' => 'Средний',
+                'color' => 'info',
             ],
             self::PRIORITY_HIGH => [
                 'name' => 'Высокий',
+                'color' => 'warning',
             ],
         ];
     }
@@ -83,18 +86,23 @@ class Ticket extends Eloquent
         return [
             self::STATUS_NEW => [
                 'name' => 'Новый',
+                'color' => 'info',
             ],
             self::STATUS_IN_WORK => [
                 'name' => 'В работе',
+                'color' => 'warning',
             ],
             self::STATUS_BLOCKED => [
                 'name' => 'Заблокирован',
+                'color' => 'danger',
             ],
             self::STATUS_DONE => [
                 'name' => 'Выполнен',
+                'color' => 'success',
             ],
             self::STATUS_ARCHIVE => [
                 'name' => 'В архиве',
+                'color' => 'secondary',
             ],
         ];
     }

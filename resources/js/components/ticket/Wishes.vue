@@ -8,9 +8,6 @@
         </div>
         <div class="panel-container">
             <div class="panel-content">
-                <div class="panel-tag">
-                    Добавь свое желание и оно обязательно сбудется :)
-                </div>
                 <form @submit.prevent="add">
                     <div class="input-group mb-3">
                         <input :class="{'is-invalid':  $v.title.$error}"

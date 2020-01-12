@@ -20,6 +20,7 @@ Route::middleware('auth:api')
             return $request->user();
         });
 
+Route::get('/system', 'Ticket\Api\SystemController@index');
 Route::get('/new-tickets', 'Ticket\Api\NewTicketController@index');
 Route::apiResources([
     'ticket' => 'Ticket\Api\TicketController',

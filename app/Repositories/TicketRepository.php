@@ -38,6 +38,8 @@ class TicketRepository extends BaseRepository
                 'id',
                 'title',
                 'description',
+                'status',
+                'priority',
             ])
             ->find($id);
     }

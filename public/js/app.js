@@ -1955,14 +1955,24 @@ __webpack_require__.r(__webpack_exports__);
     Wishes: _components_ticket_Wishes__WEBPACK_IMPORTED_MODULE_1__["default"],
     Comments: _components_ticket_Comments__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
-  created: function created() {//this.fetchUsers();
+  created: function created() {
+    this.fetchSystem(); //this.fetchUsers();
   },
   methods: {
-    fetchUsers: function fetchUsers() {
+    fetchSystem: function fetchSystem() {
       var _this = this;
 
+      axios.get('system').then(function (response) {
+        _this.$store.commit('SET_STATUSES', response.data.statuses);
+
+        _this.$store.commit('SET_PRIORITIES', response.data.priorities);
+      });
+    },
+    fetchUsers: function fetchUsers() {
+      var _this2 = this;
+
       axios.get('users').then(function (response) {
-        _this.$store.commit('SET_USERS', response.data);
+        _this2.$store.commit('SET_USERS', response.data);
       });
     }
   }
@@ -2352,9 +2362,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2387,6 +2394,9 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     hasError: function hasError() {
       return this.error !== '';
+    },
+    status: function status() {
+      return this.$store.state.statuses[this.ticket.status];
     }
   },
   methods: {
@@ -2420,9 +2430,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Modal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Modal */ "./resources/js/components/ticket/Modal.vue");
 /* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
 /* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_2__);
-//
-//
-//
 //
 //
 //
@@ -68669,49 +68676,38 @@ var render = function() {
             : _c("div", [
                 _c("div", { staticClass: "card mb-g" }, [
                   _c("div", { staticClass: "card-body p-3" }, [
-                    _c("div", [
-                      _c("div", [
-                        _c("h5", { staticClass: "text-info" }, [
+                    _c("h5", { class: "text-" + _vm.status.color }, [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(_vm.ticket.title) +
+                          "\n                        "
+                      ),
+                      _c(
+                        "small",
+                        { staticClass: "fs-nano mt-0 mb-2 text-muted" },
+                        [
+                          _vm._v("\n                            Создала "),
+                          _c("a", { attrs: { href: "#" } }, [_vm._v("Маша")]),
                           _vm._v(
-                            "\n                                " +
-                              _vm._s(_vm.ticket.title) +
-                              "\n                                "
+                            " 31 января 2019 в 20:38,\n                            обновил "
                           ),
-                          _c(
-                            "small",
-                            { staticClass: "fs-nano mt-0 mb-2 text-muted" },
-                            [
-                              _vm._v(
-                                "\n                                    Создала "
-                              ),
-                              _c("a", { attrs: { href: "#" } }, [
-                                _vm._v("Маша")
-                              ]),
-                              _vm._v(
-                                " 31 января 2019 в 20:38,\n                                    обновил "
-                              ),
-                              _c("a", { attrs: { href: "#" } }, [
-                                _vm._v("Сережа")
-                              ]),
-                              _vm._v(
-                                " 12 января в 16:15\n                                "
-                              )
-                            ]
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "span",
-                          {
-                            staticClass:
-                              "badge badge-info fw-n position-absolute pos-top pos-right mt-3 mr-3"
-                          },
-                          [_vm._v("New")]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("div", [_vm._v(_vm._s(_vm.ticket.description))])
-                    ])
+                          _c("a", { attrs: { href: "#" } }, [_vm._v("Сережа")]),
+                          _vm._v(" 12 января в 16:15\n                        ")
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "span",
+                      {
+                        staticClass:
+                          "badge fw-n position-absolute pos-top pos-right mt-3 mr-3",
+                        class: "badge-" + _vm.status.color
+                      },
+                      [_vm._v(_vm._s(_vm.status.name))]
+                    ),
+                    _vm._v(" "),
+                    _c("div", [_vm._v(_vm._s(_vm.ticket.description))])
                   ])
                 ]),
                 _vm._v(" "),
@@ -68896,12 +68892,6 @@ var render = function() {
         "div",
         { staticClass: "panel-content" },
         [
-          _c("div", { staticClass: "panel-tag" }, [
-            _vm._v(
-              "\n                Добавь свое желание и оно обязательно сбудется :)\n            "
-            )
-          ]),
-          _vm._v(" "),
           _c(
             "form",
             {
@@ -84743,16 +84733,30 @@ __webpack_require__.r(__webpack_exports__);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
 /* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: {
-    users: []
+    users: [],
+    statuses: {},
+    priorities: {}
   },
   getters: {
     USERS: function USERS(state) {
       return state.users;
+    },
+    STATUSES: function STATUSES(state) {
+      return state.statuses;
+    },
+    PRIORITIES: function PRIORITIES(state) {
+      return state.priorities;
     }
   },
   mutations: {
     SET_USERS: function SET_USERS(state, payload) {
       state.users = payload;
+    },
+    SET_STATUSES: function SET_STATUSES(state, payload) {
+      state.statuses = payload;
+    },
+    SET_PRIORITIES: function SET_PRIORITIES(state, payload) {
+      state.priorities = payload;
     }
   }
 }));
