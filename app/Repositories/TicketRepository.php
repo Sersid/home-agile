@@ -4,6 +4,8 @@ namespace App\Repositories;
 
 use App\Models\Ticket;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class TicketRepository
@@ -22,6 +24,22 @@ class TicketRepository extends BaseRepository
             ->where('status', Ticket::STATUS_NEW)
             ->orderBy('id', 'desc')
             ->paginate(20);
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return Builder|Model|object|null
+     */
+    public function getForShow(int $id)
+    {
+        return $this->query()
+            ->select([
+                'id',
+                'title',
+                'description',
+            ])
+            ->find($id);
     }
 
     /**

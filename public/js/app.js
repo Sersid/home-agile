@@ -1841,6 +1841,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_User_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/User.vue */ "./resources/js/components/User.vue");
 /* harmony import */ var _components_ticket_Wishes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/ticket/Wishes */ "./resources/js/components/ticket/Wishes.vue");
 /* harmony import */ var _components_ticket_Comments__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/ticket/Comments */ "./resources/js/components/ticket/Comments.vue");
+/* harmony import */ var _components_ticket_Detail__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/ticket/Detail */ "./resources/js/components/ticket/Detail.vue");
 //
 //
 //
@@ -1942,144 +1943,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'app',
   components: {
+    Detail: _components_ticket_Detail__WEBPACK_IMPORTED_MODULE_3__["default"],
     User: _components_User_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     Wishes: _components_ticket_Wishes__WEBPACK_IMPORTED_MODULE_1__["default"],
     Comments: _components_ticket_Comments__WEBPACK_IMPORTED_MODULE_2__["default"]
@@ -2265,6 +2136,123 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ticket/Detail.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ticket/Detail.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _User__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../User */ "./resources/js/components/User.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "Detail",
+  components: {
+    User: _User__WEBPACK_IMPORTED_MODULE_0__["default"]
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ticket/Modal.vue?vue&type=script&lang=js&":
 /*!***********************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ticket/Modal.vue?vue&type=script&lang=js& ***!
@@ -2276,6 +2264,43 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _User__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../User */ "./resources/js/components/User.vue");
 /* harmony import */ var _Comments__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Comments */ "./resources/js/components/ticket/Comments.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2355,17 +2380,26 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       showSpinner: true,
-      ticket: {}
+      ticket: {},
+      error: ''
     };
+  },
+  computed: {
+    hasError: function hasError() {
+      return this.error !== '';
+    }
   },
   methods: {
     fetchDetail: function fetchDetail(id) {
       var _this = this;
 
       this.showSpinner = true;
-      this.$http.get('tickets/' + id).then(function (response) {
-        _this.showSpinner = false;
+      axios.get('ticket/' + id).then(function (response) {
         _this.ticket = response.data;
+      })["catch"](function (e) {
+        _this.error = e.response.data.message;
+      })["finally"](function () {
+        _this.showSpinner = false;
       });
     }
   }
@@ -67884,7 +67918,7 @@ var render = function() {
             _c(
               "main",
               { staticClass: "page-content" },
-              [_vm._m(2), _vm._v(" "), _c("wishes"), _vm._v(" "), _vm._m(3)],
+              [_vm._m(2), _vm._v(" "), _c("wishes")],
               1
             )
           ])
@@ -68087,207 +68121,8 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "subheader" }, [
       _c("h1", { staticClass: "subheader-title" }, [
-        _vm._v("\n                                Главная "),
+        _vm._v("\n                            Главная "),
         _c("span", { staticClass: "fw-300" }, [_vm._v("страница")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-xl-12" }, [
-        _c("div", { staticClass: "panel" }, [
-          _c("div", { staticClass: "panel-hdr" }, [
-            _c("h2", [
-              _c("a", { attrs: { href: "#" } }, [_vm._v("#ticket-15")]),
-              _vm._v(" "),
-              _c("span", { staticClass: "fw-300" }, [
-                _c("i", [_vm._v("Просмотр тикета")])
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "panel-container show" }, [
-            _c("div", { staticClass: "panel-content" }, [
-              _c("div", { staticClass: "mb-2" }, [
-                _c(
-                  "div",
-                  { staticClass: "d-flex justify-content-between mb-2" },
-                  [
-                    _c("h3", [_vm._v("Lorem ipsum.")]),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "ml-2 mr-2" }, [
-                      _c(
-                        "button",
-                        {
-                          staticClass:
-                            "btn btn-outline-success dropdown-toggle",
-                          attrs: { type: "button" }
-                        },
-                        [_vm._v("Сделана")]
-                      )
-                    ])
-                  ]
-                ),
-                _vm._v(" "),
-                _c("div", [
-                  _vm._v(
-                    "\n                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab alias\n                                                    asperiores beatae culpa cumque enim explicabo fugiat illo illum in iste\n                                                    laboriosam necessitatibus neque nostrum optio perferendis provident quae\n                                                    quam quis quisquam quod, sequi tempora tempore temporibus velit. Amet\n                                                    autem doloremque doloribus eos explicabo mollitia officia officiis\n                                                    provident ratione voluptate? A ad, alias, animi consectetur consequatur\n                                                    cupiditate dicta dolore dolorem eaque inventore molestiae neque nobis\n                                                    optio quos recusandae tempore voluptas. Adipisci atque eos fuga\n                                                    molestiae sequi, tempora voluptatum. Accusantium blanditiis cupiditate\n                                                    dolore doloremque dolores dolorum eos, fugit ipsa ipsam, iste itaque\n                                                    labore molestiae, nam odit porro quam rerum sequi ullam.\n                                                "
-                  )
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "mb-1 text-danger" }, [
-                _c("span", [_c("i", { staticClass: "fal fa-stopwatch" })]),
-                _vm._v(" "),
-                _c("span", [_vm._v("01 января 2020")])
-              ]),
-              _vm._v(" "),
-              _c("span", [
-                _c("a", {
-                  staticClass: "profile-image-md rounded-circle d-inline-block",
-                  staticStyle: {
-                    "background-image": "url('img/demo/avatars/avatar-g.png')",
-                    "background-size": "cover"
-                  },
-                  attrs: { href: "#" }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass:
-                  "panel-content border-faded border-left-0 border-right-0 border-bottom-0 bg-faded"
-              },
-              [
-                _c("textarea", {
-                  staticClass:
-                    "form-control rounded-top border-bottom-left-radius-0 border-bottom-right-radius-0 border",
-                  attrs: { placeholder: "Добавить комментарий", rows: "2" }
-                }),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass:
-                      "d-flex justify-content-end py-2 px-2 bg-white border border-top-0 rounded-bottom"
-                  },
-                  [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-icon fs-lg mr-2",
-                        attrs: { type: "button" }
-                      },
-                      [_c("i", { staticClass: "fal fa-paperclip" })]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      { staticClass: "btn btn-primary btn-sm ml-auto ml-sm-0" },
-                      [
-                        _vm._v(
-                          "Отправить\n                                                "
-                        )
-                      ]
-                    )
-                  ]
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass:
-                  "panel-content border-faded border-left-0 border-right-0 border-bottom-0 p-0 pb-3"
-              },
-              [
-                _c("div", { staticClass: "d-flex flex-column" }, [
-                  _c("div", { staticClass: "d-flex flex-row px-3 pt-3 pb-2" }, [
-                    _c("span", [
-                      _c("a", {
-                        staticClass:
-                          "profile-image rounded-circle d-inline-block",
-                        staticStyle: {
-                          "background-image":
-                            "url('img/demo/avatars/avatar-j.png')"
-                        },
-                        attrs: { href: "#" }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "ml-3" }, [
-                      _c("div", [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "fw-700 text-dark",
-                            attrs: { href: "#", title: "Lisa Hatchensen" }
-                          },
-                          [
-                            _vm._v(
-                              "Lisa\n                                                                Hatchensen"
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c("span", { staticClass: "fs-nano text-muted mt-1" }, [
-                          _vm._v("5 mins ago")
-                        ])
-                      ]),
-                      _vm._v(
-                        "\n                                                        Hey did you meet the new board of director? He's a bit of a geek\n                                                        if you ask me...anyway here is the report you requested. I am\n                                                        off to launch with Lisa and Andrew, you wanna join?\n                                                        Hey did you meet the new board of director? He's a bit of a geek\n                                                        if you ask me...anyway here is the report you requested. I am\n                                                        off to launch with Lisa and Andrew, you wanna join?\n                                                        Hey did you meet the new board of director? He's a bit of a geek\n                                                        if you ask me...anyway here is the report you requested. I am\n                                                        off to launch with Lisa and Andrew, you wanna join?\n                                                    "
-                      )
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "d-flex flex-row px-3 pt-3 pb-2" }, [
-                    _c("span", [
-                      _c("a", {
-                        staticClass:
-                          "profile-image rounded-circle d-inline-block",
-                        staticStyle: {
-                          "background-image":
-                            "url('img/demo/avatars/avatar-j.png')"
-                        },
-                        attrs: { href: "#" }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "ml-3" }, [
-                      _c("div", [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "fw-700 text-dark",
-                            attrs: { href: "#", title: "Lisa Hatchensen" }
-                          },
-                          [
-                            _vm._v(
-                              "Lisa\n                                                                Hatchensen"
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c("span", { staticClass: "fs-nano text-muted mt-1" }, [
-                          _vm._v("5 mins ago")
-                        ])
-                      ]),
-                      _vm._v(
-                        "\n                                                        Hey did you meet the new board of director? He's a bit of a geek\n                                                        if you ask me...anyway here is the report you requested. I am\n                                                        off to launch with Lisa and Andrew, you wanna join?\n                                                        Hey did you meet the new board of director? He's a bit of a geek\n                                                        if you ask me...anyway here is the report you requested. I am\n                                                        off to launch with Lisa and Andrew, you wanna join?\n                                                        Hey did you meet the new board of director? He's a bit of a geek\n                                                        if you ask me...anyway here is the report you requested. I am\n                                                        off to launch with Lisa and Andrew, you wanna join?\n                                                    "
-                      )
-                    ])
-                  ])
-                ])
-              ]
-            )
-          ])
-        ])
       ])
     ])
   }
@@ -68493,6 +68328,268 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ticket/Detail.vue?vue&type=template&id=647a8699&scoped=true&":
+/*!****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ticket/Detail.vue?vue&type=template&id=647a8699&scoped=true& ***!
+  \****************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c(
+      "div",
+      { staticClass: "mb-3" },
+      [
+        _c(
+          "b-button-group",
+          { attrs: { size: "sm" } },
+          [
+            _c("b-button", { attrs: { variant: "outline-info" } }, [
+              _vm._v("Изменить")
+            ])
+          ],
+          1
+        )
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-9" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c(
+          "div",
+          [
+            _c("b-badge", { attrs: { pill: "", variant: "primary" } }, [
+              _vm._v("Разработка")
+            ])
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c("h3", { staticClass: "mb-2" }, [
+          _vm._v("Детальное отображение тикета в модальном окне")
+        ]),
+        _vm._v(" "),
+        _c("hr"),
+        _vm._v(" "),
+        _vm._m(1),
+        _vm._v(" "),
+        _c("hr")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-3" }, [
+        _c("ul", { staticClass: "list-group" }, [
+          _vm._m(2),
+          _vm._v(" "),
+          _c(
+            "li",
+            {
+              staticClass:
+                "list-group-item d-flex justify-content-between align-items-center"
+            },
+            [
+              _vm._v("\n                    Исполнитель\n                    "),
+              _c("span", [_c("User")], 1)
+            ]
+          ),
+          _vm._v(" "),
+          _vm._m(3),
+          _vm._v(" "),
+          _vm._m(4)
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _vm._m(5)
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "mb-2" }, [
+      _c("a", { attrs: { href: "#" } }, [_vm._v("ticket-12")]),
+      _vm._v("\n                Создал "),
+      _c("a", { attrs: { href: "#" } }, [_vm._v("Сережа")]),
+      _vm._v(" неделю назад\n                "),
+      _c("div", [
+        _vm._v("Обновила "),
+        _c("a", { attrs: { href: "#" } }, [_vm._v("Маша")]),
+        _vm._v(" сегодня в 14:23")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "mb-4" }, [
+      _c("p", [
+        _vm._v(
+          "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi asperiores commodi cupiditate ea\n                    est\n                    eum excepturi illo natus quasi veritatis. Ad aspernatur blanditiis distinctio eveniet mollitia\n                    officia possimus quae quam. A animi atque culpa doloremque expedita iure, nemo nisi non odit\n                    officia\n                    perferendis placeat possimus quidem quis similique suscipit voluptatum."
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo, possimus."
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi asperiores commodi cupiditate ea\n                    est\n                    eum excepturi illo natus quasi veritatis. Ad aspernatur blanditiis distinctio eveniet mollitia\n                    officia possimus quae quam. A animi atque culpa doloremque expedita iure, nemo nisi non odit\n                    officia\n                    perferendis placeat possimus quidem quis similique suscipit voluptatum."
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo, possimus."
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "li",
+      {
+        staticClass:
+          "list-group-item d-flex justify-content-between align-items-center"
+      },
+      [
+        _vm._v("\n                    Срок\n                    "),
+        _c("span", [_vm._v("9 декабря 2019")])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "li",
+      {
+        staticClass:
+          "list-group-item d-flex justify-content-between align-items-center"
+      },
+      [
+        _vm._v("\n                    Приоритет\n                    "),
+        _c("span", [_vm._v("Низкий")])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "li",
+      {
+        staticClass:
+          "list-group-item d-flex justify-content-between align-items-center"
+      },
+      [
+        _vm._v("\n                    Статус\n                    "),
+        _c("span", [_vm._v("В работе")])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-9" }, [
+        _c("div", { staticClass: "mb-5" }, [
+          _c("h4", [_vm._v("Комментарии")]),
+          _vm._v(" "),
+          _c("form", [
+            _c("div", { staticClass: "form-group" }, [
+              _c("textarea", {
+                staticClass: "form-control",
+                attrs: { rows: "3" }
+              })
+            ]),
+            _vm._v(" "),
+            _c(
+              "button",
+              { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+              [_vm._v("Добавить")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("hr"),
+          _vm._v(" "),
+          _c("ul", { staticClass: "list-unstyled" }, [
+            _c("li", { staticClass: "media mb-4" }, [
+              _c("img", {
+                staticClass: "mr-3 rounded ",
+                staticStyle: { width: "50px" },
+                attrs: {
+                  alt: "...",
+                  src:
+                    "https://sun9-2.userapi.com/c858428/v858428439/b1c99/u-zy4fEw_ws.jpg?ava=1"
+                }
+              }),
+              _vm._v(" "),
+              _c("div", { staticClass: "media-body" }, [
+                _c("div", [
+                  _c("a", { attrs: { href: "#" } }, [_vm._v("Сережа")]),
+                  _vm._v(" написал вчера в 20:39")
+                ]),
+                _vm._v(
+                  "\n                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin.\n                            Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc\n                            ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.\n                        "
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("li", { staticClass: "media mb-4" }, [
+              _c("img", {
+                staticClass: "mr-3 rounded ",
+                staticStyle: { width: "50px" },
+                attrs: {
+                  alt: "...",
+                  src:
+                    "https://sun9-2.userapi.com/c858428/v858428439/b1c99/u-zy4fEw_ws.jpg?ava=1"
+                }
+              }),
+              _vm._v(" "),
+              _c("div", { staticClass: "media-body" }, [
+                _c("div", [
+                  _c("a", { attrs: { href: "#" } }, [_vm._v("Сережа")]),
+                  _vm._v(" написал вчера в 20:39")
+                ]),
+                _vm._v(
+                  "\n                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin.\n                            Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc\n                            ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.\n                        "
+                )
+              ])
+            ])
+          ])
+        ])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ticket/Modal.vue?vue&type=template&id=0aa0fc95&scoped=true&":
 /*!***************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ticket/Modal.vue?vue&type=template&id=0aa0fc95&scoped=true& ***!
@@ -68517,13 +68614,36 @@ var render = function() {
           attrs: {
             id: _vm.id,
             "dialog-class": "modal-dialog-right",
-            "title-class": "h4",
             "hide-footer": "",
             size: "xl",
-            title: _vm.showSpinner ? "Загрузка..." : "#ticket-" + _vm.ticket.id
-          }
+            "title-class": "h4"
+          },
+          scopedSlots: _vm._u([
+            {
+              key: "modal-title",
+              fn: function() {
+                return [
+                  _vm.showSpinner
+                    ? _c("span", [_vm._v("Загрузка...")])
+                    : _vm.hasError
+                    ? _c("span", [_vm._v("Ошибка")])
+                    : _c("span", [
+                        _c("a", { attrs: { href: "#" } }, [
+                          _vm._v("#ticket-" + _vm._s(_vm.ticket.id))
+                        ]),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "fw-300" }, [
+                          _c("i", [_vm._v("Просмотр тикета")])
+                        ])
+                      ])
+                ]
+              },
+              proxy: true
+            }
+          ])
         },
         [
+          _vm._v(" "),
           _vm.showSpinner
             ? _c(
                 "div",
@@ -68533,135 +68653,203 @@ var render = function() {
                     staticStyle: { width: "8rem", height: "8rem" },
                     attrs: {
                       label: "Загрузка...",
-                      variant: "warning",
-                      type: "grow"
+                      type: "grow",
+                      variant: "warning"
                     }
                   })
                 ],
                 1
               )
-            : _c(
+            : _vm.hasError
+            ? _c(
                 "div",
-                [
-                  _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "col-9" }, [
-                      _c("h3", { staticClass: "mb-2" }, [
-                        _vm._v(_vm._s(_vm.ticket.name))
-                      ]),
-                      _vm._v(" "),
-                      _c("hr"),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "mb-4" }, [
-                        _vm._v(
-                          "\n                            " +
-                            _vm._s(_vm.ticket.description) +
-                            "\n                        "
+                { staticClass: "alert alert-danger", attrs: { role: "alert" } },
+                [_vm._v("\n            " + _vm._s(_vm.error) + "\n        ")]
+              )
+            : _c("div", [
+                _c("div", { staticClass: "card mb-g" }, [
+                  _c("div", { staticClass: "card-body p-3" }, [
+                    _c("div", [
+                      _c("div", [
+                        _c("h5", { staticClass: "text-info" }, [
+                          _vm._v(
+                            "\n                                " +
+                              _vm._s(_vm.ticket.title) +
+                              "\n                                "
+                          ),
+                          _c(
+                            "small",
+                            { staticClass: "fs-nano mt-0 mb-2 text-muted" },
+                            [
+                              _vm._v(
+                                "\n                                    Создала "
+                              ),
+                              _c("a", { attrs: { href: "#" } }, [
+                                _vm._v("Маша")
+                              ]),
+                              _vm._v(
+                                " 31 января 2019 в 20:38,\n                                    обновил "
+                              ),
+                              _c("a", { attrs: { href: "#" } }, [
+                                _vm._v("Сережа")
+                              ]),
+                              _vm._v(
+                                " 12 января в 16:15\n                                "
+                              )
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "span",
+                          {
+                            staticClass:
+                              "badge badge-info fw-n position-absolute pos-top pos-right mt-3 mr-3"
+                          },
+                          [_vm._v("New")]
                         )
                       ]),
                       _vm._v(" "),
-                      _c("hr")
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-3" }, [
-                      _c("ul", { staticClass: "list-group" }, [
-                        _c(
-                          "li",
-                          {
-                            staticClass:
-                              "list-group-item d-flex justify-content-between align-items-center"
-                          },
-                          [
-                            _vm._v(
-                              "\n                                Срок\n                                "
-                            ),
-                            _c("span", [_vm._v(_vm._s(_vm.ticket.term))])
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "li",
-                          {
-                            staticClass:
-                              "list-group-item d-flex justify-content-between align-items-center"
-                          },
-                          [
-                            _vm._v(
-                              "\n                                Исполнитель\n                                "
-                            ),
-                            _c("User", {
-                              attrs: { id: _vm.ticket.executor_id }
-                            })
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "li",
-                          {
-                            staticClass:
-                              "list-group-item d-flex justify-content-between align-items-center"
-                          },
-                          [
-                            _vm._v(
-                              "\n                                Приоритет\n                                "
-                            ),
-                            _c("span", [_vm._v(_vm._s(_vm.ticket.priority))])
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "li",
-                          {
-                            staticClass:
-                              "list-group-item d-flex justify-content-between align-items-center"
-                          },
-                          [
-                            _vm._v(
-                              "\n                                Статус\n                                "
-                            ),
-                            _c("span", [_vm._v(_vm._s(_vm.ticket.status))])
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "li",
-                          {
-                            staticClass:
-                              "list-group-item d-flex justify-content-between align-items-center"
-                          },
-                          [
-                            _vm._v(
-                              "\n                                Создал\n                                "
-                            ),
-                            _c("span", [
-                              _vm._v("Сережа " + _vm._s(_vm.ticket.created_at))
-                            ])
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "li",
-                          {
-                            staticClass:
-                              "list-group-item d-flex justify-content-between align-items-center"
-                          },
-                          [
-                            _vm._v(
-                              "\n                                Обновила\n                                "
-                            ),
-                            _c("span", [
-                              _vm._v("Маша " + _vm._s(_vm.ticket.updated_at))
-                            ])
-                          ]
-                        )
-                      ])
+                      _c("div", [_vm._v(_vm._s(_vm.ticket.description))])
                     ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "card mb-g" }, [
+                  _c("div", { staticClass: "px-3 pt-3 pb-2" }, [
+                    _c("h5", [_vm._v("Комментарии")])
                   ]),
                   _vm._v(" "),
-                  _c("comments", { attrs: { "ticket-id": _vm.ticket.id } })
-                ],
-                1
-              )
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "border-faded border-left-0 border-right-0 bg-faded p-3"
+                    },
+                    [
+                      _c("textarea", {
+                        staticClass:
+                          "form-control rounded-top border-bottom-left-radius-0 border-bottom-right-radius-0 border",
+                        attrs: {
+                          placeholder: "Добавить комментарий",
+                          rows: "2"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "d-flex justify-content-end py-2 px-2 bg-white border border-top-0 rounded-bottom"
+                        },
+                        [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-icon fs-lg mr-2",
+                              attrs: { type: "button" }
+                            },
+                            [_c("i", { staticClass: "fal fa-paperclip" })]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass:
+                                "btn btn-primary btn-sm ml-auto ml-sm-0"
+                            },
+                            [_vm._v("Отправить\n                        ")]
+                          )
+                        ]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-body" }, [
+                    _c("div", { staticClass: "d-flex flex-column" }, [
+                      _c("div", { staticClass: "d-flex flex-row pt-3 pb-2" }, [
+                        _c("span", [
+                          _c("a", {
+                            staticClass:
+                              "profile-image rounded-circle d-inline-block",
+                            staticStyle: {
+                              "background-image":
+                                'url("img/demo/avatars/avatar-j.png")'
+                            },
+                            attrs: { href: "#" }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "ml-3" }, [
+                          _c("div", [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "fw-700 text-dark",
+                                attrs: { href: "#", title: "Lisa Hatchensen" }
+                              },
+                              [
+                                _vm._v(
+                                  "Lisa\n                                    Hatchensen"
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              { staticClass: "fs-nano text-muted mt-1" },
+                              [_vm._v("5 mins ago")]
+                            )
+                          ]),
+                          _vm._v(
+                            "\n                                Hey did you meet the new board of director? He's a bit of a geek\n                                if you ask me...anyway here is the report you requested. I am\n                                off to launch with Lisa and Andrew, you wanna join?\n                                Hey did you meet the new board of director? He's a bit of a geek\n                                if you ask me...anyway here is the report you requested. I am\n                                off to launch with Lisa and Andrew, you wanna join?\n                                Hey did you meet the new board of director? He's a bit of a geek\n                                if you ask me...anyway here is the report you requested. I am\n                                off to launch with Lisa and Andrew, you wanna join?\n                            "
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "d-flex flex-row pt-3 pb-2" }, [
+                        _c("span", [
+                          _c("a", {
+                            staticClass:
+                              "profile-image rounded-circle d-inline-block",
+                            staticStyle: {
+                              "background-image":
+                                'url("img/demo/avatars/avatar-j.png")'
+                            },
+                            attrs: { href: "#" }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "ml-3" }, [
+                          _c("div", [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "fw-700 text-dark",
+                                attrs: { href: "#", title: "Lisa Hatchensen" }
+                              },
+                              [
+                                _vm._v(
+                                  "Lisa\n                                    Hatchensen"
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              { staticClass: "fs-nano text-muted mt-1" },
+                              [_vm._v("5 mins ago")]
+                            )
+                          ]),
+                          _vm._v(
+                            "\n                                Hey did you meet the new board of director? He's a bit of a geek\n                                if you ask me...anyway here is the report you requested. I am\n                                off to launch with Lisa and Andrew, you wanna join?\n                                Hey did you meet the new board of director? He's a bit of a geek\n                                if you ask me...anyway here is the report you requested. I am\n                                off to launch with Lisa and Andrew, you wanna join?\n                                Hey did you meet the new board of director? He's a bit of a geek\n                                if you ask me...anyway here is the report you requested. I am\n                                off to launch with Lisa and Andrew, you wanna join?\n                            "
+                          )
+                        ])
+                      ])
+                    ])
+                  ])
+                ])
+              ])
         ]
       )
     ],
@@ -84326,6 +84514,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Comments_vue_vue_type_template_id_7fd476bc_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Comments_vue_vue_type_template_id_7fd476bc_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/ticket/Detail.vue":
+/*!***************************************************!*\
+  !*** ./resources/js/components/ticket/Detail.vue ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Detail_vue_vue_type_template_id_647a8699_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Detail.vue?vue&type=template&id=647a8699&scoped=true& */ "./resources/js/components/ticket/Detail.vue?vue&type=template&id=647a8699&scoped=true&");
+/* harmony import */ var _Detail_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Detail.vue?vue&type=script&lang=js& */ "./resources/js/components/ticket/Detail.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Detail_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Detail_vue_vue_type_template_id_647a8699_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Detail_vue_vue_type_template_id_647a8699_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "647a8699",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/ticket/Detail.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/ticket/Detail.vue?vue&type=script&lang=js&":
+/*!****************************************************************************!*\
+  !*** ./resources/js/components/ticket/Detail.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Detail_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./Detail.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ticket/Detail.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Detail_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/ticket/Detail.vue?vue&type=template&id=647a8699&scoped=true&":
+/*!**********************************************************************************************!*\
+  !*** ./resources/js/components/ticket/Detail.vue?vue&type=template&id=647a8699&scoped=true& ***!
+  \**********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Detail_vue_vue_type_template_id_647a8699_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./Detail.vue?vue&type=template&id=647a8699&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ticket/Detail.vue?vue&type=template&id=647a8699&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Detail_vue_vue_type_template_id_647a8699_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Detail_vue_vue_type_template_id_647a8699_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

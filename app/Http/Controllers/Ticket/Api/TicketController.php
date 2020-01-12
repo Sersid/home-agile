@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Ticket\Api;
 use App\Http\Requests\TicketRequest;
 use App\Models\Ticket;
 use App\Repositories\TicketRepository;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -43,13 +45,18 @@ class TicketController extends BaseController
     /**
      * Display the specified resource.
      *
-     * @param int $id
+     * @param int              $id
+     * @param TicketRepository $repository
      *
-     * @return Response
+     * @return Builder|Model|JsonResponse|object|null
      */
-    public function show($id)
+    public function show($id, TicketRepository $repository)
     {
-        //
+        $ticket = $repository->getForShow((int)$id);
+        if (empty($ticket)) {
+            return response()->json(['message' => 'Ticket not found'], 404);
+        }
+        return $ticket;
     }
 
     /**

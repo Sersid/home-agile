@@ -90,138 +90,6 @@
                             </h1>
                         </div>
                         <wishes></wishes>
-                        <div class="row">
-                            <div class="col-xl-12">
-                                <div class="panel">
-                                    <div class="panel-hdr">
-                                        <h2>
-                                            <a href="#">#ticket-15</a> <span class="fw-300"><i>Просмотр тикета</i></span>
-                                        </h2>
-                                    </div>
-                                    <div class="panel-container show">
-                                        <div class="panel-content">
-                                            <div class="mb-2">
-                                                <div class="d-flex justify-content-between mb-2">
-                                                    <h3>Lorem ipsum.</h3>
-                                                    <span class="ml-2 mr-2"><button type="button" class="btn btn-outline-success dropdown-toggle">Сделана</button></span>
-                                                </div>
-                                                <div>
-                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab alias
-                                                    asperiores beatae culpa cumque enim explicabo fugiat illo illum in iste
-                                                    laboriosam necessitatibus neque nostrum optio perferendis provident quae
-                                                    quam quis quisquam quod, sequi tempora tempore temporibus velit. Amet
-                                                    autem doloremque doloribus eos explicabo mollitia officia officiis
-                                                    provident ratione voluptate? A ad, alias, animi consectetur consequatur
-                                                    cupiditate dicta dolore dolorem eaque inventore molestiae neque nobis
-                                                    optio quos recusandae tempore voluptas. Adipisci atque eos fuga
-                                                    molestiae sequi, tempora voluptatum. Accusantium blanditiis cupiditate
-                                                    dolore doloremque dolores dolorum eos, fugit ipsa ipsam, iste itaque
-                                                    labore molestiae, nam odit porro quam rerum sequi ullam.
-                                                </div>
-                                            </div>
-
-                                            <div class="mb-1 text-danger">
-                                                <span><i class="fal fa-stopwatch"></i></span>
-                                                <span>01 января 2020</span>
-                                            </div>
-                                            <span><a class="profile-image-md rounded-circle d-inline-block" href="#" style="background-image:url('img/demo/avatars/avatar-g.png'); background-size: cover;"></a></span>
-<!--                                            <div class="d-flex justify-content-between align-items-center mb-2">-->
-<!--                                                <span class="mr-2">Статус</span>-->
-<!--                                                <span class="badge border border-success text-success">Сделана</span>-->
-<!--                                            </div>-->
-<!--                                            <div class="d-flex justify-content-between align-items-center mb-2">-->
-<!--                                                <span class="mr-2">Приоритет</span>-->
-<!--                                                <span class="badge border border-danger text-danger">Высокий</span>-->
-<!--                                            </div>-->
-<!--                                            <div class="d-flex justify-content-between align-items-center mb-2">-->
-<!--                                                <span class="mr-2">Срок</span>-->
-<!--                                            </div>-->
-<!--                                            <div class="d-flex justify-content-between align-items-center mb-2">-->
-<!--                                                <span class="mr-2">Исполнитель</span>-->
-<!--                                                <span>-->
-<!--                                                                <a class="profile-image-sm rounded-circle d-inline-block" href="#" style="background-image:url('img/demo/avatars/avatar-g.png'); background-size: cover;"></a>-->
-<!--                                                            </span>-->
-<!--                                            </div>-->
-<!--                                            <div class="d-flex justify-content-between align-items-center mb-2">-->
-<!--                                                <span class="mr-2">Создал</span>-->
-<!--                                                <span>-->
-<!--                                                                <a class="profile-image-sm rounded-circle d-inline-block" href="#" style="background-image:url('img/demo/avatars/avatar-g.png'); background-size: cover;"></a>-->
-<!--                                                            </span>-->
-<!--                                            </div>-->
-<!--                                            <div class="d-flex justify-content-between align-items-center mb-2">-->
-<!--                                                <span class="mr-2">Обновила</span>-->
-<!--                                                <span>-->
-<!--                                                                <a class="profile-image-sm rounded-circle d-inline-block" href="#" style="background-image:url('img/demo/avatars/avatar-j.png'); background-size: cover;"></a>-->
-<!--                                                            </span>-->
-<!--                                            </div>-->
-                                        </div>
-                                        <div class="panel-content border-faded border-left-0 border-right-0 border-bottom-0 bg-faded">
-                                            <textarea class="form-control rounded-top border-bottom-left-radius-0 border-bottom-right-radius-0 border" placeholder="Добавить комментарий" rows="2"></textarea>
-                                            <div class="d-flex justify-content-end py-2 px-2 bg-white border border-top-0 rounded-bottom">
-                                                <button class="btn btn-icon fs-lg mr-2" type="button">
-                                                    <i class="fal fa-paperclip"></i></button>
-                                                <button class="btn btn-primary btn-sm ml-auto ml-sm-0">Отправить
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="panel-content border-faded border-left-0 border-right-0 border-bottom-0 p-0 pb-3">
-                                            <div class="d-flex flex-column">
-                                                <!-- message -->
-                                                <div class="d-flex flex-row px-3 pt-3 pb-2">
-                                                    <!-- profile photo : lazy loaded -->
-                                                    <span>
-                                                        <a class="profile-image rounded-circle d-inline-block" href="#" style="background-image:url('img/demo/avatars/avatar-j.png')"></a>
-                                                    </span>
-                                                    <!-- profile photo end -->
-                                                    <div class="ml-3">
-                                                        <div>
-                                                            <a class="fw-700 text-dark" href="#" title="Lisa Hatchensen">Lisa
-                                                                Hatchensen</a>
-                                                            <span class="fs-nano text-muted mt-1">5 mins ago</span>
-                                                        </div>
-                                                        Hey did you meet the new board of director? He's a bit of a geek
-                                                        if you ask me...anyway here is the report you requested. I am
-                                                        off to launch with Lisa and Andrew, you wanna join?
-                                                        Hey did you meet the new board of director? He's a bit of a geek
-                                                        if you ask me...anyway here is the report you requested. I am
-                                                        off to launch with Lisa and Andrew, you wanna join?
-                                                        Hey did you meet the new board of director? He's a bit of a geek
-                                                        if you ask me...anyway here is the report you requested. I am
-                                                        off to launch with Lisa and Andrew, you wanna join?
-                                                    </div>
-                                                </div>
-                                                <!-- message end -->
-                                                <!-- message -->
-                                                <div class="d-flex flex-row px-3 pt-3 pb-2">
-                                                    <!-- profile photo : lazy loaded -->
-                                                    <span>
-                                                        <a class="profile-image rounded-circle d-inline-block" href="#" style="background-image:url('img/demo/avatars/avatar-j.png')"></a>
-                                                    </span>
-                                                    <!-- profile photo end -->
-                                                    <div class="ml-3">
-                                                        <div>
-                                                            <a class="fw-700 text-dark" href="#" title="Lisa Hatchensen">Lisa
-                                                                Hatchensen</a>
-                                                            <span class="fs-nano text-muted mt-1">5 mins ago</span>
-                                                        </div>
-                                                        Hey did you meet the new board of director? He's a bit of a geek
-                                                        if you ask me...anyway here is the report you requested. I am
-                                                        off to launch with Lisa and Andrew, you wanna join?
-                                                        Hey did you meet the new board of director? He's a bit of a geek
-                                                        if you ask me...anyway here is the report you requested. I am
-                                                        off to launch with Lisa and Andrew, you wanna join?
-                                                        Hey did you meet the new board of director? He's a bit of a geek
-                                                        if you ask me...anyway here is the report you requested. I am
-                                                        off to launch with Lisa and Andrew, you wanna join?
-                                                    </div>
-                                                </div>
-                                                <!-- message end -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </main>
                     <!-- this overlay is activated only when mobile menu is triggered -->
                 </div>
@@ -235,10 +103,12 @@
     import User from './components/User.vue'
     import Wishes from './components/ticket/Wishes'
     import Comments from './components/ticket/Comments';
+    import Detail from './components/ticket/Detail';
 
     export default {
         name: 'app',
         components: {
+            Detail,
             User,
             Wishes,
             Comments
