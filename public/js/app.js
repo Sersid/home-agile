@@ -2362,6 +2362,61 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2388,15 +2443,22 @@ __webpack_require__.r(__webpack_exports__);
     return {
       showSpinner: true,
       ticket: {},
-      error: ''
+      error: '',
+      showForm: false
     };
   },
   computed: {
     hasError: function hasError() {
       return this.error !== '';
     },
+    hasDescription: function hasDescription() {
+      return typeof this.ticket.description === 'string' && this.ticket.description.length > 0;
+    },
     status: function status() {
       return this.$store.state.statuses[this.ticket.status];
+    },
+    priority: function priority() {
+      return this.$store.state.priorities[this.ticket.priority];
     }
   },
   methods: {
@@ -68674,40 +68736,220 @@ var render = function() {
                 [_vm._v("\n            " + _vm._s(_vm.error) + "\n        ")]
               )
             : _c("div", [
-                _c("div", { staticClass: "card mb-g" }, [
-                  _c("div", { staticClass: "card-body p-3" }, [
-                    _c("h5", { class: "text-" + _vm.status.color }, [
-                      _vm._v(
-                        "\n                        " +
-                          _vm._s(_vm.ticket.title) +
-                          "\n                        "
-                      ),
+                !_vm.showForm
+                  ? _c("div", { staticClass: "card mb-g" }, [
+                      _c("div", { staticClass: "card-body p-3" }, [
+                        _c(
+                          "h5",
+                          {
+                            staticClass: "mb-0",
+                            class: "text-" + _vm.status.color
+                          },
+                          [
+                            _c(
+                              "small",
+                              { staticClass: "fs-nano mt-0 mb-2 text-muted" },
+                              [
+                                _vm._v(
+                                  "\n                            Создала "
+                                ),
+                                _c("a", { attrs: { href: "#" } }, [
+                                  _vm._v("Маша")
+                                ]),
+                                _vm._v(
+                                  " 31 января 2019 в 20:38,\n                            обновил "
+                                ),
+                                _c("a", { attrs: { href: "#" } }, [
+                                  _vm._v("Сережа")
+                                ]),
+                                _vm._v(
+                                  " 12 января в 16:15\n                        "
+                                )
+                              ]
+                            ),
+                            _vm._v(
+                              "\n                        " +
+                                _vm._s(_vm.ticket.title) +
+                                "\n                    "
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "fw-n position-absolute pos-top pos-right mt-3 mr-3"
+                          },
+                          [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-outline-default",
+                                attrs: { type: "button" }
+                              },
+                              [
+                                _c("span", { staticClass: "text-muted" }, [
+                                  _c("i", { staticClass: "fal fa-pen-alt" })
+                                ])
+                              ]
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _vm.hasDescription
+                          ? _c("div", { staticClass: "mt-3" }, [
+                              _vm._v(_vm._s(_vm.ticket.description))
+                            ])
+                          : _vm._e()
+                      ])
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.showForm
+                  ? _c("div", { staticClass: "card mb-g" }, [
                       _c(
-                        "small",
-                        { staticClass: "fs-nano mt-0 mb-2 text-muted" },
+                        "div",
+                        {
+                          staticClass:
+                            "p-3 border-faded border-left-0 border-right-0  border-top-0"
+                        },
                         [
-                          _vm._v("\n                            Создала "),
-                          _c("a", { attrs: { href: "#" } }, [_vm._v("Маша")]),
-                          _vm._v(
-                            " 31 января 2019 в 20:38,\n                            обновил "
-                          ),
-                          _c("a", { attrs: { href: "#" } }, [_vm._v("Сережа")]),
-                          _vm._v(" 12 января в 16:15\n                        ")
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("input", {
+                              staticClass: "form-control",
+                              attrs: { placeholder: "Заголовок", type: "text" }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("textarea", {
+                              staticClass: "form-control",
+                              attrs: { placeholder: "Описание", rows: "5" }
+                            })
+                          ])
                         ]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "span",
-                      {
-                        staticClass:
-                          "badge fw-n position-absolute pos-top pos-right mt-3 mr-3",
-                        class: "badge-" + _vm.status.color
-                      },
-                      [_vm._v(_vm._s(_vm.status.name))]
-                    ),
-                    _vm._v(" "),
-                    _c("div", [_vm._v(_vm._s(_vm.ticket.description))])
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "text-right p-3 pt-0" }, [
+                        _c("a", { attrs: { href: "#" } }, [_vm._v("Отменить")]),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary ml-3",
+                            attrs: { type: "submit" }
+                          },
+                          [_vm._v("Сохранить изменения")]
+                        )
+                      ])
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("div", { staticClass: "card mb-g" }, [
+                  _c("div", { staticClass: "card-body" }, [
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-3" }, [
+                        _c("div", { staticClass: "text-muted mb-2" }, [
+                          _vm._v("Исполнитель")
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "d-flex" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-icon fs-lg mr-1",
+                              attrs: { type: "button" }
+                            },
+                            [_c("i", { staticClass: "fal fa-exchange" })]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            { staticClass: "d-flex", attrs: { href: "#" } },
+                            [
+                              _c("span", {
+                                staticClass:
+                                  "profile-image-md rounded-circle d-inline-block",
+                                staticStyle: {
+                                  "background-image":
+                                    'url("img/demo/avatars/avatar-g.png")',
+                                  "background-size": "cover"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "span",
+                                { staticClass: "align-self-center p-2" },
+                                [_vm._v("Сережа")]
+                              )
+                            ]
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-3" }, [
+                        _c("div", { staticClass: "text-muted mb-2" }, [
+                          _vm._v("Приоритет")
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn dropdown-toggle",
+                            class: "btn-outline-" + _vm.priority.color,
+                            attrs: { type: "button" }
+                          },
+                          [
+                            _vm._v(
+                              "\n                                " +
+                                _vm._s(_vm.priority.name) +
+                                "\n                            "
+                            )
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-3" }, [
+                        _c("div", { staticClass: "text-muted mb-2" }, [
+                          _vm._v("Срок")
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-icon fs-lg mr-1",
+                            attrs: { type: "button" }
+                          },
+                          [_c("i", { staticClass: "fal fa-calendar-alt" })]
+                        ),
+                        _vm._v(
+                          "\n                            9 декабря 2019\n                        "
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-3" }, [
+                        _c("div", { staticClass: "text-muted mb-2" }, [
+                          _vm._v("Статус")
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn dropdown-toggle",
+                            class: "btn-outline-" + _vm.status.color,
+                            attrs: { type: "button" }
+                          },
+                          [
+                            _vm._v(
+                              "\n                                " +
+                                _vm._s(_vm.status.name) +
+                                "\n                            "
+                            )
+                          ]
+                        )
+                      ])
+                    ])
                   ])
                 ]),
                 _vm._v(" "),
@@ -68754,7 +68996,11 @@ var render = function() {
                               staticClass:
                                 "btn btn-primary btn-sm ml-auto ml-sm-0"
                             },
-                            [_vm._v("Отправить\n                        ")]
+                            [
+                              _vm._v(
+                                "\n                            Отправить\n                        "
+                              )
+                            ]
                           )
                         ]
                       )
@@ -68786,7 +69032,7 @@ var render = function() {
                               },
                               [
                                 _vm._v(
-                                  "Lisa\n                                    Hatchensen"
+                                  "Lisa\n                                        Hatchensen"
                                 )
                               ]
                             ),
@@ -68826,7 +69072,7 @@ var render = function() {
                               },
                               [
                                 _vm._v(
-                                  "Lisa\n                                    Hatchensen"
+                                  "Lisa\n                                        Hatchensen"
                                 )
                               ]
                             ),
