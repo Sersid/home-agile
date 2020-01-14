@@ -14,10 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get(
+Route::middleware('auth')->get(
     '/',
-    function () {
-        return view('welcome');
+    function (Request $request) {
+        $token = Auth::user()->api_token;
+        return view('welcome', compact('token'));
     }
 );
 

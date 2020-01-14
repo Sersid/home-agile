@@ -84808,6 +84808,8 @@ try {
 
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + api_token;
+window.axios.defaults.headers.common['Accept'] = 'application/json';
 window.axios.defaults.baseURL = '/api/';
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

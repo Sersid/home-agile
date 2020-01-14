@@ -15,13 +15,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:api')
-    ->get('/user',
-        function (Request $request) {
-            return $request->user();
-        });
-
-Route::get('/system', 'Ticket\Api\SystemController@index');
-Route::get('/new-tickets', 'Ticket\Api\NewTicketController@index');
-Route::apiResources([
-    'ticket' => 'Ticket\Api\TicketController',
-]);
+    ->group(function () {
+        Route::get('/user',
+            function (Request $request) {
+                return $request->user();
+            });
+        Route::get('/system', 'Ticket\Api\SystemController@index');
+        Route::get('/new-tickets', 'Ticket\Api\NewTicketController@index');
+        Route::apiResources([
+            'ticket' => 'Ticket\Api\TicketController',
+        ]);
+    });
