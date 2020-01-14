@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Auth;
 use Eloquent;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -48,12 +49,7 @@ class Ticket extends Eloquent
     /**
      * @var array
      */
-    protected $fillable = ['title'];
-
-    /**
-     * @var array
-     */
-    protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
+    protected $fillable = ['title', 'priority', 'status', 'created_user_id'];
 
     /**
      * Приоритеты
@@ -145,6 +141,22 @@ class Ticket extends Eloquent
             'title' => $title,
             'priority' => self::PRIORITY_LOW,
             'status' => self::STATUS_NEW,
+            'created_user_id' => Auth::id(),
+        ]);
+    }
+
+    /**
+     * @param string $title
+     * @param string $description
+     *
+     * @return Ticket
+     */
+    public function updateDescription(string $title, string $description)
+    {
+        return $this->fill([
+            'title' => $title,
+            'description' => $description,
+            'updated_user_id' => Auth::id(),
         ]);
     }
 }

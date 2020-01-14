@@ -17,33 +17,34 @@
                     <div class="card-body p-3">
                         <h5 :class="'text-' + status.color" class="mb-0">
                             <small class="fs-nano mt-0 mb-2 text-muted">
-                                Создала <a href="#">Маша</a> 31 января 2019 в 20:38,
-                                обновил <a href="#">Сережа</a> 12 января в 16:15
+                                <span>Создала <a href="#">{{author}}</a> {{dateCreate}}</span><span v-if="hasUpdated">, обновил <a href="#">{{redactor}}</a> {{dateUpdate}}</span>
                             </small>
                             {{ticket.title}}
                         </h5>
                         <div class="fw-n position-absolute pos-top pos-right mt-3 mr-3">
-                            <button class="btn btn-outline-default" type="button" @click.prevent="showForm">
+                            <button @click.prevent="showForm" class="btn btn-outline-default" type="button">
                                 <span class="text-muted"><i class="fal fa-pen-alt"></i></span>
                             </button>
                         </div>
                         <div class="mt-3">
                             <div v-if="hasDescription">{{ticket.description}}</div>
-                            <a @click.prevent="showForm" class="d-block p-3 rounded border border-primary" style="border-style: dashed !important;" href="#" v-else>Нажми на меня, чтоб добавить описание</a>
+                            <a @click.prevent="showForm" class="d-block p-3 rounded border border-primary" href="#" style="border-style: dashed !important;" v-else>
+                                Нажми на меня, чтоб добавить описание
+                            </a>
                         </div>
                     </div>
                 </div>
                 <div class="card mb-g" v-if="showEditForm">
                     <div class="p-3 border-faded border-left-0 border-right-0  border-top-0">
                         <div class="form-group">
-                            <input v-model="title" class="form-control" placeholder="Заголовок" type="text">
+                            <input class="form-control" placeholder="Заголовок" type="text" v-model="title">
                         </div>
                         <div class="form-group">
-                            <textarea v-model="description" class="form-control" placeholder="Описание" rows="5"></textarea>
+                            <textarea class="form-control" placeholder="Описание" rows="5" v-model="description"></textarea>
                         </div>
                     </div>
                     <div class="text-right p-3 pt-0">
-                        <a href="#" @click.prevent="hideForm">Отменить</a>
+                        <a @click.prevent="hideForm" href="#">Отменить</a>
                         <button class="btn btn-primary ml-3" type="submit">Сохранить изменения</button>
                     </div>
                 </div>
@@ -186,10 +187,15 @@
 <script>
     import User from '../User';
     import Comments from './Comments';
+    import users from '../../mixins/users';
+    import moment from 'moment';
+
+    moment.locale('ru');
 
     export default {
         name: "Modal",
         components: {User, Comments},
+        mixins: [users],
         props: {
             id: {
                 type: String,
@@ -226,6 +232,21 @@
             },
             priority() {
                 return this.$store.state.priorities[this.ticket.priority];
+            },
+            hasUpdated() {
+                return this.ticket.updated_at !== null && this.ticket.updated_at !== this.ticket.created_at;
+            },
+            author() {
+                return this.user(this.ticket.created_user_id).name;
+            },
+            dateCreate() {
+                return moment(this.ticket.created_at).calendar().toLowerCase();
+            },
+            redactor() {
+                return this.user(this.ticket.updated_user_id).name;
+            },
+            dateUpdate() {
+                return moment(this.ticket.updated_at).calendar().toLowerCase();
             }
         },
         methods: {
