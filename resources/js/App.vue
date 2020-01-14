@@ -115,18 +115,13 @@
         },
         created() {
             this.fetchSystem();
-            //this.fetchUsers();
         },
         methods: {
             fetchSystem() {
                 axios.get('system').then(response => {
                     this.$store.commit('SET_STATUSES', response.data.statuses);
                     this.$store.commit('SET_PRIORITIES', response.data.priorities);
-                });
-            },
-            fetchUsers() {
-                axios.get('users').then(response => {
-                    this.$store.commit('SET_USERS', response.data);
+                    this.$store.commit('SET_USERS', response.data.users);
                 });
             }
         }

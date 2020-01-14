@@ -1956,7 +1956,7 @@ __webpack_require__.r(__webpack_exports__);
     Comments: _components_ticket_Comments__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   created: function created() {
-    this.fetchSystem(); //this.fetchUsers();
+    this.fetchSystem();
   },
   methods: {
     fetchSystem: function fetchSystem() {
@@ -1966,13 +1966,8 @@ __webpack_require__.r(__webpack_exports__);
         _this.$store.commit('SET_STATUSES', response.data.statuses);
 
         _this.$store.commit('SET_PRIORITIES', response.data.priorities);
-      });
-    },
-    fetchUsers: function fetchUsers() {
-      var _this2 = this;
 
-      axios.get('users').then(function (response) {
-        _this2.$store.commit('SET_USERS', response.data);
+        _this.$store.commit('SET_USERS', response.data.users);
       });
     }
   }
@@ -2003,20 +1998,13 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     user: function user() {
-      var _this = this;
-
-      var user = null;
-
-      if (typeof this.id === 'number') {
-        this.$store.state.users.forEach(function (u) {
-          if (_this.id === u.id) {
-            user = u;
-            return;
-          }
-        });
+      if (typeof this.$store.state.users[this.id] === 'undefined') {
+        return {
+          name: ''
+        };
       }
 
-      return user;
+      return this.$store.state.users[this.id];
     }
   }
 });
@@ -68283,7 +68271,7 @@ var render = function() {
             "background-image": "url('img/demo/avatars/avatar-b.png')",
             "background-size": "cover"
           },
-          attrs: { href: "#", title: _vm.user.username }
+          attrs: { href: "#", title: _vm.user.name }
         })
   ])
 }

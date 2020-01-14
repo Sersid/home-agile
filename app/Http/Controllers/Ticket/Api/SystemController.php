@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Ticket\Api;
 
 use App\Models\Ticket;
+use App\Repositories\UserRepository;
 
 /**
  * Class SystemController
@@ -18,6 +19,7 @@ class SystemController extends BaseController
         return [
             'statuses' => Ticket::getStatuses(),
             'priorities' => Ticket::getPriorities(),
+            'users' => (new UserRepository)->getAll(),
         ];
     }
 }
