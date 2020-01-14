@@ -2417,6 +2417,48 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2444,7 +2486,9 @@ __webpack_require__.r(__webpack_exports__);
       showSpinner: true,
       ticket: {},
       error: '',
-      showForm: false
+      showEditForm: false,
+      title: '',
+      description: ''
     };
   },
   computed: {
@@ -2468,11 +2512,20 @@ __webpack_require__.r(__webpack_exports__);
       this.showSpinner = true;
       axios.get('ticket/' + id).then(function (response) {
         _this.ticket = response.data;
+        _this.title = _this.ticket.title;
+        _this.description = _this.ticket.description;
+        _this.showEditForm = false;
       })["catch"](function (e) {
         _this.error = e.response.data.message;
       })["finally"](function () {
         _this.showSpinner = false;
       });
+    },
+    showForm: function showForm() {
+      this.showEditForm = true;
+    },
+    hideForm: function hideForm() {
+      this.showEditForm = false;
     }
   }
 });
@@ -68736,7 +68789,7 @@ var render = function() {
                 [_vm._v("\n            " + _vm._s(_vm.error) + "\n        ")]
               )
             : _c("div", [
-                !_vm.showForm
+                !_vm.showEditForm
                   ? _c("div", { staticClass: "card mb-g" }, [
                       _c("div", { staticClass: "card-body p-3" }, [
                         _c(
@@ -68786,7 +68839,13 @@ var render = function() {
                               "button",
                               {
                                 staticClass: "btn btn-outline-default",
-                                attrs: { type: "button" }
+                                attrs: { type: "button" },
+                                on: {
+                                  click: function($event) {
+                                    $event.preventDefault()
+                                    return _vm.showForm($event)
+                                  }
+                                }
                               },
                               [
                                 _c("span", { staticClass: "text-muted" }, [
@@ -68797,16 +68856,39 @@ var render = function() {
                           ]
                         ),
                         _vm._v(" "),
-                        _vm.hasDescription
-                          ? _c("div", { staticClass: "mt-3" }, [
-                              _vm._v(_vm._s(_vm.ticket.description))
-                            ])
-                          : _vm._e()
+                        _c("div", { staticClass: "mt-3" }, [
+                          _vm.hasDescription
+                            ? _c("div", [
+                                _vm._v(_vm._s(_vm.ticket.description))
+                              ])
+                            : _c(
+                                "a",
+                                {
+                                  staticClass:
+                                    "d-block p-3 rounded border border-primary",
+                                  staticStyle: {
+                                    "border-style": "dashed !important"
+                                  },
+                                  attrs: { href: "#" },
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      return _vm.showForm($event)
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "Нажми на меня, чтоб добавить описание"
+                                  )
+                                ]
+                              )
+                        ])
                       ])
                     ])
                   : _vm._e(),
                 _vm._v(" "),
-                _vm.showForm
+                _vm.showEditForm
                   ? _c("div", { staticClass: "card mb-g" }, [
                       _c(
                         "div",
@@ -68817,22 +68899,68 @@ var render = function() {
                         [
                           _c("div", { staticClass: "form-group" }, [
                             _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.title,
+                                  expression: "title"
+                                }
+                              ],
                               staticClass: "form-control",
-                              attrs: { placeholder: "Заголовок", type: "text" }
+                              attrs: { placeholder: "Заголовок", type: "text" },
+                              domProps: { value: _vm.title },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.title = $event.target.value
+                                }
+                              }
                             })
                           ]),
                           _vm._v(" "),
                           _c("div", { staticClass: "form-group" }, [
                             _c("textarea", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.description,
+                                  expression: "description"
+                                }
+                              ],
                               staticClass: "form-control",
-                              attrs: { placeholder: "Описание", rows: "5" }
+                              attrs: { placeholder: "Описание", rows: "5" },
+                              domProps: { value: _vm.description },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.description = $event.target.value
+                                }
+                              }
                             })
                           ])
                         ]
                       ),
                       _vm._v(" "),
                       _c("div", { staticClass: "text-right p-3 pt-0" }, [
-                        _c("a", { attrs: { href: "#" } }, [_vm._v("Отменить")]),
+                        _c(
+                          "a",
+                          {
+                            attrs: { href: "#" },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.hideForm($event)
+                              }
+                            }
+                          },
+                          [_vm._v("Отменить")]
+                        ),
                         _vm._v(" "),
                         _c(
                           "button",
@@ -68858,7 +68986,7 @@ var render = function() {
                           _c(
                             "button",
                             {
-                              staticClass: "btn btn-icon fs-lg mr-1",
+                              staticClass: "btn btn-icon fs-lg mr-2",
                               attrs: { type: "button" }
                             },
                             [_c("i", { staticClass: "fal fa-exchange" })]
@@ -68918,7 +69046,7 @@ var render = function() {
                         _c(
                           "button",
                           {
-                            staticClass: "btn btn-icon fs-lg mr-1",
+                            staticClass: "btn btn-icon fs-lg mr-2",
                             attrs: { type: "button" }
                           },
                           [_c("i", { staticClass: "fal fa-calendar-alt" })]
@@ -68970,7 +69098,7 @@ var render = function() {
                           "form-control rounded-top border-bottom-left-radius-0 border-bottom-right-radius-0 border",
                         attrs: {
                           placeholder: "Добавить комментарий",
-                          rows: "2"
+                          rows: "3"
                         }
                       }),
                       _vm._v(" "),
@@ -69009,6 +69137,86 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { staticClass: "card-body" }, [
                     _c("div", { staticClass: "d-flex flex-column" }, [
+                      _c("div", { staticClass: "d-flex flex-row pt-3 pb-2" }, [
+                        _c("span", [
+                          _c("a", {
+                            staticClass:
+                              "profile-image rounded-circle d-inline-block",
+                            staticStyle: {
+                              "background-image":
+                                'url("img/demo/avatars/avatar-j.png")'
+                            },
+                            attrs: { href: "#" }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "ml-3" }, [
+                          _c("div", [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "fw-700 text-dark",
+                                attrs: { href: "#", title: "Lisa Hatchensen" }
+                              },
+                              [
+                                _vm._v(
+                                  "Lisa\n                                        Hatchensen"
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              { staticClass: "fs-nano text-muted mt-1" },
+                              [_vm._v("5 mins ago")]
+                            )
+                          ]),
+                          _vm._v(
+                            "\n                                Hey did you meet the new board of director? He's a bit of a geek\n                                if you ask me...anyway here is the report you requested. I am\n                                off to launch with Lisa and Andrew, you wanna join?\n                                Hey did you meet the new board of director? He's a bit of a geek\n                                if you ask me...anyway here is the report you requested. I am\n                                off to launch with Lisa and Andrew, you wanna join?\n                                Hey did you meet the new board of director? He's a bit of a geek\n                                if you ask me...anyway here is the report you requested. I am\n                                off to launch with Lisa and Andrew, you wanna join?\n                            "
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "d-flex flex-row pt-3 pb-2" }, [
+                        _c("span", [
+                          _c("a", {
+                            staticClass:
+                              "profile-image rounded-circle d-inline-block",
+                            staticStyle: {
+                              "background-image":
+                                'url("img/demo/avatars/avatar-j.png")'
+                            },
+                            attrs: { href: "#" }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "ml-3" }, [
+                          _c("div", [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "fw-700 text-dark",
+                                attrs: { href: "#", title: "Lisa Hatchensen" }
+                              },
+                              [
+                                _vm._v(
+                                  "Lisa\n                                        Hatchensen"
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              { staticClass: "fs-nano text-muted mt-1" },
+                              [_vm._v("5 mins ago")]
+                            )
+                          ]),
+                          _vm._v(
+                            "\n                                Hey did you meet the new board of director? He's a bit of a geek\n                                if you ask me...anyway here is the report you requested. I am\n                                off to launch with Lisa and Andrew, you wanna join?\n                                Hey did you meet the new board of director? He's a bit of a geek\n                                if you ask me...anyway here is the report you requested. I am\n                                off to launch with Lisa and Andrew, you wanna join?\n                                Hey did you meet the new board of director? He's a bit of a geek\n                                if you ask me...anyway here is the report you requested. I am\n                                off to launch with Lisa and Andrew, you wanna join?\n                            "
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
                       _c("div", { staticClass: "d-flex flex-row pt-3 pb-2" }, [
                         _c("span", [
                           _c("a", {

@@ -13,9 +13,9 @@
                 {{error}}
             </div>
             <div v-else>
-                <div v-if="!showForm" class="card mb-g">
+                <div class="card mb-g" v-if="!showEditForm">
                     <div class="card-body p-3">
-                        <h5 class="mb-0" :class="'text-' + status.color">
+                        <h5 :class="'text-' + status.color" class="mb-0">
                             <small class="fs-nano mt-0 mb-2 text-muted">
                                 Создала <a href="#">Маша</a> 31 января 2019 в 20:38,
                                 обновил <a href="#">Сережа</a> 12 января в 16:15
@@ -23,24 +23,27 @@
                             {{ticket.title}}
                         </h5>
                         <div class="fw-n position-absolute pos-top pos-right mt-3 mr-3">
-                            <button class="btn btn-outline-default" type="button">
+                            <button class="btn btn-outline-default" type="button" @click.prevent="showForm">
                                 <span class="text-muted"><i class="fal fa-pen-alt"></i></span>
                             </button>
                         </div>
-                        <div v-if="hasDescription" class="mt-3">{{ticket.description}}</div>
+                        <div class="mt-3">
+                            <div v-if="hasDescription">{{ticket.description}}</div>
+                            <a @click.prevent="showForm" class="d-block p-3 rounded border border-primary" style="border-style: dashed !important;" href="#" v-else>Нажми на меня, чтоб добавить описание</a>
+                        </div>
                     </div>
                 </div>
-                <div v-if="showForm" class="card mb-g">
+                <div class="card mb-g" v-if="showEditForm">
                     <div class="p-3 border-faded border-left-0 border-right-0  border-top-0">
                         <div class="form-group">
-                            <input class="form-control" placeholder="Заголовок" type="text">
+                            <input v-model="title" class="form-control" placeholder="Заголовок" type="text">
                         </div>
                         <div class="form-group">
-                            <textarea class="form-control" placeholder="Описание" rows="5"></textarea>
+                            <textarea v-model="description" class="form-control" placeholder="Описание" rows="5"></textarea>
                         </div>
                     </div>
                     <div class="text-right p-3 pt-0">
-                        <a href="#">Отменить</a>
+                        <a href="#" @click.prevent="hideForm">Отменить</a>
                         <button class="btn btn-primary ml-3" type="submit">Сохранить изменения</button>
                     </div>
                 </div>
@@ -51,8 +54,9 @@
                             <div class="col-3">
                                 <div class="text-muted mb-2">Исполнитель</div>
                                 <div class="d-flex">
-                                    <button class="btn btn-icon fs-lg mr-1" type="button">
-                                        <i class="fal fa-exchange"></i></button>
+                                    <button class="btn btn-icon fs-lg mr-2" type="button">
+                                        <i class="fal fa-exchange"></i>
+                                    </button>
                                     <a class="d-flex" href="#">
                                         <span class="profile-image-md rounded-circle d-inline-block" style="background-image: url(&quot;img/demo/avatars/avatar-g.png&quot;); background-size: cover;"></span>
                                         <span class="align-self-center p-2">Сережа</span>
@@ -67,7 +71,7 @@
                             </div>
                             <div class="col-3">
                                 <div class="text-muted mb-2">Срок</div>
-                                <button class="btn btn-icon fs-lg mr-1" type="button">
+                                <button class="btn btn-icon fs-lg mr-2" type="button">
                                     <i class="fal fa-calendar-alt"></i>
                                 </button>
                                 9 декабря 2019
@@ -84,7 +88,7 @@
                 <div class="card mb-g">
                     <div class="px-3 pt-3 pb-2"><h5>Комментарии</h5></div>
                     <div class="border-faded border-left-0 border-right-0 bg-faded p-3">
-                        <textarea class="form-control rounded-top border-bottom-left-radius-0 border-bottom-right-radius-0 border" placeholder="Добавить комментарий" rows="2"></textarea>
+                        <textarea class="form-control rounded-top border-bottom-left-radius-0 border-bottom-right-radius-0 border" placeholder="Добавить комментарий" rows="3"></textarea>
                         <div class="d-flex justify-content-end py-2 px-2 bg-white border border-top-0 rounded-bottom">
                             <button class="btn btn-icon fs-lg mr-2" type="button">
                                 <i class="fal fa-paperclip"></i></button>
@@ -95,6 +99,44 @@
                     </div>
                     <div class="card-body">
                         <div class="d-flex flex-column">
+                            <div class="d-flex flex-row pt-3 pb-2">
+                                <span><a class="profile-image rounded-circle d-inline-block" href="#" style="background-image: url(&quot;img/demo/avatars/avatar-j.png&quot;);"></a></span>
+                                <div class="ml-3">
+                                    <div>
+                                        <a class="fw-700 text-dark" href="#" title="Lisa Hatchensen">Lisa
+                                            Hatchensen</a>
+                                        <span class="fs-nano text-muted mt-1">5 mins ago</span>
+                                    </div>
+                                    Hey did you meet the new board of director? He's a bit of a geek
+                                    if you ask me...anyway here is the report you requested. I am
+                                    off to launch with Lisa and Andrew, you wanna join?
+                                    Hey did you meet the new board of director? He's a bit of a geek
+                                    if you ask me...anyway here is the report you requested. I am
+                                    off to launch with Lisa and Andrew, you wanna join?
+                                    Hey did you meet the new board of director? He's a bit of a geek
+                                    if you ask me...anyway here is the report you requested. I am
+                                    off to launch with Lisa and Andrew, you wanna join?
+                                </div>
+                            </div>
+                            <div class="d-flex flex-row pt-3 pb-2">
+                                <span><a class="profile-image rounded-circle d-inline-block" href="#" style="background-image: url(&quot;img/demo/avatars/avatar-j.png&quot;);"></a></span>
+                                <div class="ml-3">
+                                    <div>
+                                        <a class="fw-700 text-dark" href="#" title="Lisa Hatchensen">Lisa
+                                            Hatchensen</a>
+                                        <span class="fs-nano text-muted mt-1">5 mins ago</span>
+                                    </div>
+                                    Hey did you meet the new board of director? He's a bit of a geek
+                                    if you ask me...anyway here is the report you requested. I am
+                                    off to launch with Lisa and Andrew, you wanna join?
+                                    Hey did you meet the new board of director? He's a bit of a geek
+                                    if you ask me...anyway here is the report you requested. I am
+                                    off to launch with Lisa and Andrew, you wanna join?
+                                    Hey did you meet the new board of director? He's a bit of a geek
+                                    if you ask me...anyway here is the report you requested. I am
+                                    off to launch with Lisa and Andrew, you wanna join?
+                                </div>
+                            </div>
                             <div class="d-flex flex-row pt-3 pb-2">
                                 <span><a class="profile-image rounded-circle d-inline-block" href="#" style="background-image: url(&quot;img/demo/avatars/avatar-j.png&quot;);"></a></span>
                                 <div class="ml-3">
@@ -167,7 +209,9 @@
                 showSpinner: true,
                 ticket: {},
                 error: '',
-                showForm: false
+                showEditForm: false,
+                title: '',
+                description: ''
             };
         },
         computed: {
@@ -175,7 +219,7 @@
                 return this.error !== '';
             },
             hasDescription() {
-              return typeof this.ticket.description === 'string' && this.ticket.description.length > 0;
+                return typeof this.ticket.description === 'string' && this.ticket.description.length > 0;
             },
             status() {
                 return this.$store.state.statuses[this.ticket.status];
@@ -190,6 +234,9 @@
                 axios.get('ticket/' + id)
                     .then(response => {
                         this.ticket = response.data;
+                        this.title = this.ticket.title;
+                        this.description = this.ticket.description;
+                        this.showEditForm = false;
                     })
                     .catch(e => {
                         this.error = e.response.data.message;
@@ -197,6 +244,12 @@
                     .finally(() => {
                         this.showSpinner = false;
                     });
+            },
+            showForm() {
+                this.showEditForm = true;
+            },
+            hideForm() {
+                this.showEditForm = false;
             }
         }
     }
