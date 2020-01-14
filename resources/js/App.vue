@@ -100,18 +100,12 @@
 </template>
 
 <script>
-    import User from './components/User.vue'
     import Wishes from './components/ticket/Wishes'
-    import Comments from './components/ticket/Comments';
-    import Detail from './components/ticket/Detail';
 
     export default {
         name: 'app',
         components: {
-            Detail,
-            User,
             Wishes,
-            Comments
         },
         created() {
             this.fetchSystem();

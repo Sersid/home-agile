@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Ticket\Api;
 
-use App\Http\Requests\TicketRequest;
+use App\Http\Requests\Ticket\QuickAddRequest;
+use App\Http\Requests\Ticket\UpdateRequest;
 use App\Models\Ticket;
 use App\Repositories\TicketRepository;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 /**
@@ -32,12 +32,12 @@ class TicketController extends BaseController
     /**
      * Store a newly created resource in storage.
      *
-     * @param TicketRequest $request
-     * @param Ticket        $ticket
+     * @param QuickAddRequest $request
+     * @param Ticket          $ticket
      *
      * @return Ticket|Model
      */
-    public function store(TicketRequest $request, Ticket $ticket)
+    public function store(QuickAddRequest $request, Ticket $ticket)
     {
         return $ticket->quickAdd($request->get('title'));
     }
@@ -62,14 +62,15 @@ class TicketController extends BaseController
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
-     * @param int     $id
+     * @param UpdateRequest $request
+     * @param Ticket        $ticket
      *
-     * @return Response
+     * @return Ticket
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRequest $request, Ticket $ticket)
     {
-        //
+        $ticket->updateDescription($request->get('title'), $request->get('description'));
+        return $ticket;
     }
 
     /**

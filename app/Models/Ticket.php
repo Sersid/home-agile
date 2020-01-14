@@ -49,7 +49,16 @@ class Ticket extends Eloquent
     /**
      * @var array
      */
-    protected $fillable = ['title', 'priority', 'status', 'created_user_id'];
+    protected $fillable = [
+        'title',
+        'description',
+        'term',
+        'executor_id',
+        'priority',
+        'status',
+        'created_user_id',
+        'updated_user_id',
+    ];
 
     /**
      * Приоритеты
@@ -149,11 +158,11 @@ class Ticket extends Eloquent
      * @param string $title
      * @param string $description
      *
-     * @return Ticket
+     * @return bool
      */
     public function updateDescription(string $title, string $description)
     {
-        return $this->fill([
+        return $this->update([
             'title' => $title,
             'description' => $description,
             'updated_user_id' => Auth::id(),

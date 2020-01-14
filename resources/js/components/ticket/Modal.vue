@@ -34,20 +34,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card mb-g" v-if="showEditForm">
-                    <div class="p-3 border-faded border-left-0 border-right-0  border-top-0">
-                        <div class="form-group">
-                            <input class="form-control" placeholder="Заголовок" type="text" v-model="title">
-                        </div>
-                        <div class="form-group">
-                            <textarea class="form-control" placeholder="Описание" rows="5" v-model="description"></textarea>
-                        </div>
-                    </div>
-                    <div class="text-right p-3 pt-0">
-                        <a @click.prevent="hideForm" href="#">Отменить</a>
-                        <button class="btn btn-primary ml-3" type="submit">Сохранить изменения</button>
-                    </div>
-                </div>
+                <update-form v-if="showEditForm" :ticket="ticket" @cancel="hideForm" @saved="updated"></update-form>
 
                 <div class="card mb-g">
                     <div class="card-body">
@@ -185,16 +172,16 @@
 </template>
 
 <script>
-    import User from '../User';
     import Comments from './Comments';
     import users from '../../mixins/users';
     import moment from 'moment';
+    import UpdateForm from './UpdateForm';
 
     moment.locale('ru');
 
     export default {
         name: "Modal",
-        components: {User, Comments},
+        components: {UpdateForm, Comments},
         mixins: [users],
         props: {
             id: {
@@ -216,8 +203,6 @@
                 ticket: {},
                 error: '',
                 showEditForm: false,
-                title: '',
-                description: ''
             };
         },
         computed: {
@@ -257,7 +242,7 @@
                         this.ticket = response.data;
                         this.title = this.ticket.title;
                         this.description = this.ticket.description;
-                        this.showEditForm = false;
+                        this.hideForm();
                     })
                     .catch(e => {
                         this.error = e.response.data.message;
@@ -271,6 +256,10 @@
             },
             hideForm() {
                 this.showEditForm = false;
+            },
+            updated(ticket) {
+                this.ticket = ticket;
+                this.hideForm();
             }
         }
     }
