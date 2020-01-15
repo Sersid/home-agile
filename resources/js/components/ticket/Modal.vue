@@ -42,15 +42,7 @@
                         <div class="row">
                             <div class="col-3">
                                 <div class="text-muted mb-2">Исполнитель</div>
-                                <div class="d-flex">
-                                    <button class="btn btn-icon fs-lg mr-2" type="button">
-                                        <i class="fal fa-exchange"></i>
-                                    </button>
-                                    <a class="d-flex" href="#">
-                                        <span class="profile-image-md rounded-circle d-inline-block" style="background-image: url(&quot;img/demo/avatars/avatar-g.png&quot;); background-size: cover;"></span>
-                                        <span class="align-self-center p-2">Сережа</span>
-                                    </a>
-                                </div>
+                                <executor-changer :ticket="ticket" @process="showProcessLoader"/>
                             </div>
                             <div class="col-3">
                                 <div class="text-muted mb-2">Приоритет</div>
@@ -176,13 +168,14 @@
     import VueMarkdown from 'vue-markdown';
     import StatusChanger from './StatusChanger';
     import PriorityChanger from './PriorityChanger';
+    import ExecutorChanger from './ExecutorChanger';
     import Comments from './Comments';
 
     moment.locale('ru');
 
     export default {
         name: "Modal",
-        components: {UpdateForm, VueMarkdown, StatusChanger, PriorityChanger, Comments},
+        components: {UpdateForm, VueMarkdown, StatusChanger, PriorityChanger, ExecutorChanger, Comments},
         mixins: [users, statuses],
         props: {
             id: {
@@ -221,13 +214,13 @@
                 return this.ticket.updated_at !== null && this.ticket.updated_at !== this.ticket.created_at;
             },
             author() {
-                return this.user(this.ticket.created_user_id).name;
+                return this.getUser(this.ticket.created_user_id).name;
             },
             dateCreate() {
                 return moment(this.ticket.created_at).calendar().toLowerCase();
             },
             redactor() {
-                return this.user(this.ticket.updated_user_id).name;
+                return this.getUser(this.ticket.updated_user_id).name;
             },
             dateUpdate() {
                 return moment(this.ticket.updated_at).calendar().toLowerCase();

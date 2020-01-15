@@ -24,6 +24,7 @@ Route::middleware('auth:api')
         Route::get('/ticket/last', 'Ticket\Api\TicketController@last');
         Route::patch('/ticket/status/{ticket}', 'Ticket\Api\TicketController@status')->where('ticket', '[0-9]+');
         Route::patch('/ticket/priority/{ticket}', 'Ticket\Api\TicketController@priority')->where('ticket', '[0-9]+');
+        Route::patch('/ticket/executor/{ticket}', 'Ticket\Api\TicketController@executor')->where('ticket', '[0-9]+');
         Route::apiResources([
             'ticket' => 'Ticket\Api\TicketController',
         ]);

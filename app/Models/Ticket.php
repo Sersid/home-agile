@@ -197,4 +197,19 @@ class Ticket extends Eloquent
             'updated_user_id' => Auth::id(),
         ]);
     }
+
+    /**
+     * Обновление ответственного
+     *
+     * @param int $executor_id
+     *
+     * @return bool
+     */
+    public function updateExecutor(int $executor_id)
+    {
+        return $this->update([
+            'executor_id' => $executor_id,
+            'updated_user_id' => Auth::id(),
+        ]);
+    }
 }

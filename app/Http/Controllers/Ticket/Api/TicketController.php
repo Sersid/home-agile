@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Ticket\Api;
 
+use App\Http\Requests\Ticket\ExecutorRequest;
 use App\Http\Requests\Ticket\PriorityRequest;
 use App\Http\Requests\Ticket\QuickAddRequest;
 use App\Http\Requests\Ticket\StatusRequest;
@@ -125,6 +126,20 @@ class TicketController extends BaseController
     public function priority(PriorityRequest $request, Ticket $ticket)
     {
         $ticket->updatePriority($request->get('priority'));
+        return $ticket;
+    }
+
+    /**
+     * Обновление ответственного
+     *
+     * @param ExecutorRequest $request
+     * @param Ticket          $ticket
+     *
+     * @return Ticket
+     */
+    public function executor(ExecutorRequest $request, Ticket $ticket)
+    {
+        $ticket->updateExecutor($request->get('executor_id'));
         return $ticket;
     }
 }

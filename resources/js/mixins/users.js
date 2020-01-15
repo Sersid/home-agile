@@ -1,10 +1,15 @@
 export default {
     methods: {
-        user(id) {
-            if (typeof this.$store.state.users[id] === 'undefined') {
-                return  {name: 'Undefined'};
+        getUser(id) {
+            if (typeof this.users[id] === 'undefined') {
+                return  {name: ''};
             }
-            return this.$store.state.users[id];
+            return this.users[id];
+        }
+    },
+    computed: {
+        users() {
+            return this.$store.state.users;
         }
     }
 }
