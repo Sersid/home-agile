@@ -33,8 +33,8 @@
             this.data = this.ticket;
         },
         methods: {
-            save(status) {
-                this.$set(this.data, 'priority', parseInt(status));
+            save(priority) {
+                this.$set(this.data, 'priority', parseInt(priority));
                 this.$emit('process', true);
                 axios.patch('ticket/priority/' + this.data.id, {priority: this.data.priority})
                     .then(response => {
