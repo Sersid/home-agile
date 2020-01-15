@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Ticket\Api;
 
 use App\Http\Requests\Ticket\QuickAddRequest;
+use App\Http\Requests\Ticket\StatusRequest;
 use App\Http\Requests\Ticket\UpdateRequest;
 use App\Models\Ticket;
 use App\Repositories\TicketRepository;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
@@ -17,6 +19,18 @@ use Illuminate\Http\Response;
  */
 class TicketController extends BaseController
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @param TicketRepository $repository
+     *
+     * @return LengthAwarePaginator
+     */
+    public function last(TicketRepository $repository)
+    {
+        return $repository->getLast();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -83,5 +97,19 @@ class TicketController extends BaseController
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Обновление статуса тикета
+     *
+     * @param StatusRequest $request
+     * @param Ticket        $ticket
+     *
+     * @return Ticket
+     */
+    public function status(StatusRequest $request, Ticket $ticket)
+    {
+        $ticket->updateStatus($request->get('status'));
+        return $ticket;
     }
 }

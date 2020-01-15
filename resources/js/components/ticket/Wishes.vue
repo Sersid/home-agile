@@ -92,7 +92,7 @@
         },
         methods: {
             fetch() {
-                axios.get('new-tickets').then(response => {
+                axios.get('ticket/last').then(response => {
                     this.tickets = response.data.data;
                 }).finally(() => {
                     this.showTicketsLoader = false;

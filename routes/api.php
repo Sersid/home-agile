@@ -21,7 +21,8 @@ Route::middleware('auth:api')
                 return $request->user();
             });
         Route::get('/system', 'Ticket\Api\SystemController@index');
-        Route::get('/new-tickets', 'Ticket\Api\NewTicketController@index');
+        Route::get('/ticket/last', 'Ticket\Api\TicketController@last');
+        Route::patch('/ticket/status/{ticket}', 'Ticket\Api\TicketController@status')->where('ticket', '[0-9]+');
         Route::apiResources([
             'ticket' => 'Ticket\Api\TicketController',
         ]);

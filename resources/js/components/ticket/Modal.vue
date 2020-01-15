@@ -15,7 +15,7 @@
             <div v-else>
                 <div class="card mb-g" v-if="!showEditForm">
                     <div class="card-body p-3">
-                        <h5 :class="'text-' + status.color" class="mb-0">
+                        <h5 :class="'text-' + getStatus(ticket.status).color" class="mb-0">
                             <small class="fs-nano mt-0 mb-2 text-muted">
                                 <span>Создала <a href="#">{{author}}</a> {{dateCreate}}</span><span v-if="hasUpdated">, обновил <a href="#">{{redactor}}</a> {{dateUpdate}}</span>
                             </small>
@@ -66,9 +66,7 @@
                             </div>
                             <div class="col-3">
                                 <div class="text-muted mb-2">Статус</div>
-                                <button :class="'btn-outline-' + status.color" class="btn dropdown-toggle" type="button">
-                                    {{status.name}}
-                                </button>
+                                <status-changer :ticket="ticket" />
                             </div>
                         </div>
                     </div>
@@ -172,18 +170,20 @@
 </template>
 
 <script>
-    import Comments from './Comments';
     import users from '../../mixins/users';
+    import statuses from '../../mixins/statuses';
     import moment from 'moment';
     import UpdateForm from './UpdateForm';
     import VueMarkdown from 'vue-markdown';
+    import StatusChanger from './StatusChanger';
+    import Comments from './Comments';
 
     moment.locale('ru');
 
     export default {
         name: "Modal",
-        components: {UpdateForm, VueMarkdown, Comments},
-        mixins: [users],
+        components: {UpdateForm, VueMarkdown, StatusChanger, Comments},
+        mixins: [users, statuses],
         props: {
             id: {
                 type: String,
@@ -212,9 +212,6 @@
             },
             hasDescription() {
                 return typeof this.ticket.description === 'string' && this.ticket.description.length > 0;
-            },
-            status() {
-                return this.$store.state.statuses[this.ticket.status];
             },
             priority() {
                 return this.$store.state.priorities[this.ticket.priority];

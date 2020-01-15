@@ -168,4 +168,17 @@ class Ticket extends Eloquent
             'updated_user_id' => Auth::id(),
         ]);
     }
+
+    /**
+     * @param int $status
+     *
+     * @return bool
+     */
+    public function updateStatus(int $status)
+    {
+        return $this->update([
+            'status' => $status,
+            'updated_user_id' => Auth::id(),
+        ]);
+    }
 }

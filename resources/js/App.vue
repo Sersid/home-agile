@@ -105,7 +105,7 @@
     export default {
         name: 'app',
         components: {
-            Wishes,
+            Wishes
         },
         created() {
             this.fetchSystem();
