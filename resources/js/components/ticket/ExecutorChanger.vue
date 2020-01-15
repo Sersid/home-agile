@@ -6,6 +6,7 @@
                 <i v-else class="fal fa-user-plus"></i>
             </template>
             <b-dropdown-item :key="index" @click.prevent="save(index)" href="#" v-for="(u, index) in users">
+                <span v-if="parseInt(index) === data.executor_id">&blacktriangleright;</span>
                 {{u.name}}
             </b-dropdown-item>
         </b-dropdown>
