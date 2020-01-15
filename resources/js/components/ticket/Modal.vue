@@ -22,7 +22,8 @@
                             {{ticket.title}}
                         </h5>
                         <div class="fw-n position-absolute pos-top pos-right mt-3 mr-3">
-                            <button @click.prevent="showForm" class="btn btn-outline-default" type="button">
+                            <b-spinner v-if="showSaveSpinner" label="Сохранение..." small variant="warning" class="mt-1"></b-spinner>
+                            <button v-else @click.prevent="showForm" class="btn btn-outline-default" type="button">
                                 <span class="text-muted"><i class="fal fa-pen-alt"></i></span>
                             </button>
                         </div>
@@ -66,7 +67,7 @@
                             </div>
                             <div class="col-3">
                                 <div class="text-muted mb-2">Статус</div>
-                                <status-changer :ticket="ticket" />
+                                <status-changer :ticket="ticket" @process="showProcessLoader" />
                             </div>
                         </div>
                     </div>
@@ -204,6 +205,7 @@
                 ticket: {},
                 error: '',
                 showEditForm: false,
+                showSaveSpinner: false
             };
         },
         computed: {
@@ -258,6 +260,9 @@
             updated(ticket) {
                 this.ticket = ticket;
                 this.hideForm();
+            },
+            showProcessLoader(process) {
+                this.showSaveSpinner = process;
             }
         }
     }
