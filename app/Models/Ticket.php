@@ -73,11 +73,11 @@ class Ticket extends Eloquent
             ],
             self::PRIORITY_MEDIUM => [
                 'name' => 'Средний',
-                'color' => 'info',
+                'color' => 'warning',
             ],
             self::PRIORITY_HIGH => [
                 'name' => 'Высокий',
-                'color' => 'warning',
+                'color' => 'danger',
             ],
         ];
     }
@@ -155,6 +155,7 @@ class Ticket extends Eloquent
     }
 
     /**
+     * Обновление заголовка и описания
      * @param string $title
      * @param string|null $description
      *
@@ -170,6 +171,7 @@ class Ticket extends Eloquent
     }
 
     /**
+     * Обновление статуса
      * @param int $status
      *
      * @return bool
@@ -178,6 +180,20 @@ class Ticket extends Eloquent
     {
         return $this->update([
             'status' => $status,
+            'updated_user_id' => Auth::id(),
+        ]);
+    }
+
+    /**
+     * Обновление приоритета
+     * @param int $priority
+     *
+     * @return bool
+     */
+    public function updatePriority(int $priority)
+    {
+        return $this->update([
+            'priority' => $priority,
             'updated_user_id' => Auth::id(),
         ]);
     }

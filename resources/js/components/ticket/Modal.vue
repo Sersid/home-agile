@@ -54,9 +54,7 @@
                             </div>
                             <div class="col-3">
                                 <div class="text-muted mb-2">Приоритет</div>
-                                <button :class="'btn-outline-' + priority.color" class="btn dropdown-toggle" type="button">
-                                    {{priority.name}}
-                                </button>
+                                <priority-changer :ticket="ticket" @process="showProcessLoader" />
                             </div>
                             <div class="col-3">
                                 <div class="text-muted mb-2">Срок</div>
@@ -177,13 +175,14 @@
     import UpdateForm from './UpdateForm';
     import VueMarkdown from 'vue-markdown';
     import StatusChanger from './StatusChanger';
+    import PriorityChanger from './PriorityChanger';
     import Comments from './Comments';
 
     moment.locale('ru');
 
     export default {
         name: "Modal",
-        components: {UpdateForm, VueMarkdown, StatusChanger, Comments},
+        components: {UpdateForm, VueMarkdown, StatusChanger, PriorityChanger, Comments},
         mixins: [users, statuses],
         props: {
             id: {
