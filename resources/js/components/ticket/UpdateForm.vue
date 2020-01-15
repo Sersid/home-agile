@@ -1,41 +1,48 @@
 <template>
     <div class="card mb-g">
-        <div class="p-3 border-faded border-left-0 border-right-0  border-top-0">
-            <div class="alert alert-danger" role="alert" v-if="hasError">
-                {{error.message}}
-                <div v-for="field in error.errors">
-                    <div v-for="err in field">{{err}}</div>
+        <form @submit.prevent="save">
+            <div class="p-3 border-faded border-left-0 border-right-0  border-top-0">
+                <div class="alert alert-danger" role="alert" v-if="hasError">
+                    {{error.message}}
+                    <div v-for="field in error.errors">
+                        <div v-for="err in field">{{err}}</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input :class="{'is-invalid':  $v.title.$error}"
+                           :disabled="showButtonLoader"
+                           @input="$v.title.$touch()"
+                           @keydown.enter="save"
+                           class="form-control"
+                           placeholder="Заголовок"
+                           type="text"
+                           v-model="title"
+                    >
+                </div>
+                <div class="alert alert-danger" role="alert" v-if="$v.title.$error">
+                    Напиши хоть что-нибудь :(
+                </div>
+                <div class="form-group">
+                    <textarea :disabled="showButtonLoader" :rows="rows" @keydown.enter.ctrl="save" class="form-control" placeholder="Описание" v-model="description"/>
                 </div>
             </div>
-            <div class="form-group">
-                <input :class="{'is-invalid':  $v.title.$error}"
-                       :disabled="showButtonLoader"
-                       @input="$v.title.$touch()"
-                       class="form-control"
-                       placeholder="Заголовок"
-                       type="text"
-                       v-model="title"
-                >
+            <div class="text-right p-3 pt-0">
+                <button @click.prevent="cancel" class="btn btn-link" v-show="!showButtonLoader">Отменить</button>
+                <button :disabled="showButtonLoader" class="btn btn-primary" type="submit">
+                    <b-spinner label="Загрузка..." small v-if="showButtonLoader"></b-spinner>
+                    Сохранить изменения
+                </button>
             </div>
-            <div class="alert alert-danger" role="alert" v-if="$v.title.$error">
-                Напиши хоть что-нибудь :(
-            </div>
-            <div class="form-group">
-                <textarea :disabled="showButtonLoader" class="form-control" placeholder="Описание" rows="5" v-model="description"/>
-            </div>
-        </div>
-        <div class="text-right p-3 pt-0">
-            <button @click.prevent="cancel" class="btn btn-link" v-show="!showButtonLoader"> Отменить</button>
-            <button :disabled="showButtonLoader" @click.prevent="save" class="btn btn-primary" type="submit">
-                <b-spinner label="Загрузка..." small v-if="showButtonLoader"></b-spinner>
-                Сохранить изменения
-            </button>
+        </form>
+        <div class="p-3 border-faded border-left-0 border-right-0 border-bottom-0" v-if="description.length > 0">
+            <vue-markdown :source="description"/>
         </div>
     </div>
 </template>
 
 <script>
     import {required} from 'vuelidate/lib/validators'
+    import VueMarkdown from 'vue-markdown';
 
     export default {
         name: "UpdateForm",
@@ -45,6 +52,7 @@
                 required: true
             }
         },
+        components: {VueMarkdown},
         created() {
             this.id = this.ticket.id;
             this.title = this.ticket.title;
@@ -53,6 +61,10 @@
         computed: {
             hasError() {
                 return Object.keys(this.error).length !== 0;
+            },
+            rows() {
+                let lines = this.description.split("\n").length;
+                return lines > 3 ? lines : 3;
             }
         },
         data() {

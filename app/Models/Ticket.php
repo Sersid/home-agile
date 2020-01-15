@@ -156,11 +156,11 @@ class Ticket extends Eloquent
 
     /**
      * @param string $title
-     * @param string $description
+     * @param string|null $description
      *
      * @return bool
      */
-    public function updateDescription(string $title, string $description)
+    public function updateDescription(string $title, $description)
     {
         return $this->update([
             'title' => $title,

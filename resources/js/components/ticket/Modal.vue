@@ -27,7 +27,7 @@
                             </button>
                         </div>
                         <div class="mt-3">
-                            <div v-if="hasDescription">{{ticket.description}}</div>
+                            <div v-if="hasDescription"><vue-markdown>{{ticket.description}}</vue-markdown></div>
                             <a @click.prevent="showForm" class="d-block p-3 rounded border border-primary" href="#" style="border-style: dashed !important;" v-else>
                                 Нажми на меня, чтоб добавить описание
                             </a>
@@ -176,12 +176,13 @@
     import users from '../../mixins/users';
     import moment from 'moment';
     import UpdateForm from './UpdateForm';
+    import VueMarkdown from 'vue-markdown';
 
     moment.locale('ru');
 
     export default {
         name: "Modal",
-        components: {UpdateForm, Comments},
+        components: {UpdateForm, VueMarkdown, Comments},
         mixins: [users],
         props: {
             id: {
