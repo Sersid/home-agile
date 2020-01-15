@@ -34,7 +34,7 @@
                 </button>
             </div>
         </form>
-        <div class="p-3 border-faded border-left-0 border-right-0 border-bottom-0" v-if="description.length > 0">
+        <div class="p-3 border-faded border-left-0 border-right-0 border-bottom-0" v-if="hasDescription">
             <vue-markdown :source="description"/>
         </div>
     </div>
@@ -61,6 +61,9 @@
         computed: {
             hasError() {
                 return Object.keys(this.error).length !== 0;
+            },
+            hasDescription() {
+                return this.description !== null && this.description.length > 0;
             },
             rows() {
                 let lines = this.description === null ? 0 : this.description.split("\n").length;
