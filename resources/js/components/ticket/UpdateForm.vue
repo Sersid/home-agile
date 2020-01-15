@@ -63,7 +63,7 @@
                 return Object.keys(this.error).length !== 0;
             },
             rows() {
-                let lines = this.description.split("\n").length;
+                let lines = this.description === null ? 0 : this.description.split("\n").length;
                 return lines > 3 ? lines : 3;
             }
         },
