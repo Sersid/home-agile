@@ -1,8 +1,8 @@
 <template>
     <b-dropdown :text="priority.name" :variant="'outline-' + priority.color">
-        <b-dropdown-item :key="index" @click.prevent="save(index)" href="#" v-for="(s, index) in priorities">
+        <b-dropdown-item :key="index" @click.prevent="save(index)" href="#" v-for="(p, index) in priorities">
             <span v-if="parseInt(index) === data.priority">&blacktriangleright;</span>
-            <span :class="'text-' + s.color">{{s.name}}</span>
+            <span :class="'text-' + p.color">{{p.name}}</span>
         </b-dropdown-item>
     </b-dropdown>
 </template>
