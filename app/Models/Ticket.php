@@ -212,4 +212,20 @@ class Ticket extends Eloquent
             'updated_user_id' => Auth::id(),
         ]);
     }
+
+    /**
+     * Обновление срока
+     *
+     * @param $term
+     *
+     * @return bool
+     */
+    public function updateTerm($term)
+    {
+        $term = !empty($term) ? date('Y-m-d', strtotime($term)) : null;
+        return $this->update([
+            'term' => $term,
+            'updated_user_id' => Auth::id(),
+        ]);
+    }
 }

@@ -6,6 +6,7 @@ use App\Http\Requests\Ticket\ExecutorRequest;
 use App\Http\Requests\Ticket\PriorityRequest;
 use App\Http\Requests\Ticket\QuickAddRequest;
 use App\Http\Requests\Ticket\StatusRequest;
+use App\Http\Requests\Ticket\TermRequest;
 use App\Http\Requests\Ticket\UpdateRequest;
 use App\Models\Ticket;
 use App\Repositories\TicketRepository;
@@ -140,6 +141,20 @@ class TicketController extends BaseController
     public function executor(ExecutorRequest $request, Ticket $ticket)
     {
         $ticket->updateExecutor($request->get('executor_id'));
+        return $ticket;
+    }
+
+    /**
+     * Обновление срока
+     *
+     * @param TermRequest $request
+     * @param Ticket      $ticket
+     *
+     * @return Ticket
+     */
+    public function term(TermRequest $request, Ticket $ticket)
+    {
+        $ticket->updateTerm($request->get('term'));
         return $ticket;
     }
 }

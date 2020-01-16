@@ -89,7 +89,7 @@
                                 Главная <span class='fw-300'>страница</span>
                             </h1>
                         </div>
-                        <wishes></wishes>
+                        <wishes/>
                     </main>
                     <!-- this overlay is activated only when mobile menu is triggered -->
                 </div>

@@ -50,10 +50,7 @@
                             </div>
                             <div class="col-3">
                                 <div class="text-muted mb-2">Срок</div>
-                                <button class="btn btn-icon fs-lg mr-2" type="button">
-                                    <i class="fal fa-calendar-alt"></i>
-                                </button>
-                                9 декабря 2019
+                                <term-changer :ticket="ticket" @process="showProcessLoader" />
                             </div>
                             <div class="col-3">
                                 <div class="text-muted mb-2">Статус</div>
@@ -169,13 +166,14 @@
     import StatusChanger from './StatusChanger';
     import PriorityChanger from './PriorityChanger';
     import ExecutorChanger from './ExecutorChanger';
+    import TermChanger from './TermChanger';
     import Comments from './Comments';
 
     moment.locale('ru');
 
     export default {
         name: "Modal",
-        components: {UpdateForm, VueMarkdown, StatusChanger, PriorityChanger, ExecutorChanger, Comments},
+        components: {UpdateForm, VueMarkdown, StatusChanger, PriorityChanger, ExecutorChanger, TermChanger, Comments},
         mixins: [users, statuses],
         props: {
             id: {
