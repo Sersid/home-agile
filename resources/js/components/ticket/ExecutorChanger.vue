@@ -14,6 +14,7 @@
             <span class="profile-image-md rounded-circle d-inline-block" style="background-image: url(img/demo/avatars/avatar-g.png); background-size: cover;"></span>
             <span class="align-self-center p-2">{{getUser(data.executor_id).name}}</span>
         </a>
+        <div v-else class="text-muted pt-2">не указан</div>
     </div>
 </template>
 
