@@ -11,20 +11,20 @@
             <div class="row">
                 <div class="col-4" v-for="(tickets, index) in ticketsFormatted">
                     <transition-group enter-active-class="animated zoomIn" leave-active-class="animated zoomOut">
-                        <div :key="ticket.id" @click.prevent="view(ticket.id)" class="card mb-g cursor-pointer" v-for="ticket in tickets">
+                        <div :key="ticket.id" @click.prevent="view(ticket.id)" class="card mb-g cursor-pointer border border-bottom-0 border-top-0 border-right-0" :class="'border-' + getStatus(ticket.status).color" v-for="ticket in tickets">
                             <div class="card-body p-3">
                                 <a href="#">ticket-{{ticket.id}}</a> {{ticket.title}}
                             </div>
                         </div>
                     </transition-group>
                     <div v-if='parseInt(index) === 0'>
-                        <quick-add @added="added" />
+                        <quick-add @added="added"/>
                     </div>
                 </div>
             </div>
-            <modal :ticket-id="ticketId" id="detail" @updated="updated"/>
+            <modal :ticket-id="ticketId" @updated="updated" id="detail"/>
         </div>
-        <div v-else class="text-center">
+        <div class="text-center" v-else>
             <b-spinner label="Загрузка..." style="width: 8rem; height: 8rem;" type="grow" variant="warning"></b-spinner>
         </div>
     </div>
@@ -33,13 +33,16 @@
 <script>
     import Modal from './Modal';
     import QuickAdd from './QuickAdd';
+    import statuses from '../../mixins/statuses';
+
     export default {
         name: "Agile",
         components: {QuickAdd, Modal},
+        mixins: [statuses],
         data() {
             return {
                 columns: [
-                    {name: 'В очереди', color: 'secondary'},
+                    {name: 'Новые', color: 'info'},
                     {name: 'В работе', color: 'warning'},
                     {name: 'Выполнено', color: 'success'}
                 ],
