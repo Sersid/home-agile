@@ -8,7 +8,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-4" v-for="tickets in ticketsFormatted">
+            <div class="col-4" v-for="(tickets, index) in ticketsFormatted">
                 <transition-group enter-active-class="animated zoomIn" leave-active-class="animated zoomOut">
                     <div :key="ticket.id" @click.prevent="view(ticket.id)" class="card mb-g cursor-pointer" v-for="ticket in tickets">
                         <div class="card-body p-3">
@@ -16,6 +16,9 @@
                         </div>
                     </div>
                 </transition-group>
+                <div v-if='parseInt(index) === 0'>
+                    <quick-add @added="added" />
+                </div>
             </div>
         </div>
         <modal :ticket-id="ticketId" id="detail" @updated="updated"/>
@@ -24,9 +27,10 @@
 
 <script>
     import Modal from './Modal';
+    import QuickAdd from './QuickAdd';
     export default {
         name: "Agile",
-        components: {Modal},
+        components: {QuickAdd, Modal},
         data() {
             return {
                 columns: [
@@ -89,6 +93,9 @@
             view(id) {
                 this.ticketId = id;
                 this.$bvModal.show('detail');
+            },
+            added(ticket) {
+                this.tickets.push(ticket);
             },
             updated(ticket) {
                 let key = this.getTicketKey(ticket.id);

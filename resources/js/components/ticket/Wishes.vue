@@ -8,34 +8,7 @@
         </div>
         <div class="panel-container">
             <div class="panel-content">
-                <form @submit.prevent="add">
-                    <div class="input-group mb-3">
-                        <input :class="{'is-invalid': $v.title.$error}"
-                               :disabled="showButtonLoader"
-                               @input="$v.title.$touch()"
-                               autofocus
-                               class="form-control form-control-lg"
-                               placeholder="Я хочу..."
-                               type="text"
-                               v-model="title"
-                        >
-                        <div class="input-group-append">
-                            <button :disabled="showButtonLoader" class="btn btn-primary" type="submit">
-                                <b-spinner label="Загрузка..." small v-if="showButtonLoader"></b-spinner>
-                                Добавить
-                            </button>
-                        </div>
-                    </div>
-                    <div class="alert alert-danger" role="alert" v-if="$v.title.$error">
-                        Напиши хоть что-нибудь :(
-                    </div>
-                    <div class="alert alert-danger" role="alert" v-if="hasError">
-                        {{error.message}}
-                        <div v-for="field in error.errors">
-                            <div v-for="err in field">{{err}}</div>
-                        </div>
-                    </div>
-                </form>
+                <quick-add @added="add" />
                 <div class="list-group">
                     <a
                             :key="ticket.id"
@@ -56,11 +29,11 @@
 <script>
     import User from '../User'
     import Modal from './Modal'
-    import {required} from 'vuelidate/lib/validators'
+    import QuickAdd from './QuickAdd';
 
     export default {
         name: "Wishes",
-        components: {User, Modal},
+        components: {User, Modal, QuickAdd},
         props: {
             timer: {
                 type: Number,
@@ -70,12 +43,9 @@
         data() {
             return {
                 tickets: Array,
-                title: '',
-                showButtonLoader: false,
                 showTicketsLoader: true,
                 showModal: false,
                 ticketId: null,
-                error: {},
                 interval: ''
             }
         },
@@ -98,33 +68,12 @@
                     this.showTicketsLoader = false;
                 });
             },
-            add() {
-                this.$v.$touch();
-                if (!this.$v.$invalid) {
-                    this.showButtonLoader = true;
-                    this.error = {};
-                    axios.post('ticket', {title: this.title})
-                        .then(response => {
-                            this.tickets.unshift(response.data);
-                            this.title = '';
-                            this.$v.$reset();
-                        })
-                        .catch(e => {
-                            this.error = e.response.data;
-                        })
-                        .finally(() => {
-                            this.showButtonLoader = false;
-                        });
-                }
+            add(ticket) {
+                this.tickets.unshift(ticket);
             },
             view(id) {
                 this.ticketId = id;
                 this.$bvModal.show('detail');
-            }
-        },
-        validations: {
-            title: {
-                required
             }
         },
         beforeDestroy() {
