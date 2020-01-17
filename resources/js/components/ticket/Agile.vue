@@ -7,21 +7,26 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-4" v-for="(tickets, index) in ticketsFormatted">
-                <transition-group enter-active-class="animated zoomIn" leave-active-class="animated zoomOut">
-                    <div :key="ticket.id" @click.prevent="view(ticket.id)" class="card mb-g cursor-pointer" v-for="ticket in tickets">
-                        <div class="card-body p-3">
-                            <a href="#">ticket-{{ticket.id}}</a> {{ticket.title}}
+        <div v-if="loaded">
+            <div class="row">
+                <div class="col-4" v-for="(tickets, index) in ticketsFormatted">
+                    <transition-group enter-active-class="animated zoomIn" leave-active-class="animated zoomOut">
+                        <div :key="ticket.id" @click.prevent="view(ticket.id)" class="card mb-g cursor-pointer" v-for="ticket in tickets">
+                            <div class="card-body p-3">
+                                <a href="#">ticket-{{ticket.id}}</a> {{ticket.title}}
+                            </div>
                         </div>
+                    </transition-group>
+                    <div v-if='parseInt(index) === 0'>
+                        <quick-add @added="added" />
                     </div>
-                </transition-group>
-                <div v-if='parseInt(index) === 0'>
-                    <quick-add @added="added" />
                 </div>
             </div>
+            <modal :ticket-id="ticketId" id="detail" @updated="updated"/>
         </div>
-        <modal :ticket-id="ticketId" id="detail" @updated="updated"/>
+        <div v-else class="text-center">
+            <b-spinner label="Загрузка..." style="width: 8rem; height: 8rem;" type="grow" variant="warning"></b-spinner>
+        </div>
     </div>
 </template>
 
@@ -39,7 +44,8 @@
                     {name: 'Выполнено', color: 'success'}
                 ],
                 tickets: [],
-                ticketId: null
+                ticketId: null,
+                loaded: false
             };
         },
         created() {
@@ -88,6 +94,7 @@
             fetch() {
                 axios.get('ticket').then(response => {
                     this.tickets = response.data;
+                    this.loaded = true;
                 });
             },
             view(id) {

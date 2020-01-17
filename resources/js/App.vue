@@ -86,7 +86,7 @@
                     <main class="page-content">
                         <div class="subheader">
                             <h1 class="subheader-title">
-                                Главная <span class='fw-300'>страница</span>
+                                Доска
                             </h1>
                         </div>
                         <agile />
