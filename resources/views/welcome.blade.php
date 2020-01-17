@@ -19,6 +19,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/vendors.bundle.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.bundle.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <!-- Scripts -->
     <script>
         const api_token = "{{ $token }}";

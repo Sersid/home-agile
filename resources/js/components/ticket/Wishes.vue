@@ -3,14 +3,14 @@
         <div class="panel-hdr">
             <h2>Новые тикеты</h2>
             <div class="panel-toolbar">
-                <span v-if="showTicketsLoader" class="spinner-border spinner-border-sm"><span class="sr-only">Загрузка...</span></span>
+                <span class="spinner-border spinner-border-sm" v-if="showTicketsLoader"><span class="sr-only">Загрузка...</span></span>
             </div>
         </div>
         <div class="panel-container">
             <div class="panel-content">
                 <form @submit.prevent="add">
                     <div class="input-group mb-3">
-                        <input :class="{'is-invalid':  $v.title.$error}"
+                        <input :class="{'is-invalid': $v.title.$error}"
                                :disabled="showButtonLoader"
                                @input="$v.title.$touch()"
                                autofocus
@@ -26,10 +26,10 @@
                             </button>
                         </div>
                     </div>
-                    <div v-if="$v.title.$error" class="alert alert-danger" role="alert">
+                    <div class="alert alert-danger" role="alert" v-if="$v.title.$error">
                         Напиши хоть что-нибудь :(
                     </div>
-                    <div v-if="hasError" class="alert alert-danger" role="alert">
+                    <div class="alert alert-danger" role="alert" v-if="hasError">
                         {{error.message}}
                         <div v-for="field in error.errors">
                             <div v-for="err in field">{{err}}</div>

@@ -89,7 +89,8 @@
                                 Главная <span class='fw-300'>страница</span>
                             </h1>
                         </div>
-                        <wishes/>
+<!--                        <wishes/>-->
+                        <agile />
                     </main>
                     <!-- this overlay is activated only when mobile menu is triggered -->
                 </div>
@@ -101,11 +102,13 @@
 
 <script>
     import Wishes from './components/ticket/Wishes'
+    import Agile from './components/ticket/Agile';
 
     export default {
         name: 'app',
         components: {
-            Wishes
+            Wishes,
+            Agile
         },
         created() {
             this.fetchSystem();

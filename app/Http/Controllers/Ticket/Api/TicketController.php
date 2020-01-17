@@ -12,6 +12,7 @@ use App\Models\Ticket;
 use App\Repositories\TicketRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
@@ -35,15 +36,15 @@ class TicketController extends BaseController
     }
 
     /**
-     * Display a listing of the resource.
+     * Тикеты на доску
      *
      * @param TicketRepository $repository
      *
-     * @return Response
+     * @return Builder[]|Collection
      */
     public function index(TicketRepository $repository)
     {
-        //
+        return $repository->getForAgile();
     }
 
     /**

@@ -54,7 +54,7 @@
                             </div>
                             <div class="col-3">
                                 <div class="text-muted mb-2">Статус</div>
-                                <status-changer :ticket="ticket" @process="showProcessLoader" />
+                                <status-changer :ticket="ticket" @process="showProcessLoader" @saved="updated" />
                             </div>
                         </div>
                     </div>
@@ -250,6 +250,7 @@
             updated(ticket) {
                 this.ticket = ticket;
                 this.hideForm();
+                this.$emit('updated', this.ticket);
             },
             showProcessLoader(process) {
                 this.showSaveSpinner = process;
