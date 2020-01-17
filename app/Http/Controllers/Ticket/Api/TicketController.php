@@ -8,7 +8,7 @@ use App\Http\Requests\Ticket\QuickAddRequest;
 use App\Http\Requests\Ticket\StatusRequest;
 use App\Http\Requests\Ticket\TermRequest;
 use App\Http\Requests\Ticket\UpdateRequest;
-use App\Models\Ticket;
+use App\Models\Ticket\Ticket;
 use App\Repositories\TicketRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;

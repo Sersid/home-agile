@@ -22,10 +22,15 @@ Route::middleware('auth:api')
             });
         Route::get('/system', 'Ticket\Api\SystemController@index');
         Route::get('/ticket/last', 'Ticket\Api\TicketController@last');
-        Route::patch('/ticket/status/{ticket}', 'Ticket\Api\TicketController@status')->where('ticket', '[0-9]+');
-        Route::patch('/ticket/priority/{ticket}', 'Ticket\Api\TicketController@priority')->where('ticket', '[0-9]+');
-        Route::patch('/ticket/executor/{ticket}', 'Ticket\Api\TicketController@executor')->where('ticket', '[0-9]+');
-        Route::patch('/ticket/term/{ticket}', 'Ticket\Api\TicketController@term')->where('ticket', '[0-9]+');
+        Route::where(['ticket' => '[0-9]+'])
+            ->group(function () {
+                Route::patch('/ticket/status/{ticket}', 'Ticket\Api\TicketController@status');
+                Route::patch('/ticket/priority/{ticket}', 'Ticket\Api\TicketController@priority');
+                Route::patch('/ticket/executor/{ticket}', 'Ticket\Api\TicketController@executor');
+                Route::patch('/ticket/term/{ticket}', 'Ticket\Api\TicketController@term');
+                Route::get('/ticket/comments/{ticket}', 'Ticket\Api\CommentController@index');
+                Route::post('/ticket/comments', 'Ticket\Api\CommentController@store');
+            });
         Route::apiResources([
             'ticket' => 'Ticket\Api\TicketController',
         ]);

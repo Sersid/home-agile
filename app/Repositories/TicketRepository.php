@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Models\Ticket;
+use App\Models\Ticket\Ticket;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;

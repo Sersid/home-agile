@@ -17,7 +17,6 @@
                             href="#"
                             v-for="ticket in tickets">
                         <span>{{ ticket.title }}</span>
-                        <user :id="ticket.created_user_id"/>
                     </a>
                 </div>
                 <modal :ticket-id="ticketId" id="detail"/>
@@ -27,13 +26,12 @@
 </template>
 
 <script>
-    import User from '../User'
     import Modal from './Modal'
     import QuickAdd from './QuickAdd';
 
     export default {
         name: "Wishes",
-        components: {User, Modal, QuickAdd},
+        components: {Modal, QuickAdd},
         props: {
             timer: {
                 type: Number,
@@ -53,11 +51,6 @@
             this.fetch();
             if (this.timer > 0) {
                 this.interval = setInterval(this.fetch, this.timer);
-            }
-        },
-        computed: {
-            hasError() {
-                return Object.keys(this.error).length !== 0;
             }
         },
         methods: {

@@ -100,13 +100,11 @@
 </template>
 
 <script>
-    import Wishes from './components/ticket/Wishes'
     import Agile from './components/ticket/Agile';
 
     export default {
         name: 'app',
         components: {
-            Wishes,
             Agile
         },
         created() {

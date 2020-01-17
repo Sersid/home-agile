@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Ticket\Comment;
+use App\Models\Ticket\Ticket;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -46,5 +48,13 @@ class User extends Authenticatable
     public function tickets()
     {
         return $this->hasMany(Ticket::class, 'created_user_id');
+    }
+
+    /**
+     * User comments
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'created_user_id');
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Ticket\Api;
 
-use App\Models\Ticket;
+use App\Models\Ticket\Ticket;
 use App\Repositories\UserRepository;
 
 /**

@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Ticket;
+use App\Models\Ticket\Ticket;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 

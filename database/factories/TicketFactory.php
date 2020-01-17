@@ -2,7 +2,7 @@
 
 /** @var Factory $factory */
 
-use App\Models\Ticket;
+use App\Models\Ticket\Ticket;
 use Faker\Generator as Faker;
 use Illuminate\Database\Eloquent\Factory;
 

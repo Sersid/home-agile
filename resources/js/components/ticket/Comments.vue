@@ -1,63 +1,72 @@
 <template>
-    <div>
-        <h4 class="mb-3">Комментарии</h4>
-        <form @submit.prevent="add">
-            <div class="mb-3">
-                <textarea
-                    :class="{'is-invalid':  $v.text.$error || errors.length > 0}"
+    <div class="card mb-g">
+        <div class="px-3 pt-3 pb-2">
+            <h5>Комментарии</h5>
+            <div class="fw-n position-absolute pos-top pos-right mt-3 mr-3" v-if="showCommentsLoader">
+                <b-spinner class="mt-1" label="Загрузка..." small variant="warning"></b-spinner>
+            </div>
+        </div>
+        <div class="border-faded border-left-0 border-right-0 bg-faded p-3">
+            <textarea
+                    :class="{'is-invalid': $v.text.$error}"
                     :disabled="showButtonLoader"
-                    @blur="$v.text.$touch()"
-                    class="form-control"
-                    placeholder="Добавь свой комментарий"
+                    @input="$v.text.$touch()"
+                    @keydown.enter.ctrl="add"
+                    class="form-control rounded-top border-bottom-left-radius-0 border-bottom-right-radius-0 border"
+                    placeholder="Добавить комментарий"
                     rows="3"
-                    v-model="text"
-                ></textarea>
-                <div class="invalid-feedback" v-if="!$v.text.required">
-                    Напиши хоть что-нибудь :(
-                </div>
-                <div class="invalid-feedback" v-if="errors.length > 0">
-                    <div v-for="error in errors">{{error.message}}</div>
+                    v-model="text"/>
+            <div class="d-flex justify-content-end py-2 px-2 bg-white border border-top-0 rounded-bottom">
+                <!--                <button class="btn btn-icon fs-lg mr-2" type="button">-->
+                <!--                    <i class="fal fa-paperclip"></i>-->
+                <!--                </button>-->
+                <button :disabled="showButtonLoader" @click="add" class="btn btn-primary btn-sm ml-auto ml-sm-0">
+                    <b-spinner label="Загрузка..." small v-if="showButtonLoader"></b-spinner>
+                    Отправить
+                </button>
+            </div>
+            <alert-error :error="error"/>
+        </div>
+        <div class="card-body" v-if="comments.length > 0">
+            <div class="d-flex flex-column">
+                <div :key="comment.id" class="d-flex flex-row pt-3 pb-2" v-for="comment in comments">
+                    <span><a class="profile-image rounded-circle d-inline-block" href="#" style="background-image: url(&quot;img/demo/avatars/avatar-j.png&quot;);"></a></span>
+                    <div class="ml-3">
+                        <div class="mb-1">
+                            <a class="fw-700 text-dark" href="#">{{getUser(comment.created_user_id).name}}</a>
+                            <span class="fs-nano text-muted mt-1">{{dateCreate(comment.created_at)}}</span>
+                        </div>
+                        {{comment.text}}
+                    </div>
                 </div>
             </div>
-            <button :disabled="showButtonLoader" class="btn btn-primary" type="submit">
-                <b-spinner label="Загрузка..." small v-if="showButtonLoader"></b-spinner>
-                Добавить
-            </button>
-        </form>
-        <hr>
-        <div class="text-center" v-if="showCommentsLoader">
-            <b-spinner label="Загрузка..."></b-spinner>
         </div>
-        <ul class="list-unstyled" v-if="comments.length > 0">
-            <li class="media mb-4" v-for="comment in comments">
-                <img alt="..." class="mr-3 rounded " src="https://sun9-2.userapi.com/c858428/v858428439/b1c99/u-zy4fEw_ws.jpg?ava=1" style="width:50px;">
-                <div class="media-body">
-                    <div><a href="#">Сережа</a> написал вчера в 20:39</div>
-                    {{comment.text}}
-                </div>
-            </li>
-        </ul>
     </div>
 </template>
 
 <script>
     import {required} from 'vuelidate/lib/validators'
+    import users from '../../mixins/users';
+    import AlertError from '../system/AlertError';
+    import moment from 'moment';
 
     export default {
         name: "Comments",
         props: {
-            ticketId: {
+            id: {
                 type: Number,
                 required: true
             }
         },
-        data: function() {
+        mixins: [users],
+        components: {AlertError},
+        data() {
             return {
                 comments: [],
                 text: '',
                 showButtonLoader: false,
                 showCommentsLoader: true,
-                errors: []
+                error: {}
             }
         },
         validations: {
@@ -67,12 +76,7 @@
         },
         methods: {
             fetch() {
-                this.$http.get('comments', {
-                        params: {
-                            'sort': '-id',
-                            'filter[ticket_id]': this.ticketId
-                        }
-                    })
+                axios.get('/ticket/comments/' + this.id)
                     .then(response => {
                         this.comments = response.data;
                     })
@@ -84,21 +88,24 @@
                 this.$v.$touch();
                 if (!this.$v.$invalid) {
                     this.showButtonLoader = true;
-                    this.errors = [];
-                    this.$http.post('comments', {ticket_id: this.ticketId, text: this.text})
+                    this.error = {};
+                    axios.post('/ticket/comments', {ticket_id: this.id, text: this.text})
                         .then(response => {
                             this.comments.unshift(response.data);
                             this.text = '';
                             this.$v.$reset();
                         })
                         .catch(e => {
-                            this.errors = e.response.data;
+                            this.error = e.response.data;
                         })
                         .finally(() => {
                             this.showButtonLoader = false;
                         });
                 }
-            }
+            },
+            dateCreate(date) {
+                return moment(date).fromNow()
+            },
         },
         created() {
             this.fetch();

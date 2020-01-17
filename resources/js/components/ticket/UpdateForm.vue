@@ -2,12 +2,7 @@
     <div class="card mb-g">
         <form @submit.prevent="save">
             <div class="p-3 border-faded border-left-0 border-right-0  border-top-0">
-                <div class="alert alert-danger" role="alert" v-if="hasError">
-                    {{error.message}}
-                    <div v-for="field in error.errors">
-                        <div v-for="err in field">{{err}}</div>
-                    </div>
-                </div>
+                <alert-error :error="error" />
                 <div class="form-group">
                     <input :class="{'is-invalid':  $v.title.$error}"
                            :disabled="showButtonLoader"
@@ -43,6 +38,7 @@
 <script>
     import {required} from 'vuelidate/lib/validators'
     import VueMarkdown from 'vue-markdown';
+    import AlertError from '../system/AlertError';
 
     export default {
         name: "UpdateForm",
@@ -52,16 +48,13 @@
                 required: true
             }
         },
-        components: {VueMarkdown},
+        components: {VueMarkdown, AlertError},
         created() {
             this.id = this.ticket.id;
             this.title = this.ticket.title;
             this.description = this.ticket.description;
         },
         computed: {
-            hasError() {
-                return Object.keys(this.error).length !== 0;
-            },
             hasDescription() {
                 return this.description !== null && this.description.length > 0;
             },

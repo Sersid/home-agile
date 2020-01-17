@@ -20,20 +20,17 @@
         <div class="alert alert-danger" role="alert" v-if="$v.title.$error">
             Напиши хоть что-нибудь :(
         </div>
-        <div class="alert alert-danger" role="alert" v-if="hasError">
-            {{error.message}}
-            <div v-for="field in error.errors">
-                <div v-for="err in field">{{err}}</div>
-            </div>
-        </div>
+        <alert-error :error="error" />
     </form>
 </template>
 
 <script>
     import {required} from 'vuelidate/lib/validators';
+    import AlertError from '../system/AlertError';
 
     export default {
         name: "QuickAdd",
+        components: {AlertError},
         data() {
             return {
                 title: '',
@@ -60,11 +57,6 @@
                             this.showButtonLoader = false;
                         });
                 }
-            }
-        },
-        computed: {
-            hasError() {
-                return Object.keys(this.error).length !== 0;
             }
         },
         validations: {
