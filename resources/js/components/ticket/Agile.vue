@@ -2,7 +2,7 @@
     <div>
         <div class="row mb-3">
             <div class="col-4" v-for="column in columns">
-                <div :class="'border-' + column.color" class="pb-1 border border-left-0 border-right-0 border-top-0" style="border-width: 4px !important;">
+                <div :class="'border-' + column.color" class="pb-1 border border-left-0 border-right-0 border-top-0 border-4">
                     <h3>{{column.name}}</h3>
                 </div>
             </div>
@@ -11,7 +11,7 @@
             <div class="row">
                 <div class="col-4" v-for="(tickets, index) in ticketsFormatted">
                     <transition-group enter-active-class="animated zoomIn" leave-active-class="animated zoomOut">
-                        <div :key="ticket.id" @click.prevent="view(ticket.id)" class="card mb-g cursor-pointer border border-bottom-0 border-top-0 border-right-0" :class="'border-' + getStatus(ticket.status).color" v-for="ticket in tickets">
+                        <div :key="ticket.id" @click.prevent="view(ticket.id)" class="card mb-g cursor-pointer border border-4 border-bottom-0 border-top-0 border-right-0" :class="'border-' + getStatus(ticket.status).color" v-for="ticket in tickets">
                             <div class="card-body p-3">
                                 <a href="#">ticket-{{ticket.id}}</a> {{ticket.title}}
                             </div>
