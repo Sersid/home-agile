@@ -21,6 +21,12 @@ class TicketRepository extends BaseRepository
     {
         return $this->query()
             ->select(['id', 'title', 'status'])
+            ->whereIn('status', [
+                    Ticket::STATUS_NEW,
+                    Ticket::STATUS_IN_WORK,
+                    Ticket::STATUS_BLOCKED,
+                    Ticket::STATUS_DONE,
+                ])
             ->orderBy('id', 'desc')
             ->get();
     }
