@@ -22,7 +22,7 @@
                 return this.getUser(this.id);
             },
             className() {
-                return 'profile-image' + (this.size.length > 0 ? '-' + this.size : '');
+                return 'profile-image' + (typeof this.size !== 'undefined' ? '-' + this.size : '');
             }
         }
     }
