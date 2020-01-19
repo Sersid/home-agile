@@ -30,7 +30,7 @@
         <div class="card-body" v-if="comments.length > 0">
             <div class="d-flex flex-column">
                 <div :key="comment.id" class="d-flex flex-row pt-3 pb-2" v-for="comment in comments">
-                    <span><a class="profile-image rounded-circle d-inline-block" href="#" style="background-image: url(&quot;img/demo/avatars/avatar-j.png&quot;);"></a></span>
+                    <span><a class="d-inline-block" href="#"><avatar :id="comment.created_user_id" /></a></span>
                     <div class="ml-3">
                         <div class="mb-1">
                             <a class="fw-700 text-dark" href="#">{{getUser(comment.created_user_id).name}}</a>
@@ -49,6 +49,7 @@
     import users from '../../mixins/users';
     import AlertError from '../system/AlertError';
     import moment from 'moment';
+    import Avatar from '../system/Avatar';
 
     export default {
         name: "Comments",
@@ -59,7 +60,7 @@
             }
         },
         mixins: [users],
-        components: {AlertError},
+        components: {Avatar, AlertError},
         data() {
             return {
                 comments: [],

@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 
 /**
  * Class User
+ * @property int $id
  * @package App\Models
  */
 class User extends Authenticatable
@@ -41,6 +42,17 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Аватар
+     * @return string
+     */
+    public function avatar()
+    {
+        $avatarPath = '/upload/avatars/user-' . $this->id . '.jpg';
+        $noAvatarPath = '/upload/avatars/no-avatar.png';
+        return url(is_file(public_path() . $avatarPath) ? $avatarPath : $noAvatarPath);
+    }
 
     /**
      * User tickets

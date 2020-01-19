@@ -7,11 +7,11 @@
             </template>
             <b-dropdown-item :key="index" @click.prevent="save(index)" href="#" v-for="(u, index) in users">
                 <span v-if="parseInt(index) === data.executor_id">&blacktriangleright;</span>
-                {{u.name}}
+                <avatar :id="u.id" size="sm" class="mr-2" />{{u.name}}
             </b-dropdown-item>
         </b-dropdown>
         <a v-if="hasExecutor" class="d-flex" href="#">
-            <span class="profile-image-md rounded-circle d-inline-block" style="background-image: url(img/demo/avatars/avatar-g.png); background-size: cover;"></span>
+            <span class="d-inline-block"><avatar :id="data.executor_id" size="md" /></span>
             <span class="align-self-center p-2">{{getUser(data.executor_id).name}}</span>
         </a>
         <div v-else class="text-muted pt-2">не указан</div>
@@ -20,6 +20,7 @@
 
 <script>
     import users from '../../mixins/users';
+    import Avatar from '../system/Avatar';
     export default {
         name: "ExecutorChanger",
         mixins: [users],
@@ -29,6 +30,7 @@
                 required: true
             }
         },
+        components: {Avatar},
         data() {
             return {
                 data: Object

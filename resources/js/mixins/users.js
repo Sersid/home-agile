@@ -2,7 +2,7 @@ export default {
     methods: {
         getUser(id) {
             if (typeof this.users[id] === 'undefined') {
-                return  {name: ''};
+                return  {name: '', avatar: '/upload/avatars/no-avatar.png'};
             }
             return this.users[id];
         }

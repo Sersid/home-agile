@@ -20,6 +20,7 @@ class SystemController extends BaseController
             'statuses' => Ticket::getStatuses(),
             'priorities' => Ticket::getPriorities(),
             'users' => (new UserRepository)->getAll(),
+            'user' => \Auth::user(),
         ];
     }
 }

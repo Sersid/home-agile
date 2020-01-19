@@ -23,6 +23,7 @@ class UserRepository extends BaseRepository
             ->get();
         foreach ($users as $user) {
             $return[$user->id] = $user;
+            $return[$user->id]['avatar'] = $user->avatar();
         }
         return $return;
     }
