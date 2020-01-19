@@ -59,11 +59,11 @@
 <!--                            </ul>-->
 <!--                        </div>-->
                         <!-- DOC: mobile button appears during mobile width -->
-                        <div class="hidden-lg-up">
-                            <a class="header-btn btn press-scale-down" data-action="toggle" data-class="mobile-nav-on" href="#">
-                                <i class="ni ni-menu"></i>
-                            </a>
-                        </div>
+<!--                        <div class="hidden-lg-up">-->
+<!--                            <a class="header-btn btn press-scale-down" data-action="toggle" data-class="mobile-nav-on" href="#">-->
+<!--                                <i class="ni ni-menu"></i>-->
+<!--                            </a>-->
+<!--                        </div>-->
                         <div class="ml-auto d-flex">
                             <!-- app settings -->
 <!--                            <div class="hidden-md-down">-->

@@ -20,7 +20,7 @@
                 <!--                <button class="btn btn-icon fs-lg mr-2" type="button">-->
                 <!--                    <i class="fal fa-paperclip"></i>-->
                 <!--                </button>-->
-                <button :disabled="showButtonLoader" @click="add" class="btn btn-primary btn-sm ml-auto ml-sm-0">
+                <button :disabled="showButtonLoader" @click="add" class="btn btn-primary ml-auto ml-sm-0">
                     <b-spinner label="Загрузка..." small v-if="showButtonLoader"></b-spinner>
                     Отправить
                 </button>

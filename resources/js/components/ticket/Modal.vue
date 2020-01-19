@@ -15,18 +15,18 @@
             <div v-else>
                 <div class="card mb-g" v-if="!showEditForm">
                     <div class="card-body p-3">
+                        <div class="fw-n float-right ml-3">
+                            <b-spinner v-if="showSaveSpinner" label="Сохранение..." small variant="warning" class="mt-1"></b-spinner>
+                            <button v-else @click.prevent="showForm" class="btn btn-outline-default" type="button">
+                                <span class="text-muted"><i class="fal fa-pen-alt"></i></span>
+                            </button>
+                        </div>
                         <h5 :class="'text-' + getStatus(ticket.status).color" class="mb-0">
                             <small class="fs-nano mt-0 mb-2 text-muted">
                                 <span>Создала <a href="#">{{author}}</a> {{dateCreate}}</span><span v-if="hasUpdated">, обновил <a href="#">{{redactor}}</a> {{dateUpdate}}</span>
                             </small>
                             {{ticket.title}}
                         </h5>
-                        <div class="fw-n position-absolute pos-top pos-right mt-3 mr-3">
-                            <b-spinner v-if="showSaveSpinner" label="Сохранение..." small variant="warning" class="mt-1"></b-spinner>
-                            <button v-else @click.prevent="showForm" class="btn btn-outline-default" type="button">
-                                <span class="text-muted"><i class="fal fa-pen-alt"></i></span>
-                            </button>
-                        </div>
                         <div class="mt-3">
                             <div v-if="hasDescription"><vue-markdown>{{ticket.description}}</vue-markdown></div>
                             <a @click.prevent="showForm" class="d-block p-3 rounded border border-primary" href="#" style="border-style: dashed !important;" v-else>
@@ -40,19 +40,19 @@
                 <div class="card mb-g">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-3">
+                            <div class="col-lg-3 col-6 mb-3">
                                 <div class="text-muted mb-2">Исполнитель</div>
                                 <executor-changer :ticket="ticket" @process="showProcessLoader"/>
                             </div>
-                            <div class="col-3">
+                            <div class="col-lg-3 col-6 mb-3">
                                 <div class="text-muted mb-2">Приоритет</div>
                                 <priority-changer :ticket="ticket" @process="showProcessLoader" />
                             </div>
-                            <div class="col-3">
+                            <div class="col-lg-3 col-6 mb-3">
                                 <div class="text-muted mb-2">Срок</div>
                                 <term-changer :ticket="ticket" @process="showProcessLoader" />
                             </div>
-                            <div class="col-3">
+                            <div class="col-lg-3 col-6 mb-3">
                                 <div class="text-muted mb-2">Статус</div>
                                 <status-changer :ticket="ticket" @process="showProcessLoader" @saved="updated" />
                             </div>
