@@ -17,8 +17,8 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Styles -->
-    <link href="{{ asset('css/vendors.bundle.css', env('APP_ENABLE_SSL')) }}" rel="stylesheet">
-    <link href="{{ asset('css/app.bundle.css', env('APP_ENABLE_SSL')) }}" rel="stylesheet">
+    <link href="{{ asset('css/vendors.bundle.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/app.bundle.css') }}" rel="stylesheet">
 </head>
 <body>
 <div class="pt-5">
