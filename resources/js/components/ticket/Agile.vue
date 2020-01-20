@@ -10,7 +10,7 @@
         </div>
         <div v-if="loaded">
             <div class="row">
-                <div class="col-lg-4" v-for="(tickets, index) in ticketsFormatted">
+                <div class="col-lg-4" v-for="tickets in ticketsFormatted">
                     <transition-group enter-active-class="animated zoomIn" leave-active-class="animated zoomOut">
                         <div :key="ticket.id" @click.prevent="view(ticket.id)" class="card mb-g cursor-pointer border border-4 border-bottom-0 border-top-0 border-right-0" :class="'border-' + getStatus(ticket.status).color" v-for="ticket in tickets">
                             <div class="card-body p-3">
@@ -115,6 +115,7 @@
             },
             added(ticket) {
                 this.tickets.push(ticket);
+                this.view(ticket.id);
             },
             updated(ticket) {
                 let key = this.getTicketKey(ticket.id);
