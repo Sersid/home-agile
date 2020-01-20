@@ -42,15 +42,15 @@
                         <div class="row">
                             <div class="col-lg-3 col-6 mb-3">
                                 <div class="text-muted mb-2">Исполнитель</div>
-                                <executor-changer :ticket="ticket" @process="showProcessLoader"/>
+                                <executor-changer :ticket="ticket" @process="showProcessLoader" @saved="updated" />
                             </div>
                             <div class="col-lg-3 col-6 mb-3">
                                 <div class="text-muted mb-2">Приоритет</div>
-                                <priority-changer :ticket="ticket" @process="showProcessLoader" />
+                                <priority-changer :ticket="ticket" @process="showProcessLoader" @saved="updated" />
                             </div>
                             <div class="col-lg-3 col-6 mb-3">
                                 <div class="text-muted mb-2">Срок</div>
-                                <term-changer :ticket="ticket" @process="showProcessLoader" />
+                                <term-changer :ticket="ticket" @process="showProcessLoader" @saved="updated" />
                             </div>
                             <div class="col-lg-3 col-6 mb-3">
                                 <div class="text-muted mb-2">Статус</div>

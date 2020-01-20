@@ -20,7 +20,7 @@ class TicketRepository extends BaseRepository
     public function getForAgile()
     {
         return $this->query()
-            ->select(['id', 'title', 'status'])
+            ->select(['id', 'title', 'priority', 'status'])
             ->whereIn('status', [
                     Ticket::STATUS_NEW,
                     Ticket::STATUS_IN_WORK,

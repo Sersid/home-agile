@@ -65,11 +65,20 @@
                     }
                     result[column].push(this.tickets[i]);
                 }
-                result.sort(function(a, b) {
-                    console.log(a);
-                    console.log(b);
-                    return 0;
-                });
+                for (let i = 0; i < result.length; i++) {
+                    result[i].sort(function(a, b) {
+                        if (a.priority > b.priority) {
+                            return -1;
+                        } else if (a.priority === b.priority) {
+                            if (a.id < b.id) {
+                                return -1;
+                            }
+                            return 0;
+                        } else {
+                            return 1;
+                        }
+                    });
+                }
                 return result;
             }
         },
