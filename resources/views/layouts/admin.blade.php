@@ -5,9 +5,9 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/app.css', env('APP_ENABLE_SSL')) }}" rel="stylesheet">
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/app.js', env('APP_ENABLE_SSL')) }}" defer></script>
 </head>
 <body>
 <main class="container pt-5">

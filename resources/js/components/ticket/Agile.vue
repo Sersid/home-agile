@@ -54,7 +54,7 @@
         },
         computed: {
             ticketsFormatted: function() {
-                let result = {};
+                let result = [];
                 for (let i = 0; i < this.columns.length; i++) {
                     result[i] = [];
                 }
@@ -63,11 +63,13 @@
                     if (column === -1) {
                         continue;
                     }
-                    if (typeof result[column] === 'undefined') {
-                        result[column] = [];
-                    }
                     result[column].push(this.tickets[i]);
                 }
+                result.sort(function(a, b) {
+                    console.log(a);
+                    console.log(b);
+                    return 0;
+                });
                 return result;
             }
         },
