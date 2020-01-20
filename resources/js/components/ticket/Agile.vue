@@ -1,7 +1,14 @@
 <template>
     <div>
         <quick-add @added="added"/>
-        <div class="row mb-3 mt-5">
+        <div class="mb-3 mt-5 hidden-lg-up">
+            <ul class="nav nav-tabs nav-tabs-clean nav-fill">
+                <li @click="showColumn(index)" v-for="(column, index) in columns" :class="[activeTab === index ? '' : 'border-bottom-0', 'border-' + column.color]" class="nav-item border border-2 border-left-0 border-right-0 border-top-0">
+                    {{column.name}}
+                </li>
+            </ul>
+        </div>
+        <div class="row mb-3 mt-5 hidden-xs-down">
             <div class="col-4" v-for="column in columns">
                 <div :class="'border-' + column.color" class="pb-1 border border-left-0 border-right-0 border-top-0 border-4">
                     <h3>{{column.name}}</h3>
@@ -9,7 +16,18 @@
             </div>
         </div>
         <div v-if="loaded">
-            <div class="row">
+            <div class="row hidden-lg-up">
+                <div class="col-lg-4" :key="index" v-for="(tickets, index) in ticketsFormatted" v-show="index === activeTab">
+                    <transition-group enter-active-class="animated zoomIn" leave-active-class="animated zoomOut">
+                        <div :key="ticket.id" @click.prevent="view(ticket.id)" class="card mb-g cursor-pointer border border-4 border-bottom-0 border-top-0 border-right-0" :class="'border-' + getStatus(ticket.status).color" v-for="ticket in tickets">
+                            <div class="card-body p-3">
+                                <a href="#">ticket-{{ticket.id}}</a> {{ticket.title}}
+                            </div>
+                        </div>
+                    </transition-group>
+                </div>
+            </div>
+            <div class="row hidden-xs-down">
                 <div class="col-lg-4" v-for="tickets in ticketsFormatted">
                     <transition-group enter-active-class="animated zoomIn" leave-active-class="animated zoomOut">
                         <div :key="ticket.id" @click.prevent="view(ticket.id)" class="card mb-g cursor-pointer border border-4 border-bottom-0 border-top-0 border-right-0" :class="'border-' + getStatus(ticket.status).color" v-for="ticket in tickets">
@@ -46,7 +64,8 @@
                 ],
                 tickets: [],
                 ticketId: null,
-                loaded: false
+                loaded: false,
+                activeTab: 0,
             };
         },
         created() {
@@ -83,6 +102,9 @@
             }
         },
         methods: {
+            showColumn(index) {
+                this.activeTab = index;
+            },
             getTicketKey(id) {
                 for (let i = 0; i < this.tickets.length; i++) {
                     if (this.tickets[i].id === id) {
