@@ -17,14 +17,14 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Styles -->
-    <link href="{{ asset('css/vendors.bundle.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/app.bundle.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/vendors.bundle.css', env('APP_ENABLE_SSL')) }}" rel="stylesheet">
+    <link href="{{ asset('css/app.bundle.css', env('APP_ENABLE_SSL')) }}" rel="stylesheet">
+    <link href="{{ asset('css/app.css', env('APP_ENABLE_SSL')) }}" rel="stylesheet">
     <!-- Scripts -->
     <script>
         const api_token = "{{ $token }}";
     </script>
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/app.js', env('APP_ENABLE_SSL')) }}" defer></script>
 </head>
 <body>
 <div id="app"></div>
