@@ -89,12 +89,7 @@
                     <!-- END Page Header -->
                     <!-- the #js-page-content id is needed for some plugins to initialize -->
                     <main class="page-content">
-                        <div class="subheader">
-                            <h1 class="subheader-title">
-                                Доска
-                            </h1>
-                        </div>
-                        <agile />
+                        <router-view />
                     </main>
                     <!-- this overlay is activated only when mobile menu is triggered -->
                 </div>
@@ -105,12 +100,10 @@
 </template>
 
 <script>
-    import Agile from './components/ticket/Agile';
     import Avatar from './components/system/Avatar';
     export default {
         name: 'app',
         components: {
-            Agile,
             Avatar
         },
         data: function() {

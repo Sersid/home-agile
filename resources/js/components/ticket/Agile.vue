@@ -1,5 +1,10 @@
 <template>
     <div>
+        <div class="subheader">
+            <h1 class="subheader-title">
+                Доска
+            </h1>
+        </div>
         <quick-add @added="added"/>
         <div class="mb-3 mt-5 hidden-lg-up">
             <ul class="nav nav-tabs nav-tabs-clean nav-fill">

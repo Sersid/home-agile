@@ -25,18 +25,27 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+import VueRouter from 'vue-router'
 import Vuelidate from 'vuelidate';
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import store from './store'
 import App from './App.vue'
+import Agile from './components/ticket/Agile';
 
+Vue.use(VueRouter);
 Vue.use(Vuelidate);
-
 Vue.use(BootstrapVue);
+
+let router = new VueRouter({
+    routes: [
+        {path: '/', component: Agile}
+    ]
+});
 
 new Vue({
     el: '#app',
+    router: router,
     store,
     render: h => h(App)
 });
