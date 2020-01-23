@@ -2,6 +2,7 @@
 
 namespace App\Models\Ticket;
 
+use App\Models\User;
 use Auth;
 use Eloquent;
 use Illuminate\Database\Eloquent\Model;
@@ -9,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
+ * Class Ticket
  * Ticket model
  * @property integer $id
  * @property string  $created_at
@@ -22,7 +24,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property integer $status
  * @property integer $created_user_id
  * @property integer $updated_user_id
- * @package App\Models
+ * @package App\Models\Ticket
  */
 class Ticket extends Eloquent
 {
@@ -52,6 +54,7 @@ class Ticket extends Eloquent
     protected $fillable = [
         'title',
         'description',
+        'agile_id',
         'term',
         'executor_id',
         'priority',
@@ -141,13 +144,15 @@ class Ticket extends Eloquent
 
     /**
      * @param string $title
+     * @param null|string   $agile_id
      *
      * @return Ticket|Model
      */
-    public function quickAdd(string $title)
+    public function quickAdd(string $title, $agile_id = null)
     {
         return self::create([
             'title' => $title,
+            'agile_id' => $agile_id,
             'priority' => self::PRIORITY_LOW,
             'status' => self::STATUS_NEW,
             'created_user_id' => Auth::id(),
@@ -216,7 +221,7 @@ class Ticket extends Eloquent
     /**
      * Обновление срока
      *
-     * @param $term
+     * @param int $term
      *
      * @return bool
      */
@@ -225,6 +230,21 @@ class Ticket extends Eloquent
         $term = !empty($term) ? date('Y-m-d', strtotime($term)) : null;
         return $this->update([
             'term' => $term,
+            'updated_user_id' => Auth::id(),
+        ]);
+    }
+
+    /**
+     * Обновление доски
+     *
+     * @param int $id
+     *
+     * @return bool
+     */
+    public function updateAgile($id)
+    {
+        return $this->update([
+            'agile_id' => $id,
             'updated_user_id' => Auth::id(),
         ]);
     }

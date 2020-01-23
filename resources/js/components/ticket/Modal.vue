@@ -16,8 +16,8 @@
                 <div class="card mb-g" v-if="!showEditForm">
                     <div class="card-body p-3">
                         <div class="fw-n float-right ml-3">
-                            <b-spinner v-if="showSaveSpinner" label="Сохранение..." small variant="warning" class="mt-1"></b-spinner>
-                            <button v-else @click.prevent="showForm" class="btn btn-outline-default" type="button">
+                            <b-spinner class="mt-1" label="Сохранение..." small v-if="showSaveSpinner" variant="warning"></b-spinner>
+                            <button @click.prevent="showForm" class="btn btn-outline-default" type="button" v-else>
                                 <span class="text-muted"><i class="fal fa-pen-alt"></i></span>
                             </button>
                         </div>
@@ -28,38 +28,51 @@
                             {{ticket.title}}
                         </h5>
                         <div class="mt-3">
-                            <div v-if="hasDescription"><vue-markdown>{{ticket.description}}</vue-markdown></div>
+                            <div v-if="hasDescription">
+                                <vue-markdown>{{ticket.description}}</vue-markdown>
+                            </div>
                             <a @click.prevent="showForm" class="d-block p-3 rounded border border-primary" href="#" style="border-style: dashed !important;" v-else>
                                 Нажми на меня, чтоб добавить описание
                             </a>
                         </div>
                     </div>
                 </div>
-                <update-form v-if="showEditForm" :ticket="ticket" @cancel="hideForm" @saved="updated"></update-form>
+                <update-form :ticket="ticket" @cancel="hideForm" @saved="updated" v-if="showEditForm"></update-form>
+
+                <div class="card mb-g">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6 mb-3">
+                                <div class="text-muted mb-2">Доска</div>
+                                <agile-changer :ticket="ticket" @process="showProcessLoader" @saved="updated"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="card mb-g">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-lg-3 col-6 mb-3">
                                 <div class="text-muted mb-2">Исполнитель</div>
-                                <executor-changer :ticket="ticket" @process="showProcessLoader" @saved="updated" />
+                                <executor-changer :ticket="ticket" @process="showProcessLoader" @saved="updated"/>
                             </div>
                             <div class="col-lg-3 col-6 mb-3">
                                 <div class="text-muted mb-2">Приоритет</div>
-                                <priority-changer :ticket="ticket" @process="showProcessLoader" @saved="updated" />
+                                <priority-changer :ticket="ticket" @process="showProcessLoader" @saved="updated"/>
                             </div>
                             <div class="col-lg-3 col-6 mb-3">
                                 <div class="text-muted mb-2">Срок</div>
-                                <term-changer :ticket="ticket" @process="showProcessLoader" @saved="updated" />
+                                <term-changer :ticket="ticket" @process="showProcessLoader" @saved="updated"/>
                             </div>
                             <div class="col-lg-3 col-6 mb-3">
                                 <div class="text-muted mb-2">Статус</div>
-                                <status-changer :ticket="ticket" @process="showProcessLoader" @saved="updated" />
+                                <status-changer :ticket="ticket" @process="showProcessLoader" @saved="updated"/>
                             </div>
                         </div>
                     </div>
                 </div>
-                <comments :id="ticket.id" />
+                <comments :id="ticket.id"/>
             </div>
         </b-modal>
     </div>
@@ -76,12 +89,22 @@
     import ExecutorChanger from './ExecutorChanger';
     import TermChanger from './TermChanger';
     import Comments from './Comments';
+    import AgileChanger from './AgileChanger';
 
     moment.locale('ru');
 
     export default {
         name: "Modal",
-        components: {UpdateForm, VueMarkdown, StatusChanger, PriorityChanger, ExecutorChanger, TermChanger, Comments},
+        components: {
+            UpdateForm,
+            VueMarkdown,
+            StatusChanger,
+            PriorityChanger,
+            ExecutorChanger,
+            TermChanger,
+            Comments,
+            AgileChanger
+        },
         mixins: [users, statuses],
         props: {
             id: {

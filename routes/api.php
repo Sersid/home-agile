@@ -28,6 +28,7 @@ Route::middleware('auth:api')
                 Route::patch('/ticket/priority/{ticket}', 'Ticket\Api\TicketController@priority');
                 Route::patch('/ticket/executor/{ticket}', 'Ticket\Api\TicketController@executor');
                 Route::patch('/ticket/term/{ticket}', 'Ticket\Api\TicketController@term');
+                Route::patch('/ticket/agile/{ticket}', 'Ticket\Api\TicketController@agile');
                 Route::get('/ticket/comments/{ticket}', 'Ticket\Api\CommentController@index');
                 Route::post('/ticket/comments', 'Ticket\Api\CommentController@store');
             });

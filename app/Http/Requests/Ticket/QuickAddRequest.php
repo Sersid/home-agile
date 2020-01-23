@@ -29,6 +29,7 @@ class QuickAddRequest extends FormRequest
     {
         return [
             'title' => 'required|string|max:255',
+            'agile_id' => 'nullable|integer|exists:ticket_agiles,id',
         ];
     }
 }

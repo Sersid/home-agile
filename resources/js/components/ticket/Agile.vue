@@ -3,9 +3,10 @@
         <div class="subheader">
             <h1 class="subheader-title">
                 Доска
+                <span v-if="getAgile(agileId).title.length > 0">"{{getAgile(agileId).title}}"</span>
             </h1>
         </div>
-        <quick-add @added="added"/>
+        <quick-add :agile-id="agileId" @added="added"/>
         <div class="mb-3 mt-5 hidden-lg-up">
             <ul class="nav nav-tabs nav-tabs-clean nav-fill">
                 <li @click="showColumn(index)" v-for="(column, index) in columns" :class="[activeTab === index ? '' : 'border-bottom-0', 'border-' + column.color]" class="nav-item border border-2 border-left-0 border-right-0 border-top-0">
@@ -24,22 +25,14 @@
             <div class="row hidden-lg-up">
                 <div class="col-lg-4" :key="index" v-for="(tickets, index) in ticketsFormatted" v-show="index === activeTab">
                     <transition-group enter-active-class="animated zoomIn" leave-active-class="animated zoomOut">
-                        <div :key="ticket.id" @click.prevent="view(ticket.id)" class="card mb-g cursor-pointer border border-4 border-bottom-0 border-top-0 border-right-0" :class="'border-' + getStatus(ticket.status).color" v-for="ticket in tickets">
-                            <div class="card-body p-3">
-                                <a href="#">ticket-{{ticket.id}}</a> {{ticket.title}}
-                            </div>
-                        </div>
+                        <ticket-card :key="ticket.id" v-for="ticket in tickets" :ticket="ticket" @show="view(ticket.id)" />
                     </transition-group>
                 </div>
             </div>
             <div class="row hidden-xs-down">
                 <div class="col-lg-4" v-for="tickets in ticketsFormatted">
                     <transition-group enter-active-class="animated zoomIn" leave-active-class="animated zoomOut">
-                        <div :key="ticket.id" @click.prevent="view(ticket.id)" class="card mb-g cursor-pointer border border-4 border-bottom-0 border-top-0 border-right-0" :class="'border-' + getStatus(ticket.status).color" v-for="ticket in tickets">
-                            <div class="card-body p-3">
-                                <a href="#">ticket-{{ticket.id}}</a> {{ticket.title}}
-                            </div>
-                        </div>
+                        <ticket-card :key="ticket.id" v-for="ticket in tickets" :ticket="ticket" @show="view(ticket.id)" />
                     </transition-group>
                 </div>
             </div>
@@ -54,12 +47,13 @@
 <script>
     import Modal from './Modal';
     import QuickAdd from './QuickAdd';
-    import statuses from '../../mixins/statuses';
+    import TicketCard from './TicketCard';
+    import agiles from '../../mixins/agiles';
 
     export default {
         name: "Agile",
-        components: {QuickAdd, Modal},
-        mixins: [statuses],
+        components: {QuickAdd, TicketCard, Modal},
+        mixins: [agiles],
         data() {
             return {
                 columns: [
@@ -67,6 +61,7 @@
                     {name: 'В работе', color: 'warning'},
                     {name: 'Выполнено', color: 'success'}
                 ],
+                agileId: null,
                 tickets: [],
                 ticketId: null,
                 loaded: false,
@@ -74,20 +69,29 @@
             };
         },
         created() {
+            this.setAgileId();
             this.fetch();
         },
+        watch: {
+            $route: 'setAgileId',
+            agileId: 'fetch'
+        },
         computed: {
-            ticketsFormatted: function() {
+            ticketsFormatted() {
                 let result = [];
                 for (let i = 0; i < this.columns.length; i++) {
                     result[i] = [];
                 }
                 for (let i = 0; i < this.tickets.length; i++) {
-                    let column = this.getColumnByStatus(this.tickets[i].status);
+                    let ticket = this.tickets[i];
+                    if (ticket.agile_id !== this.agileId) {
+                        continue;
+                    }
+                    let column = this.getColumnByStatus(ticket.status);
                     if (column === -1) {
                         continue;
                     }
-                    result[column].push(this.tickets[i]);
+                    result[column].push(ticket);
                 }
                 for (let i = 0; i < result.length; i++) {
                     result[i].sort(function(a, b) {
@@ -130,8 +134,12 @@
                 }
                 return -1;
             },
+            setAgileId() {
+                this.agileId = typeof this.$route.params.agileId !== 'undefined' ? this.$route.params.agileId : null;
+            },
             fetch() {
-                axios.get('ticket').then(response => {
+                this.loaded = false;
+                axios.get('ticket', {params: {id: this.agileId}}).then(response => {
                     this.tickets = response.data;
                     this.loaded = true;
                 });

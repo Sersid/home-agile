@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Ticket\Api;
 
+use App\Http\Requests\Ticket\AgileRequest;
 use App\Http\Requests\Ticket\ExecutorRequest;
+use App\Http\Requests\Ticket\IndexRequest;
 use App\Http\Requests\Ticket\PriorityRequest;
 use App\Http\Requests\Ticket\QuickAddRequest;
 use App\Http\Requests\Ticket\StatusRequest;
@@ -38,13 +40,14 @@ class TicketController extends BaseController
     /**
      * Тикеты на доску
      *
+     * @param IndexRequest     $request
      * @param TicketRepository $repository
      *
      * @return Builder[]|Collection
      */
-    public function index(TicketRepository $repository)
+    public function index(IndexRequest $request, TicketRepository $repository)
     {
-        return $repository->getForAgile();
+        return $repository->getForAgile($request->get('id'));
     }
 
     /**
@@ -57,7 +60,7 @@ class TicketController extends BaseController
      */
     public function store(QuickAddRequest $request, Ticket $ticket)
     {
-        return $ticket->quickAdd($request->get('title'));
+        return $ticket->quickAdd($request->get('title'), $request->get('agile_id'));
     }
 
     /**
@@ -156,6 +159,20 @@ class TicketController extends BaseController
     public function term(TermRequest $request, Ticket $ticket)
     {
         $ticket->updateTerm($request->get('term'));
+        return $ticket;
+    }
+
+    /**
+     * Обновление доски
+     *
+     * @param AgileRequest $request
+     * @param Ticket       $ticket
+     *
+     * @return Ticket
+     */
+    public function agile(AgileRequest $request, Ticket $ticket)
+    {
+        $ticket->updateAgile($request->get('agile_id'));
         return $ticket;
     }
 }

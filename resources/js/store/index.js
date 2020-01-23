@@ -7,6 +7,7 @@ export default new Vuex.Store({
     state: {
         user: {},
         users: {},
+        agiles: {},
         statuses: {},
         priorities: {},
     },
@@ -22,6 +23,9 @@ export default new Vuex.Store({
         },
         PRIORITIES: state => {
             return state.priorities;
+        },
+        AGILES: state => {
+            return state.agiles;
         }
     },
     mutations: {
@@ -36,6 +40,9 @@ export default new Vuex.Store({
         },
         SET_PRIORITIES: (state, payload) => {
             state.priorities = payload;
+        },
+        SET_AGILES: (state, payload) => {
+            state.agiles = payload;
         }
     }
 });

@@ -31,6 +31,7 @@
     export default {
         name: "QuickAdd",
         components: {AlertError},
+        props: ['agileId'],
         data() {
             return {
                 title: '',
@@ -44,7 +45,7 @@
                 if (!this.$v.$invalid) {
                     this.showButtonLoader = true;
                     this.error = {};
-                    axios.post('ticket', {title: this.title})
+                    axios.post('ticket', {title: this.title, agile_id: this.agileId})
                         .then(response => {
                             this.title = '';
                             this.$v.$reset();

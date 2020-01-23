@@ -39,7 +39,29 @@ Vue.use(BootstrapVue);
 
 let router = new VueRouter({
     routes: [
-        {path: '/', component: Agile}
+        {path: '/', component: Agile},
+        {
+            path: '/agile',
+            name: 'agile-default',
+            component: Agile,
+            children: [
+                {
+                    path: 'ticket-:ticketId',
+                    component: Agile
+                }
+            ]
+        },
+        {
+            path: '/agile-:agileId',
+            name: 'agile',
+            component: Agile,
+            children: [
+                {
+                    path: 'ticket-:ticketId',
+                    component: Agile
+                }
+            ]
+        },
     ]
 });
 

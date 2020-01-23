@@ -15,19 +15,21 @@ use Illuminate\Database\Eloquent\Model;
 class TicketRepository extends BaseRepository
 {
     /**
+     * @param null|integer $id
+     *
      * @return Builder[]|Collection
      */
-    public function getForAgile()
+    public function getForAgile($id = null)
     {
         return $this->query()
-            ->select(['id', 'title', 'priority', 'status'])
+            ->select(['id', 'title', 'agile_id', 'priority', 'status'])
+            ->where('agile_id', $id)
             ->whereIn('status', [
                     Ticket::STATUS_NEW,
                     Ticket::STATUS_IN_WORK,
                     Ticket::STATUS_BLOCKED,
                     Ticket::STATUS_DONE,
                 ])
-            ->orderBy('id', 'desc')
             ->get();
     }
 
@@ -56,6 +58,7 @@ class TicketRepository extends BaseRepository
                 'id',
                 'title',
                 'description',
+                'agile_id',
                 'status',
                 'priority',
                 'term',

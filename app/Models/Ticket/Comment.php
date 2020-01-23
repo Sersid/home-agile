@@ -5,6 +5,7 @@ namespace App\Models\Ticket;
 use Auth;
 use Eloquent;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * @property integer $id
@@ -18,6 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Comment extends Eloquent
 {
+    use SoftDeletes;
     /**
      * The table associated with the model.
      * @var string
