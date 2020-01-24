@@ -19,12 +19,12 @@
     <!-- Styles -->
     <link href="{{ asset('css/vendors.bundle.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.bundle.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     <!-- Scripts -->
     <script>
         const api_token = "{{ $token }}";
     </script>
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ mix('js/app.js') }}" defer></script>
 </head>
 <body>
 <div id="app"></div>
