@@ -26,7 +26,7 @@
                                     <a :href="href" @click="navigate">Основная доска</a>
                                 </li>
                             </router-link>
-                            <router-link :to="{ name: 'agile', params: {agileId: agile.id}}" v-for="agile in $store.state.agiles" v-slot="{ href, navigate, isExactActive }">
+                            <router-link :key="agile.id" :to="{ name: 'agile', params: {agileId: agile.id}}" v-for="agile in $store.state.agiles" v-slot="{ href, navigate, isExactActive }">
                                 <li :class="{'active':isExactActive}">
                                     <a :href="href" @click="navigate">{{agile.title}}</a>
                                 </li>

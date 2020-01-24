@@ -28,7 +28,7 @@ window.Vue = require('vue');
 import VueRouter from 'vue-router'
 import Vuelidate from 'vuelidate';
 import BootstrapVue from 'bootstrap-vue'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
+//import 'bootstrap-vue/dist/bootstrap-vue.css'
 import store from './store'
 import App from './App.vue'
 import Agile from './components/ticket/Agile';

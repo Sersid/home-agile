@@ -4,7 +4,7 @@
             <span v-if="null === data.agile_id">&blacktriangleright;</span>
             <span>Основная доска</span>
         </b-dropdown-item>
-        <b-dropdown-item @click.prevent="save(agile.id)" href="#" v-for="agile in agiles">
+        <b-dropdown-item @click.prevent="save(agile.id)" href="#" v-for="agile in agiles" :key="agile.id">
             <span v-if="parseInt(agile.id) === data.agile_id">&blacktriangleright;</span>
             <span>{{agile.title}}</span>
         </b-dropdown-item>

@@ -61,7 +61,7 @@
                     {name: 'В работе', color: 'warning'},
                     {name: 'Выполнено', color: 'success'}
                 ],
-                agileId: null,
+                agileId: Number,
                 tickets: [],
                 ticketId: null,
                 loaded: false,
@@ -70,7 +70,6 @@
         },
         created() {
             this.setAgileId();
-            this.fetch();
         },
         watch: {
             $route: 'setAgileId',
@@ -135,7 +134,7 @@
                 return -1;
             },
             setAgileId() {
-                this.agileId = typeof this.$route.params.agileId !== 'undefined' ? this.$route.params.agileId : null;
+                this.agileId = typeof this.$route.params.agileId !== 'undefined' ? parseInt(this.$route.params.agileId) : null;
             },
             fetch() {
                 this.loaded = false;
