@@ -29,7 +29,7 @@ class Comment extends Eloquent
     /**
      * @var array
      */
-    protected $fillable = ['ticket_id', 'text', 'created_user_id', 'updated_user_id'];
+    protected $fillable = ['ticket_id', 'text'];
 
     /**
      * @param int    $ticket_id
@@ -42,7 +42,6 @@ class Comment extends Eloquent
         return self::create([
             'ticket_id' => $ticket_id,
             'text' => $text,
-            'created_user_id' => Auth::id(),
         ]);
     }
 }

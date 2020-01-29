@@ -23,3 +23,11 @@ Route::middleware('auth')->get(
 );
 
 Auth::routes();
+
+Route::get('/test', function() {
+    $ticket = (new \App\Repositories\TicketRepository())->getForShow(15);
+    // info($ticket);
+    App\Jobs\SendMessage::dispatch($ticket);
+    // info('Test');
+    return 'Added';
+});

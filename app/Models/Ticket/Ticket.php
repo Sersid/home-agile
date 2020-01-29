@@ -59,8 +59,6 @@ class Ticket extends Eloquent
         'executor_id',
         'priority',
         'status',
-        'created_user_id',
-        'updated_user_id',
     ];
 
     /**
@@ -155,7 +153,6 @@ class Ticket extends Eloquent
             'agile_id' => $agile_id,
             'priority' => self::PRIORITY_LOW,
             'status' => self::STATUS_NEW,
-            'created_user_id' => Auth::id(),
         ]);
     }
 
@@ -171,7 +168,6 @@ class Ticket extends Eloquent
         return $this->update([
             'title' => $title,
             'description' => $description,
-            'updated_user_id' => Auth::id(),
         ]);
     }
 
@@ -185,7 +181,6 @@ class Ticket extends Eloquent
     {
         return $this->update([
             'status' => $status,
-            'updated_user_id' => Auth::id(),
         ]);
     }
 
@@ -199,7 +194,6 @@ class Ticket extends Eloquent
     {
         return $this->update([
             'priority' => $priority,
-            'updated_user_id' => Auth::id(),
         ]);
     }
 
@@ -214,7 +208,6 @@ class Ticket extends Eloquent
     {
         return $this->update([
             'executor_id' => $executor_id,
-            'updated_user_id' => Auth::id(),
         ]);
     }
 
@@ -230,7 +223,6 @@ class Ticket extends Eloquent
         $term = !empty($term) ? date('Y-m-d', strtotime($term)) : null;
         return $this->update([
             'term' => $term,
-            'updated_user_id' => Auth::id(),
         ]);
     }
 
@@ -245,7 +237,6 @@ class Ticket extends Eloquent
     {
         return $this->update([
             'agile_id' => $id,
-            'updated_user_id' => Auth::id(),
         ]);
     }
 }
