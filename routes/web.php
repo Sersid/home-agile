@@ -25,9 +25,8 @@ Route::middleware('auth')->get(
 Auth::routes();
 
 Route::get('/test', function() {
-    $ticket = (new \App\Repositories\TicketRepository())->getForShow(15);
-    // info($ticket);
-    App\Jobs\SendMessage::dispatch($ticket);
-    // info('Test');
+    $ticket = (new \App\Repositories\TicketRepository())->getForShow(38);
+    $test = new \App\Jobs\NotifyExecutor($ticket);
+    $test->handle(new \App\Repositories\UserRepository());
     return 'Added';
 });

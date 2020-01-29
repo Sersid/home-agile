@@ -10,11 +10,16 @@ use Illuminate\Notifications\Notifiable;
 /**
  * Class User
  * @property int $id
+ * @property int $sex
+ * @property string $name
  * @package App\Models
  */
 class User extends Authenticatable
 {
     use Notifiable;
+
+    const MALE = 1;
+    const FEMALE = 2;
 
     /**
      * The attributes that are mass assignable.
@@ -52,6 +57,22 @@ class User extends Authenticatable
         $avatarPath = '/upload/avatars/user-' . $this->id . '.jpg';
         $noAvatarPath = '/upload/avatars/no-avatar.png';
         return url(is_file(public_path() . $avatarPath) ? $avatarPath : $noAvatarPath);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isMale()
+    {
+        return $this->sex === self::MALE;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isFemale()
+    {
+        return $this->sex === self::FEMALE;
     }
 
     /**
