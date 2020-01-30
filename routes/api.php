@@ -21,7 +21,6 @@ Route::middleware('auth:api')
                 return $request->user();
             });
         Route::get('/system', 'Ticket\Api\SystemController@index');
-        Route::get('/ticket/last', 'Ticket\Api\TicketController@last');
         Route::where(['ticket' => '[0-9]+'])
             ->group(function () {
                 Route::patch('/ticket/status/{ticket}', 'Ticket\Api\TicketController@status');

@@ -3,9 +3,8 @@
 namespace App\Models\Ticket;
 
 use App\Models\User;
-use Auth;
-use Eloquent;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -26,7 +25,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property integer $updated_user_id
  * @package App\Models\Ticket
  */
-class Ticket extends Eloquent
+class Ticket extends Model
 {
     use SoftDeletes;
 
@@ -114,6 +113,15 @@ class Ticket extends Eloquent
     }
 
     /**
+     * Comments
+     * @return HasMany
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'ticket_id', 'id');
+    }
+
+    /**
      * Author
      * @return HasOne
      */
@@ -141,8 +149,8 @@ class Ticket extends Eloquent
     }
 
     /**
-     * @param string $title
-     * @param null|string   $agile_id
+     * @param string      $title
+     * @param null|string $agile_id
      *
      * @return Ticket|Model
      */
@@ -158,7 +166,8 @@ class Ticket extends Eloquent
 
     /**
      * Обновление заголовка и описания
-     * @param string $title
+     *
+     * @param string      $title
      * @param string|null $description
      *
      * @return bool
@@ -173,6 +182,7 @@ class Ticket extends Eloquent
 
     /**
      * Обновление статуса
+     *
      * @param int $status
      *
      * @return bool
@@ -186,6 +196,7 @@ class Ticket extends Eloquent
 
     /**
      * Обновление приоритета
+     *
      * @param int $priority
      *
      * @return bool

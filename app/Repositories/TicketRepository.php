@@ -3,7 +3,6 @@
 namespace App\Repositories;
 
 use App\Models\Ticket\Ticket;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -23,27 +22,16 @@ class TicketRepository extends BaseRepository
     {
         return $this->query()
             ->select(['id', 'title', 'agile_id', 'priority', 'status'])
+            ->withCount('comments')
             ->where('agile_id', $id)
-            ->whereIn('status', [
+            ->whereIn('status',
+                [
                     Ticket::STATUS_NEW,
                     Ticket::STATUS_IN_WORK,
                     Ticket::STATUS_BLOCKED,
                     Ticket::STATUS_DONE,
                 ])
             ->get();
-    }
-
-    /**
-     * Новые тикеты
-     * @return LengthAwarePaginator
-     */
-    public function getLast()
-    {
-        return $this->query()
-            ->select(['id', 'title', 'created_user_id'])
-            ->where('status', Ticket::STATUS_NEW)
-            ->orderBy('id', 'desc')
-            ->paginate(20);
     }
 
     /**

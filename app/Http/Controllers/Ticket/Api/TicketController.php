@@ -26,18 +26,6 @@ use Illuminate\Http\Response;
 class TicketController extends BaseController
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @param TicketRepository $repository
-     *
-     * @return LengthAwarePaginator
-     */
-    public function last(TicketRepository $repository)
-    {
-        return $repository->getLast();
-    }
-
-    /**
      * Тикеты на доску
      *
      * @param IndexRequest     $request
