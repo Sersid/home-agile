@@ -3,7 +3,9 @@
         <div class="card-body p-3">
             <span class="text-primary">ticket-{{ticket.id}}</span> {{ticket.title}}
             <div class="d-flex justify-content-between mt-1">
-                <div></div>
+                <div>
+                    <avatar :id="ticket.executor_id" size="sm" />
+                </div>
                 <div class="text-muted">
                     <small v-if="ticket.comments_count > 0"><span class="fal fa-comment-alt mr-1"></span>2</small>
                 </div>
@@ -14,9 +16,11 @@
 
 <script>
     import statuses from '../../mixins/statuses';
+    import Avatar from '../system/Avatar';
 
     export default {
         name: "TicketCard",
+        components: {Avatar},
         props: {
             ticket: {
                 type: Object,

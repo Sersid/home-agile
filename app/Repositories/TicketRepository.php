@@ -21,7 +21,7 @@ class TicketRepository extends BaseRepository
     public function getForAgile($id = null)
     {
         return $this->query()
-            ->select(['id', 'title', 'agile_id', 'priority', 'status'])
+            ->select(['id', 'title', 'agile_id', 'priority', 'status', 'executor_id'])
             ->withCount('comments')
             ->where('agile_id', $id)
             ->whereIn('status',

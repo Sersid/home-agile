@@ -1,5 +1,5 @@
 <template>
-    <img class="rounded-circle" :class="className" :src="user.avatar" :alt="user.name" />
+    <img class="rounded-circle" :class="className" :src="user.avatar" :alt="user.name" :title="user.name" />
 </template>
 
 <script>
