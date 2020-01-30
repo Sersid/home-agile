@@ -1,13 +1,16 @@
 <template>
     <div :class="'border-' + getStatus(ticket.status).color" class="card mb-g cursor-pointer border border-4 border-bottom-0 border-top-0 border-right-0" @click="show(ticket.id)">
         <div class="card-body p-3">
+            <div class="mb-1" v-if="hasTerm">
+                <small class="text-muted" :class="wantedTerm ? 'text-danger' : ''"><span class="fal fa-calendar-alt mr-1"></span>{{termFormatted}}</small>
+            </div>
             <span class="text-primary">ticket-{{ticket.id}}</span> {{ticket.title}}
             <div class="d-flex justify-content-between mt-1">
                 <div>
-                    <avatar :id="ticket.executor_id" size="sm" />
+                    <avatar :id="parseInt(ticket.executor_id)" size="sm" />
                 </div>
-                <div class="text-muted">
-                    <small v-if="ticket.comments_count > 0"><span class="fal fa-comment-alt mr-1"></span>2</small>
+                <div>
+                    <small class="text-muted" v-if="ticket.comments_count > 0"><span class="fal fa-comment-alt mr-1"></span>2</small>
                 </div>
             </div>
         </div>
@@ -17,6 +20,7 @@
 <script>
     import statuses from '../../mixins/statuses';
     import Avatar from '../system/Avatar';
+    import moment from 'moment';
 
     export default {
         name: "TicketCard",
@@ -26,6 +30,22 @@
                 type: Object,
                 required: true
             }
+        },
+        computed: {
+            wantedTerm() {
+                if (this.hasTerm) {
+                    let term = moment(this.ticket.term);
+                    let now = moment();
+                    return term.diff(now, 'days') <= 2;
+                }
+                return false;
+            },
+            hasTerm() {
+                return this.ticket.term !== null;
+            },
+            termFormatted() {
+                return moment(this.ticket.term).format('D MMMM YYYY');
+            },
         },
         mixins: [statuses],
         methods: {
