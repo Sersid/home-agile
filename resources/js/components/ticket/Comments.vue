@@ -95,6 +95,7 @@
                             this.comments.unshift(response.data);
                             this.text = '';
                             this.$v.$reset();
+                            this.$emit('added');
                         })
                         .catch(e => {
                             this.error = e.response.data;

@@ -72,7 +72,7 @@
                         </div>
                     </div>
                 </div>
-                <comments :id="ticket.id"/>
+                <comments :id="ticket.id" @added="$emit('addedComment', ticket.id)"/>
             </div>
         </b-modal>
     </div>

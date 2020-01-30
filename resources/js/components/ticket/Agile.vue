@@ -36,7 +36,7 @@
                     </transition-group>
                 </div>
             </div>
-            <modal :ticket-id="ticketId" @updated="updated" id="detail"/>
+            <modal :ticket-id="ticketId" @updated="updated" @addedComment="addedComment" id="detail"/>
         </div>
         <div class="text-center" v-else>
             <b-spinner label="Загрузка..." style="width: 8rem; height: 8rem;" type="grow" variant="warning"></b-spinner>
@@ -156,7 +156,13 @@
                 if (key !== -1) {
                     this.$set(this.tickets, key, ticket);
                 }
-            }
+            },
+            addedComment(id) {
+                let key = this.getTicketKey(id);
+                if (key !== -1) {
+                    this.$set(this.tickets[key], 'comments_count', this.tickets[key].comments_count + 1);
+                }
+            },
         }
     }
 </script>
