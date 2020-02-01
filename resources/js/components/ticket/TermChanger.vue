@@ -37,7 +37,7 @@
                 return moment(this.date).format('D MMMM YYYY');
             },
             dateValue() {
-                return this.hasDate ? moment(this.date).format('YYYY-MM-D') : ''
+                return this.hasDate ? moment(this.date).format('YYYY-MM-DD') : ''
             }
         },
         methods: {
