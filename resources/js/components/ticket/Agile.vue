@@ -37,7 +37,7 @@
         <div class="text-center" v-else>
             <b-spinner label="Загрузка..." style="width: 8rem; height: 8rem;" type="grow" variant="warning"></b-spinner>
         </div>
-        <modal :ticket-id="ticketId" @addedComment="addedComment" @updated="updated" id="detail" @hidden="hiddenModal"/>
+        <modal :ticket-id="ticketId" @addedComment="addedComment" @updated="updated" id="detail"/>
     </div>
 </template>
 
@@ -153,6 +153,10 @@
             },
             added(ticket) {
                 this.tickets.push(ticket);
+                this.$router.push({
+                    name: ticket.agile_id !== null ? 'show-ticket' : 'show-ticket-default',
+                    params: { agileId: ticket.agile_id, ticketId: ticket.id }
+                });
             },
             updated(ticket) {
                 let key = this.getTicketKey(ticket.id);
@@ -165,9 +169,6 @@
                 if (key !== -1) {
                     this.$set(this.tickets[key], 'comments_count', this.tickets[key].comments_count + 1);
                 }
-            },
-            hiddenModal() {
-                console.log(123123);
             }
         }
     }
