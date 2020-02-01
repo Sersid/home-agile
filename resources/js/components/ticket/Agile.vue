@@ -1,15 +1,12 @@
 <template>
     <div>
         <div class="subheader">
-            <h1 class="subheader-title">
-                Доска
-                <span v-if="getAgile(agileId).title.length > 0">"{{getAgile(agileId).title}}"</span>
-            </h1>
+            <h1 class="subheader-title">{{getAgile(agileId).title}}</h1>
         </div>
         <quick-add :agile-id="agileId" @added="added"/>
         <div class="mb-3 mt-5 hidden-lg-up">
             <ul class="nav nav-tabs nav-tabs-clean nav-fill">
-                <li @click="showColumn(index)" v-for="(column, index) in columns" :class="[activeTab === index ? '' : 'border-bottom-0', 'border-' + column.color]" class="nav-item border border-2 border-left-0 border-right-0 border-top-0">
+                <li :class="[activeTab === index ? '' : 'border-bottom-0', 'border-' + column.color]" @click="showColumn(index)" class="nav-item border border-2 border-left-0 border-right-0 border-top-0" v-for="(column, index) in columns">
                     {{column.name}}
                 </li>
             </ul>
@@ -23,24 +20,24 @@
         </div>
         <div v-if="loaded">
             <div class="row hidden-lg-up">
-                <div class="col-lg-4" :key="index" v-for="(tickets, index) in ticketsFormatted" v-show="index === activeTab">
+                <div :key="index" class="col-lg-4" v-for="(tickets, index) in ticketsFormatted" v-show="index === activeTab">
                     <transition-group enter-active-class="animated zoomIn" leave-active-class="animated zoomOut">
-                        <ticket-card :key="ticket.id" v-for="ticket in tickets" :ticket="ticket" @show="view(ticket.id)" />
+                        <ticket-card :key="ticket.id" :ticket="ticket" v-for="ticket in tickets"/>
                     </transition-group>
                 </div>
             </div>
             <div class="row hidden-xs-down">
                 <div class="col-lg-4" v-for="tickets in ticketsFormatted">
                     <transition-group enter-active-class="animated zoomIn" leave-active-class="animated zoomOut">
-                        <ticket-card :key="ticket.id" v-for="ticket in tickets" :ticket="ticket" @show="view(ticket.id)" />
+                        <ticket-card :key="ticket.id" :ticket="ticket" v-for="ticket in tickets"/>
                     </transition-group>
                 </div>
             </div>
-            <modal :ticket-id="ticketId" @updated="updated" @addedComment="addedComment" id="detail"/>
         </div>
         <div class="text-center" v-else>
             <b-spinner label="Загрузка..." style="width: 8rem; height: 8rem;" type="grow" variant="warning"></b-spinner>
         </div>
+        <modal :ticket-id="ticketId" @addedComment="addedComment" @updated="updated" id="detail" @hidden="hiddenModal"/>
     </div>
 </template>
 
@@ -69,11 +66,24 @@
             };
         },
         created() {
-            this.setAgileId();
+            this.route();
         },
         watch: {
-            $route: 'setAgileId',
-            agileId: 'fetch'
+            $route: 'route',
+            agileId() {
+                this.loaded = false;
+                axios.get('ticket', {params: {id: this.agileId}}).then(response => {
+                    this.tickets = response.data;
+                    this.loaded = true;
+                });
+            },
+            ticketId() {
+                if (this.ticketId !== null) {
+                    this.$bvModal.show('detail');
+                } else {
+                    this.$bvModal.hide('detail');
+                }
+            }
         },
         computed: {
             ticketsFormatted() {
@@ -133,23 +143,16 @@
                 }
                 return -1;
             },
-            setAgileId() {
-                this.agileId = typeof this.$route.params.agileId !== 'undefined' ? parseInt(this.$route.params.agileId) : null;
-            },
-            fetch() {
-                this.loaded = false;
-                axios.get('ticket', {params: {id: this.agileId}}).then(response => {
-                    this.tickets = response.data;
-                    this.loaded = true;
-                });
-            },
-            view(id) {
-                this.ticketId = id;
-                this.$bvModal.show('detail');
+            route() {
+                this.agileId = typeof this.$route.params.agileId !== 'undefined' && this.$route.params.agileId !== null
+                               ? parseInt(this.$route.params.agileId)
+                               : null;
+                this.ticketId = typeof this.$route.params.ticketId !== 'undefined' && this.$route.params.ticketId !== null
+                               ? parseInt(this.$route.params.ticketId)
+                               : null;
             },
             added(ticket) {
                 this.tickets.push(ticket);
-                this.view(ticket.id);
             },
             updated(ticket) {
                 let key = this.getTicketKey(ticket.id);
@@ -163,6 +166,9 @@
                     this.$set(this.tickets[key], 'comments_count', this.tickets[key].comments_count + 1);
                 }
             },
+            hiddenModal() {
+                console.log(123123);
+            }
         }
     }
 </script>

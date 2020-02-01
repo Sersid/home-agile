@@ -1,20 +1,24 @@
 <template>
-    <div :class="'border-' + getStatus(ticket.status).color" class="card mb-g cursor-pointer border border-4 border-bottom-0 border-top-0 border-right-0" @click="show(ticket.id)">
-        <div class="card-body p-3">
-            <div class="mb-2" v-if="hasTerm">
-                <small class="text-muted" :class="wantedTerm ? 'text-danger' : ''"><span class="fal fa-calendar-alt mr-1"></span>{{termFormatted}}</small>
-            </div>
-            <span class="text-primary">ticket-{{ticket.id}}</span> {{ticket.title}}
-            <div class="d-flex justify-content-between mt-1">
-                <div>
-                    <avatar :id="parseInt(ticket.executor_id)" size="sm" />
-                </div>
-                <div>
-                    <small class="text-muted" v-if="ticket.comments_count > 0"><span class="fal fa-comment-alt mr-1"></span>{{ticket.comments_count}}</small>
-                </div>
-            </div>
-        </div>
-    </div>
+    <router-link :class="'border-' + getStatus(ticket.status).color"
+                 class="d-block card mb-g cursor-pointer border border-4 border-bottom-0 border-top-0 border-right-0"
+                 :to="routeToDetail"
+    >
+        <span class="d-block card-body p-3">
+            <span class="d-block mb-2" v-if="hasTerm">
+                <small :class="wantedTerm ? 'text-danger' : ''" class="text-muted">
+                    <i class="fal fa-stopwatch mr-1"></i>{{termFormatted}}
+                </small>
+            </span>
+            ticket-{{ticket.id}}
+            <span class="text-dark">{{ticket.title}}</span>
+            <span class="d-flex justify-content-between mt-1">
+                <avatar :id="parseInt(ticket.executor_id)" size="sm"/>
+                <small class="text-muted" v-if="ticket.comments_count > 0">
+                    <i class="fal fa-comment-alt mr-1"></i>{{ticket.comments_count}}
+                </small>
+            </span>
+        </span>
+    </router-link>
 </template>
 
 <script>
@@ -46,6 +50,12 @@
             termFormatted() {
                 return moment(this.ticket.term).format('D MMMM YYYY');
             },
+            routeToDetail() {
+                return {
+                    name: this.ticket.agile_id === null ? 'show-ticket-default' : 'show-ticket',
+                    params: {agileId: this.ticket.agile_id, ticketId: this.ticket.id}
+                };
+            }
         },
         mixins: [statuses],
         methods: {

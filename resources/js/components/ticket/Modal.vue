@@ -1,6 +1,6 @@
 <template>
     <div>
-        <b-modal :id="id" dialog-class="modal-dialog-right" hide-footer size="xl" title-class="h4">
+        <b-modal :id="id" dialog-class="modal-dialog-right" hide-footer size="xl" title-class="h4" @hidden="closeModal">
             <template v-slot:modal-title>
                 <span v-if="showSpinner">Загрузка...</span>
                 <span v-else-if="hasError">Ошибка</span>
@@ -115,6 +115,9 @@
                 type: Number
             }
         },
+        created() {
+            this.fetchDetail(this.ticketId);
+        },
         watch: {
             ticketId(val) {
                 this.fetchDetail(val);
@@ -157,20 +160,22 @@
         },
         methods: {
             fetchDetail(id) {
-                this.showSpinner = true;
-                axios.get('ticket/' + id)
-                    .then(response => {
-                        this.ticket = response.data;
-                        this.title = this.ticket.title;
-                        this.description = this.ticket.description;
-                        this.hideForm();
-                    })
-                    .catch(e => {
-                        this.error = e.response.data.message;
-                    })
-                    .finally(() => {
-                        this.showSpinner = false;
-                    });
+                if (id !== null) {
+                    this.showSpinner = true;
+                    axios.get('ticket/' + id)
+                        .then(response => {
+                            this.ticket = response.data;
+                            this.title = this.ticket.title;
+                            this.description = this.ticket.description;
+                            this.hideForm();
+                        })
+                        .catch(e => {
+                            this.error = e.response.data.message;
+                        })
+                        .finally(() => {
+                            this.showSpinner = false;
+                        });
+                }
             },
             showForm() {
                 this.showEditForm = true;
@@ -185,6 +190,12 @@
             },
             showProcessLoader(process) {
                 this.showSaveSpinner = process;
+            },
+            closeModal() {
+                this.$router.push({
+                    name: this.ticket.agile_id !== null ? 'agile' : 'agile-default',
+                    params: { agileId: this.ticket.agile_id }
+                }).catch(err => {});
             }
         }
     }

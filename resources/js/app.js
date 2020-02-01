@@ -46,6 +46,7 @@ let router = new VueRouter({
             component: Agile,
             children: [
                 {
+                    name: 'show-ticket-default',
                     path: 'ticket-:ticketId',
                     component: Agile
                 }
@@ -57,6 +58,7 @@ let router = new VueRouter({
             component: Agile,
             children: [
                 {
+                    name: 'show-ticket',
                     path: 'ticket-:ticketId',
                     component: Agile
                 }

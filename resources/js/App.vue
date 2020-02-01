@@ -21,13 +21,13 @@
                     <nav class="primary-nav">
                         <ul class="nav-menu">
                             <li class="nav-title">Доски</li>
-                            <router-link to="/" v-slot="{ href, navigate, isExactActive }">
-                                <li :class="{'active':isExactActive}">
+                            <router-link :to="{ name: 'agile-default'}" v-slot="{ href, navigate, isActive }">
+                                <li :class="{'active':isActive}">
                                     <a :href="href" @click="navigate">Основная доска</a>
                                 </li>
                             </router-link>
-                            <router-link :key="agile.id" :to="{ name: 'agile', params: {agileId: agile.id}}" v-for="agile in $store.state.agiles" v-slot="{ href, navigate, isExactActive }">
-                                <li :class="{'active':isExactActive}">
+                            <router-link :key="agile.id" :to="{ name: 'agile', params: {agileId: agile.id}}" v-for="agile in $store.state.agiles" v-slot="{ href, navigate, isActive }">
+                                <li :class="{'active':isActive}">
                                     <a :href="href" @click="navigate">{{agile.title}}</a>
                                 </li>
                             </router-link>
