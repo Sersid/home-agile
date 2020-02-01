@@ -1,12 +1,12 @@
 <template>
     <div class="d-flex">
         <button class="btn btn-icon fs-lg mr-2 active" type="button" @click="show = !show">
-            <i class="fal fa-calendar-alt"></i>
+            <i class="fal fa-calendar-alt" ref="button"></i>
         </button>
         <datepicker v-if="show" :language="ru" input-class="form-control" v-model="date" format="dd MMM yyyy" />
         <span v-else class="pt-2">
             <span v-if="hasTerm">{{dateFormatted}}</span>
-            <span v-else class="text-muted">не указан</span>
+            <span v-else class="text-muted cursor-pointer" @click="$refs.button.click()">не указан</span>
         </span>
     </div>
 </template>

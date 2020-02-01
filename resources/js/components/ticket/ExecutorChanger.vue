@@ -3,18 +3,18 @@
         <b-dropdown variant="icon" class="fs-lg mr-2" no-caret>
             <template v-slot:button-content>
                 <i v-if="hasExecutor" class="fal fa-exchange"></i>
-                <i v-else class="fal fa-user-plus"></i>
+                <i v-else class="fal fa-user-plus" ref="button"></i>
             </template>
             <b-dropdown-item :key="index" @click.prevent="save(index)" href="#" v-for="(u, index) in users">
                 <span v-if="parseInt(index) === data.executor_id">&blacktriangleright;</span>
                 <avatar :id="u.id" size="sm" class="mr-2" />{{u.name}}
             </b-dropdown-item>
         </b-dropdown>
-        <a v-if="hasExecutor" class="d-flex" href="#">
+        <span v-if="hasExecutor" class="d-flex">
             <span class="d-inline-block"><avatar :id="data.executor_id" size="md" /></span>
             <span class="align-self-center p-2">{{getUser(data.executor_id).name}}</span>
-        </a>
-        <div v-else class="text-muted pt-2">не указан</div>
+        </span>
+        <div v-else class="text-muted pt-2 cursor-pointer" @click="$refs.button.click()">не указан</div>
     </div>
 </template>
 
