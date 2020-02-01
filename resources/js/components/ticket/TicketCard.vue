@@ -13,7 +13,7 @@
             <span class="text-dark">{{ticket.title}}</span>
             <span class="d-flex justify-content-between mt-1">
                 <avatar :id="parseInt(ticket.executor_id)" size="sm"/>
-                <small class="text-muted" v-if="ticket.comments_count > 0">
+                <small class="text-muted mt-1" v-if="ticket.comments_count > 0">
                     <i class="fal fa-comment-alt mr-1"></i>{{ticket.comments_count}}
                 </small>
             </span>

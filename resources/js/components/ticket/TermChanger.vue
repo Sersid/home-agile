@@ -2,7 +2,7 @@
     <div>
         <input :value="dateValue" @input="save($event.target.value)" class="form-control" type="date" v-if="show"/>
         <div @click="showInput" class="pt-2 cursor-pointer" v-else>
-            <i class="fal fa-calendar-alt mr-1"></i>
+            <i class="fal fa-stopwatch mr-1"></i>
             <span v-if="hasDate">{{dateFormatted}}</span>
             <span class="text-muted" v-else>не указан</span>
         </div>
