@@ -16,7 +16,7 @@
                 <div class="card mb-g" v-if="!showEditForm">
                     <div class="card-body p-3">
                         <div class="fw-n float-right ml-3">
-                            <b-spinner class="mt-1" label="Сохранение..." small v-if="showSaveSpinner" variant="warning"></b-spinner>
+                            <b-spinner class="mt-1" label="Сохранение..." small v-if="showSaveSpinner" variant="warning"/>
                             <button @click.prevent="showForm" class="btn btn-outline-default" type="button" v-else>
                                 <span class="text-muted"><i class="fal fa-pen-alt"></i></span>
                             </button>
@@ -38,7 +38,7 @@
                         </div>
                     </div>
                 </div>
-                <update-form :ticket="ticket" @cancel="hideForm" @saved="updated" v-if="showEditForm"></update-form>
+                <update-form :ticket="ticket" @cancel="hideForm" @saved="updated" v-if="showEditForm"/>
 
                 <div class="card mb-g">
                     <div class="card-body">
@@ -176,6 +176,7 @@
                             this.error = e.response.data.message;
                         })
                         .finally(() => {
+                            this.showProcessLoader(false);
                             this.showSpinner = false;
                         });
                 }

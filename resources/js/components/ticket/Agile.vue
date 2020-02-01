@@ -51,6 +51,12 @@
         name: "Agile",
         components: {QuickAdd, TicketCard, Modal},
         mixins: [agiles],
+        props: {
+            timer: {
+                type: Number,
+                default: 120000
+            }
+        },
         data() {
             return {
                 columns: [
@@ -63,19 +69,20 @@
                 ticketId: null,
                 loaded: false,
                 activeTab: 0,
+                interval: ''
             };
         },
         created() {
             this.route();
+            if (this.timer > 0) {
+                this.interval = setInterval(this.fetch, this.timer);
+            }
         },
         watch: {
             $route: 'route',
             agileId() {
                 this.loaded = false;
-                axios.get('ticket', {params: {id: this.agileId}}).then(response => {
-                    this.tickets = response.data;
-                    this.loaded = true;
-                });
+                this.fetch();
             },
             ticketId() {
                 if (this.ticketId !== null) {
@@ -169,7 +176,16 @@
                 if (key !== -1) {
                     this.$set(this.tickets[key], 'comments_count', this.tickets[key].comments_count + 1);
                 }
+            },
+            fetch(){
+                axios.get('ticket', {params: {id: this.agileId}}).then(response => {
+                    this.tickets = response.data;
+                    this.loaded = true;
+                });
             }
+        },
+        beforeDestroy() {
+            clearInterval(this.interval);
         }
     }
 </script>
