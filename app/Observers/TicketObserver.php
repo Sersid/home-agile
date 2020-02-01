@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Jobs\NotifyExecutor;
 use App\Models\Ticket\Ticket;
+use App\Models\Ticket\Watcher;
 
 /**
  * Class TicketObserver
@@ -45,6 +46,12 @@ class TicketObserver extends BaseObserver
     public function updated(Ticket $ticket)
     {
         $this->notifyExecutor($ticket);
+        // Редактор подписывается на тикет
+        $this->watch($ticket, $ticket->updated_user_id);
+        // Исполнитель тоже
+        if ($ticket->updated_user_id != $ticket->executor_id) {
+            $this->watch($ticket, $ticket->executor_id);
+        }
     }
 
     /**
@@ -58,6 +65,29 @@ class TicketObserver extends BaseObserver
             && $ticket->getOriginal('executor_id') != $ticket->executor_id
             && $ticket->executor_id != $ticket->updated_user_id) {
             NotifyExecutor::dispatch($ticket);
+        }
+    }
+
+    /**
+     * After created
+     *
+     * @param Ticket $ticket
+     */
+    public function created(Ticket $ticket)
+    {
+        $this->watch($ticket, $ticket->created_user_id);
+    }
+
+    /**
+     * Добавляет автора в наблюдатели
+     *
+     * @param Ticket   $ticket
+     * @param int|null $user_id
+     */
+    private function watch(Ticket $ticket, $user_id)
+    {
+        if (!empty($user_id)) {
+            (new Watcher)->watch($ticket->id, $user_id);
         }
     }
 }

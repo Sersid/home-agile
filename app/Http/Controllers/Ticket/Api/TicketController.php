@@ -10,12 +10,8 @@ use App\Http\Requests\Ticket\QuickAddRequest;
 use App\Http\Requests\Ticket\StatusRequest;
 use App\Http\Requests\Ticket\TermRequest;
 use App\Http\Requests\Ticket\UpdateRequest;
-use App\Models\Ticket\Ticket;
 use App\Repositories\TicketRepository;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
+use App\Services\Ticket\TicketService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 
@@ -25,61 +21,73 @@ use Illuminate\Http\Response;
  */
 class TicketController extends BaseController
 {
+    /** @var TicketRepository */
+    protected $repository;
+    /** @var TicketService */
+    protected $service;
+
+    /**
+     * TicketController constructor.
+     */
+    public function __construct()
+    {
+        $this->repository = new TicketRepository();
+        $this->service = new TicketService();
+    }
+
     /**
      * Тикеты на доску
      *
-     * @param IndexRequest     $request
-     * @param TicketRepository $repository
+     * @param IndexRequest $request
      *
-     * @return Builder[]|Collection
+     * @return JsonResponse
      */
-    public function index(IndexRequest $request, TicketRepository $repository)
+    public function index(IndexRequest $request)
     {
-        return $repository->getForAgile($request->get('id'));
+        return $this->respond($this->repository->getForAgile($request->get('id')));
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param QuickAddRequest $request
-     * @param Ticket          $ticket
      *
-     * @return Ticket|Model
+     * @return JsonResponse
      */
-    public function store(QuickAddRequest $request, Ticket $ticket)
+    public function store(QuickAddRequest $request)
     {
-        return $ticket->quickAdd($request->get('title'), $request->get('agile_id'));
+        $ticket = $this->service->quickAdd($request->get('title'), $request->get('agile_id'));
+        return $this->show($ticket->id);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param int              $id
-     * @param TicketRepository $repository
+     * @param int $id
      *
-     * @return Builder|Model|JsonResponse|object|null
+     * @return JsonResponse
      */
-    public function show($id, TicketRepository $repository)
+    public function show(int $id)
     {
-        $ticket = $repository->getForShow((int)$id);
+        $ticket = $this->repository->getForShow($id);
         if (empty($ticket)) {
-            return response()->json(['message' => 'Ticket not found'], 404);
+            return $this->respond(['message' => 'Ticket not found'], 404);
         }
-        return $ticket;
+        return $this->respond($ticket);
     }
 
     /**
      * Update the specified resource in storage.
      *
+     * @param int           $id
      * @param UpdateRequest $request
-     * @param Ticket        $ticket
      *
-     * @return Ticket
+     * @return JsonResponse
      */
-    public function update(UpdateRequest $request, Ticket $ticket)
+    public function update(int $id, UpdateRequest $request)
     {
-        $ticket->updateDescription($request->get('title'), $request->get('description'));
-        return $ticket;
+        $this->service->updateDescription($id, $request->get('title'), $request->get('description'));
+        return $this->show($id);
     }
 
     /**
@@ -97,70 +105,70 @@ class TicketController extends BaseController
     /**
      * Обновление статуса тикета
      *
+     * @param int           $id
      * @param StatusRequest $request
-     * @param Ticket        $ticket
      *
-     * @return Ticket
+     * @return JsonResponse
      */
-    public function status(StatusRequest $request, Ticket $ticket)
+    public function status(int $id, StatusRequest $request)
     {
-        $ticket->updateStatus($request->get('status'));
-        return $ticket;
+        $this->service->updateStatus($id, $request->get('status'));
+        return $this->show($id);
     }
 
     /**
      * Обновление приоритета тикета
      *
+     * @param int             $id
      * @param PriorityRequest $request
-     * @param Ticket          $ticket
      *
-     * @return Ticket
+     * @return JsonResponse
      */
-    public function priority(PriorityRequest $request, Ticket $ticket)
+    public function priority(int $id, PriorityRequest $request)
     {
-        $ticket->updatePriority($request->get('priority'));
-        return $ticket;
+        $this->service->updatePriority($id, $request->get('priority'));
+        return $this->show($id);
     }
 
     /**
      * Обновление ответственного
      *
+     * @param int             $id
      * @param ExecutorRequest $request
-     * @param Ticket          $ticket
      *
-     * @return Ticket
+     * @return JsonResponse
      */
-    public function executor(ExecutorRequest $request, Ticket $ticket)
+    public function executor(int $id, ExecutorRequest $request)
     {
-        $ticket->updateExecutor($request->get('executor_id'));
-        return $ticket;
+        $this->service->updateExecutor($id, $request->get('executor_id'));
+        return $this->show($id);
     }
 
     /**
      * Обновление срока
      *
+     * @param int         $id
      * @param TermRequest $request
-     * @param Ticket      $ticket
      *
-     * @return Ticket
+     * @return JsonResponse
      */
-    public function term(TermRequest $request, Ticket $ticket)
+    public function term(int $id, TermRequest $request)
     {
-        $ticket->updateTerm($request->get('term'));
-        return $ticket;
+        $this->service->updateTerm($id, $request->get('term'));
+        return $this->show($id);
     }
 
     /**
      * Обновление доски
      *
+     * @param int          $id
      * @param AgileRequest $request
-     * @param Ticket       $ticket
      *
-     * @return Ticket
+     * @return JsonResponse
      */
-    public function agile(AgileRequest $request, Ticket $ticket)
+    public function agile(int $id, AgileRequest $request)
     {
-        $ticket->updateAgile($request->get('agile_id'));
-        return $ticket;
+        $this->service->updateAgile($id, $request->get('agile_id'));
+        return $this->show($id);
     }
 }

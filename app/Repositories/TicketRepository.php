@@ -3,9 +3,6 @@
 namespace App\Repositories;
 
 use App\Models\Ticket\Ticket;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class TicketRepository
@@ -16,7 +13,7 @@ class TicketRepository extends BaseRepository
     /**
      * @param null|integer $id
      *
-     * @return Builder[]|Collection
+     * @return array
      */
     public function getForAgile($id = null)
     {
@@ -31,17 +28,18 @@ class TicketRepository extends BaseRepository
                     Ticket::STATUS_BLOCKED,
                     Ticket::STATUS_DONE,
                 ])
-            ->get();
+            ->get()
+            ->toArray();
     }
 
     /**
      * @param int $id
      *
-     * @return Builder|Model|object|null
+     * @return array
      */
     public function getForShow(int $id)
     {
-        return $this->query()
+        $item = $this->query()
             ->select([
                 'id',
                 'title',
@@ -56,7 +54,13 @@ class TicketRepository extends BaseRepository
                 'updated_at',
                 'updated_user_id',
             ])
-            ->find($id);
+            ->withCount('watch as is_watch')
+            ->find($id)
+            ->toArray();
+        if (!empty($item)) {
+            $item['is_watch'] = (bool)$item['is_watch'];
+        }
+        return $item;
     }
 
     /**

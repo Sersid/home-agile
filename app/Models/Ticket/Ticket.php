@@ -149,105 +149,11 @@ class Ticket extends Model
     }
 
     /**
-     * @param string      $title
-     * @param null|string $agile_id
-     *
-     * @return Ticket|Model
+     * Watcher
+     * @return HasOne
      */
-    public function quickAdd(string $title, $agile_id = null)
+    public function watch()
     {
-        return self::create([
-            'title' => $title,
-            'agile_id' => $agile_id,
-            'priority' => self::PRIORITY_LOW,
-            'status' => self::STATUS_NEW,
-        ]);
-    }
-
-    /**
-     * Обновление заголовка и описания
-     *
-     * @param string      $title
-     * @param string|null $description
-     *
-     * @return bool
-     */
-    public function updateDescription(string $title, $description)
-    {
-        return $this->update([
-            'title' => $title,
-            'description' => $description,
-        ]);
-    }
-
-    /**
-     * Обновление статуса
-     *
-     * @param int $status
-     *
-     * @return bool
-     */
-    public function updateStatus(int $status)
-    {
-        return $this->update([
-            'status' => $status,
-        ]);
-    }
-
-    /**
-     * Обновление приоритета
-     *
-     * @param int $priority
-     *
-     * @return bool
-     */
-    public function updatePriority(int $priority)
-    {
-        return $this->update([
-            'priority' => $priority,
-        ]);
-    }
-
-    /**
-     * Обновление ответственного
-     *
-     * @param int $executor_id
-     *
-     * @return bool
-     */
-    public function updateExecutor(int $executor_id)
-    {
-        return $this->update([
-            'executor_id' => $executor_id,
-        ]);
-    }
-
-    /**
-     * Обновление срока
-     *
-     * @param int $term
-     *
-     * @return bool
-     */
-    public function updateTerm($term)
-    {
-        $term = !empty($term) ? date('Y-m-d', strtotime($term)) : null;
-        return $this->update([
-            'term' => $term,
-        ]);
-    }
-
-    /**
-     * Обновление доски
-     *
-     * @param int $id
-     *
-     * @return bool
-     */
-    public function updateAgile($id)
-    {
-        return $this->update([
-            'agile_id' => $id,
-        ]);
+        return $this->hasOne(Watcher::class, 'ticket_id', 'id')->where(['user_id' => \Auth::id()]);
     }
 }

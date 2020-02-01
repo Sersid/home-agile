@@ -30,6 +30,9 @@ Route::middleware('auth:api')
                 Route::patch('/ticket/agile/{ticket}', 'Ticket\Api\TicketController@agile');
                 Route::get('/ticket/comments/{ticket}', 'Ticket\Api\CommentController@index');
                 Route::post('/ticket/comments', 'Ticket\Api\CommentController@store');
+                Route::post('/ticket/comments', 'Ticket\Api\CommentController@store');
+                Route::post('/ticket/watch', 'Ticket\Api\WatchController@watch');
+                Route::post('/ticket/unwatch', 'Ticket\Api\WatchController@unwatch');
             });
         Route::apiResources([
             'ticket' => 'Ticket\Api\TicketController',

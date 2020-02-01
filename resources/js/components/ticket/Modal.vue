@@ -25,6 +25,7 @@
                             <small class="fs-nano mt-0 mb-2 text-muted">
                                 <span>Создала <a href="#">{{author}}</a> {{dateCreate}}</span><span v-if="hasUpdated">, обновил <a href="#">{{redactor}}</a> {{dateUpdate}}</span>
                             </small>
+                            <watcher :ticket="ticket" class="mr-1" @process="showProcessLoader" @saved="updated" />
                             {{ticket.title}}
                         </h5>
                         <div class="mt-3">
@@ -90,6 +91,7 @@
     import TermChanger from './TermChanger';
     import Comments from './Comments';
     import AgileChanger from './AgileChanger';
+    import Watcher from './Watcher';
 
     moment.locale('ru');
 
@@ -103,7 +105,8 @@
             ExecutorChanger,
             TermChanger,
             Comments,
-            AgileChanger
+            AgileChanger,
+            Watcher
         },
         mixins: [users, statuses],
         props: {
@@ -184,7 +187,7 @@
                 this.showEditForm = false;
             },
             updated(ticket) {
-                this.ticket = ticket;
+                this.ticket = Object.assign( {}, this.ticket, ticket);
                 this.hideForm();
                 this.$emit('updated', this.ticket);
             },
