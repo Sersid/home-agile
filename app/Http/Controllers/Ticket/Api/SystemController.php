@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Ticket\Api;
 
 use App\Models\Ticket\Ticket;
-use App\Repositories\TicketAgileRepository;
+use App\Repositories\Ticket\AgileRepository;
 use App\Repositories\UserRepository;
 
 /**
@@ -18,7 +18,7 @@ class SystemController extends BaseController
     public function index()
     {
         return [
-            'agiles' => (new TicketAgileRepository)->getAll(),
+            'agiles' => (new AgileRepository)->getAll(),
             'statuses' => Ticket::getStatuses(),
             'priorities' => Ticket::getPriorities(),
             'users' => (new UserRepository)->getAll(),

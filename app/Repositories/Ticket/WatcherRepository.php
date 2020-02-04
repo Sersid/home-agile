@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\Ticket;
 
 use App\Models\Ticket\Watcher;
+use App\Repositories\BaseRepository;
 
 /**
- * Class TicketWatcherRepository
- * @package App\Repositories
+ * Class WatcherRepository
+ * @package App\Repositories\Ticket
  */
-class TicketWatcherRepository extends BaseRepository
+class WatcherRepository extends BaseRepository
 {
     /**
      * @param int $ticket_id

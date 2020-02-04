@@ -9,9 +9,10 @@ use Illuminate\Notifications\Notifiable;
 
 /**
  * Class User
- * @property int $id
- * @property int $sex
+ * @property int    $id
+ * @property int    $sex
  * @property string $name
+ * @property int    $vk
  * @package App\Models
  */
 class User extends Authenticatable
@@ -23,25 +24,25 @@ class User extends Authenticatable
 
     /**
      * The attributes that are mass assignable.
-     *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name',
+        'email',
+        'password',
     ];
 
     /**
      * The attributes that should be hidden for arrays.
-     *
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
     ];
 
     /**
      * The attributes that should be cast to native types.
-     *
      * @var array
      */
     protected $casts = [
@@ -62,17 +63,28 @@ class User extends Authenticatable
     /**
      * @return bool
      */
-    public function isMale()
+    public function isFemale()
     {
-        return $this->sex === self::MALE;
+        return $this->sex === self::FEMALE;
+    }
+
+    /**
+     * @param string $male
+     * @param string $female
+     *
+     * @return string
+     */
+    public function genderVerb(string $male, string $female)
+    {
+        return $this->isMale() ? $male : $female;
     }
 
     /**
      * @return bool
      */
-    public function isFemale()
+    public function isMale()
     {
-        return $this->sex === self::FEMALE;
+        return $this->sex === self::MALE;
     }
 
     /**

@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\Ticket;
 
 use App\Models\Ticket\Agile;
+use App\Repositories\BaseRepository;
 
 /**
- * Class TicketAgileRepository
- * @package App\Repositories
+ * Class AgileRepository
+ * @package App\Repositories\Ticket
  */
-class TicketAgileRepository extends BaseRepository
+class AgileRepository extends BaseRepository
 {
     /**
      * @return array

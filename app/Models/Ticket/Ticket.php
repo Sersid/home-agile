@@ -3,7 +3,10 @@
 namespace App\Models\Ticket;
 
 use App\Models\User;
+use Auth;
+use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -23,6 +26,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property integer $status
  * @property integer $created_user_id
  * @property integer $updated_user_id
+ * @property User    $executor
+ * @property User    $redactor
+ * @property User[]  $notifyTo
  * @package App\Models\Ticket
  */
 class Ticket extends Model
@@ -58,6 +64,19 @@ class Ticket extends Model
         'executor_id',
         'priority',
         'status',
+    ];
+
+    /**
+     * @var array
+     */
+    protected $attributeNames = [
+        'title' => 'Заголовок',
+        'description' => 'Описание',
+        'agile_id' => 'Доска',
+        'term' => 'Срок',
+        'executor_id' => 'Исполнитель',
+        'priority' => 'Приоритет',
+        'status' => 'Статус',
     ];
 
     /**
@@ -113,6 +132,17 @@ class Ticket extends Model
     }
 
     /**
+     * Название атрибута
+     * @param string $key
+     *
+     * @return string|null
+     */
+    public function getAttributeName(string $key)
+    {
+        return isset($this->attributeNames[$key]) ? $this->attributeNames[$key] : null;
+    }
+
+    /**
      * Comments
      * @return HasMany
      */
@@ -149,11 +179,38 @@ class Ticket extends Model
     }
 
     /**
+     * Agile
+     * @return HasOne
+     */
+    public function agile()
+    {
+        return $this->hasOne(Agile::class, 'id', 'agile_id');
+    }
+
+    /**
      * Watcher
      * @return HasOne
      */
     public function watch()
     {
-        return $this->hasOne(Watcher::class, 'ticket_id', 'id')->where(['user_id' => \Auth::id()]);
+        return $this->hasOne(Watcher::class, 'ticket_id', 'id')
+            ->where(['user_id' => Auth::id()]);
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function notifyTo()
+    {
+        return $this->belongsToMany(User::class, (new Watcher())->getTable())
+            ->where('user_id', '<>', $this->updated_user_id);
+    }
+
+    /**
+     * @return UrlGenerator|string
+     */
+    public function getUrl()
+    {
+        return url('/') . '/#/agile' . (empty($this->agile_id) ? '' : '-' . $this->agile_id) . '/ticket-' . $this->id;
     }
 }

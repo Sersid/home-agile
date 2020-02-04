@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\Ticket;
 
 use App\Models\Ticket\Comment;
+use App\Repositories\BaseRepository;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
- * Class TicketCommentRepository
- * @package App\Repositories
+ * Class CommentRepository
+ * @package App\Repositories\Ticket
  */
-class TicketCommentRepository extends BaseRepository
+class CommentRepository extends BaseRepository
 {
     /**
      * @param int $id

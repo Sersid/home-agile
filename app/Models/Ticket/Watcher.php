@@ -2,9 +2,11 @@
 
 namespace App\Models\Ticket;
 
-use App\Repositories\TicketWatcherRepository;
+use App\Models\User;
+use App\Repositories\Ticket\WatcherRepository;
 use Eloquent;
 use Exception;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -26,46 +28,10 @@ class Watcher extends Eloquent
     protected $fillable = ['ticket_id', 'user_id'];
 
     /**
-     * @param int      $ticket_id
-     * @param int|null $user_id
-     *
-     * @return bool
+     * @return HasOne
      */
-    public function watch(int $ticket_id, int $user_id)
+    public function users()
     {
-        $item = (new TicketWatcherRepository)->getItem($ticket_id, $user_id);
-        if (!empty($item)) {
-            if ($item->trashed()) {
-                $item->restore();
-            }
-            return true;
-        }
-        self::create([
-            'ticket_id' => $ticket_id,
-            'user_id' => $user_id,
-        ]);
-        return true;
-    }
-
-    /**
-     * @param int $ticket_id
-     * @param int $user_id
-     *
-     * @return bool
-     */
-    public function unwatch(int $ticket_id, int $user_id)
-    {
-        $item = (new TicketWatcherRepository)->getItem($ticket_id, $user_id);
-        if (empty($item)) {
-            return true;
-        }
-        if (!$item->trashed()) {
-            try {
-                $item->delete();
-            } catch (Exception $e) {
-                return false;
-            }
-        }
-        return true;
+        return $this->hasOne(User::class, 'id', 'user_id');
     }
 }

@@ -10,10 +10,12 @@ use App\Http\Requests\Ticket\QuickAddRequest;
 use App\Http\Requests\Ticket\StatusRequest;
 use App\Http\Requests\Ticket\TermRequest;
 use App\Http\Requests\Ticket\UpdateRequest;
-use App\Repositories\TicketRepository;
+use App\Notifications\Ticket\UpdateDescription;
+use App\Repositories\Ticket\TicketRepository;
 use App\Services\Ticket\TicketService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
+use Notification;
 
 /**
  * Class TicketController

@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\Ticket;
 
 use App\Models\Ticket\Ticket;
+use App\Repositories\BaseRepository;
 
 /**
  * Class TicketRepository

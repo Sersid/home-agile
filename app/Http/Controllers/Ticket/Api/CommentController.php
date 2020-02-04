@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Ticket\Api;
 
 use App\Http\Requests\Ticket\Comment\AddRequest;
 use App\Models\Ticket\Comment;
-use App\Repositories\TicketCommentRepository;
+use App\Repositories\Ticket\CommentRepository;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -20,12 +20,12 @@ class CommentController extends BaseController
     /**
      * Комментарии для тикета
      *
-     * @param int                      $id
-     * @param TicketCommentRepository $repository
+     * @param int               $id
+     * @param CommentRepository $repository
      *
      * @return Builder[]|Collection
      */
-    public function index($id, TicketCommentRepository $repository)
+    public function index($id, CommentRepository $repository)
     {
         return $repository->getForTicket($id);
     }

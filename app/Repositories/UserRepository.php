@@ -29,25 +29,6 @@ class UserRepository extends BaseRepository
     }
 
     /**
-     * @param int $fromId
-     * @param int $toId
-     *
-     * @return array
-     */
-    public function getForVkNotify(int $fromId, int $toId)
-    {
-        $return = [];
-        $users = $this->query()
-            ->select(['id', 'name', 'sex', 'vk'])
-            ->whereIn('id', [$fromId, $toId])
-            ->get();
-        foreach ($users as $user) {
-            $return[$user->id == $fromId ? 'from' : 'to'] = $user;
-        }
-        return $return;
-    }
-
-    /**
      * @inheritDoc
      */
     protected function getModelClass()
