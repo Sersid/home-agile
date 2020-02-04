@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Models\Ticket\Ticket;
 use App\Notifications\NowYouExecutor;
+use App\Services\Ticket\HistoryService;
 use App\Services\Ticket\WatcherService;
 
 /**
@@ -53,6 +54,8 @@ class TicketObserver extends BaseObserver
         if ($ticket->updated_user_id != $ticket->executor_id) {
             $this->watch($ticket, $ticket->executor_id);
         }
+        // Добавление изменения в историю
+        (new HistoryService())->add($ticket->id, $ticket->updated_user_id, $ticket->getOriginal(), $ticket->getChanges());
     }
 
     /**
@@ -89,6 +92,9 @@ class TicketObserver extends BaseObserver
      */
     public function created(Ticket $ticket)
     {
+        // Автор подписывается на тикет
         $this->watch($ticket, $ticket->created_user_id);
+        // Добавление в историю
+        (new HistoryService())->add($ticket->id, $ticket->created_user_id, [], $ticket->getAttributes());
     }
 }
