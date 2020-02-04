@@ -6,19 +6,22 @@
 use App\Models\Ticket\Ticket;
 
 echo "📝 " . $ticket->redactor->name . " ";
-echo $ticket->author->genderVerb('изменил', 'изменила');
+echo $ticket->redactor->genderVerb('изменил', 'изменила');
 echo " тикет #";
 echo $ticket->id;
 echo ' "' . $oldTicket->title . '":';
 echo "\n";
 foreach ($change['new'] as $key => $value) {
+    if ($oldTicket->getAttribute($key) == $ticket->getAttribute($key)) {
+        continue;
+    }
     switch ($key) {
         case 'title':
             echo "Заголовок: ";
             echo '"' . $oldTicket->title . '" => "' . $ticket->title . '"';
             break;
         case 'description':
-            echo "Описание: " . $ticket->description;
+            echo "Описание: " . empty($ticket->description) ? '-' : $ticket->description;
             break;
         case 'term':
             echo "Срок: ";
