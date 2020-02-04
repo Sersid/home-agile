@@ -21,7 +21,7 @@ foreach ($change['new'] as $key => $value) {
             echo '"' . $oldTicket->title . '" => "' . $ticket->title . '"';
             break;
         case 'description':
-            echo "Описание: " . empty($ticket->description) ? '-' : $ticket->description;
+            echo "Описание: " . (empty($ticket->description) ? '-' : $ticket->description);
             break;
         case 'term':
             echo "Срок: ";
