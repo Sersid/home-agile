@@ -54,7 +54,6 @@ class VkChannel
      */
     public function send($notifiable, Notification $notification)
     {
-        info($notification->toVk($notifiable));
         if (empty($this->token)) {
             return;
         }

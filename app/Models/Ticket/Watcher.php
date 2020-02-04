@@ -3,15 +3,16 @@
 namespace App\Models\Ticket;
 
 use App\Models\User;
-use App\Repositories\Ticket\WatcherRepository;
 use Eloquent;
-use Exception;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Наблюдатели
  * @package App\Models\Ticket
+ * @property int  $ticket_id
+ * @property int  $user_id
+ * @property User $user
  */
 class Watcher extends Eloquent
 {
@@ -30,7 +31,7 @@ class Watcher extends Eloquent
     /**
      * @return HasOne
      */
-    public function users()
+    public function user()
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }

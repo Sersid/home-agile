@@ -4,6 +4,9 @@ namespace App\Repositories\Ticket;
 
 use App\Models\Ticket\Ticket;
 use App\Repositories\BaseRepository;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class TicketRepository
@@ -62,6 +65,18 @@ class TicketRepository extends BaseRepository
             $item['is_watch'] = (bool)$item['is_watch'];
         }
         return $item;
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return Builder|Builder[]|Collection|Model
+     */
+    public function getForNotify(int $id)
+    {
+        return $this->query()
+            ->with(['notification', 'watchers', 'watchers.user', 'author', 'redactor', 'executor'])
+            ->find($id);
     }
 
     /**

@@ -6,29 +6,28 @@ use App\Models\User;
 use Auth;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Ticket
  * Ticket model
- * @property integer $id
- * @property string  $created_at
- * @property string  $updated_at
- * @property string  $deleted_at
- * @property string  $title
- * @property string  $description
- * @property string  $term
- * @property integer $executor_id
- * @property integer $priority
- * @property integer $status
- * @property integer $created_user_id
- * @property integer $updated_user_id
- * @property User    $executor
- * @property User    $redactor
- * @property User[]  $notifyTo
+ * @property integer      $id
+ * @property string       $created_at
+ * @property string       $updated_at
+ * @property string       $deleted_at
+ * @property string       $title
+ * @property string       $description
+ * @property string       $term
+ * @property integer      $executor_id
+ * @property integer      $priority
+ * @property integer      $status
+ * @property integer      $created_user_id
+ * @property integer      $updated_user_id
+ * @property User         $executor
+ * @property User         $redactor
+ * @property Notification $notification
+ * @property Watcher[]    $watchers
  * @package App\Models\Ticket
  */
 class Ticket extends Model
@@ -64,19 +63,6 @@ class Ticket extends Model
         'executor_id',
         'priority',
         'status',
-    ];
-
-    /**
-     * @var array
-     */
-    protected $attributeNames = [
-        'title' => 'Заголовок',
-        'description' => 'Описание',
-        'agile_id' => 'Доска',
-        'term' => 'Срок',
-        'executor_id' => 'Исполнитель',
-        'priority' => 'Приоритет',
-        'status' => 'Статус',
     ];
 
     /**
@@ -132,14 +118,12 @@ class Ticket extends Model
     }
 
     /**
-     * Название атрибута
-     * @param string $key
-     *
-     * @return string|null
+     * Notification
+     * @return HasOne
      */
-    public function getAttributeName(string $key)
+    public function notification()
     {
-        return isset($this->attributeNames[$key]) ? $this->attributeNames[$key] : null;
+        return $this->hasOne(Notification::class);
     }
 
     /**
@@ -198,12 +182,28 @@ class Ticket extends Model
     }
 
     /**
-     * @return BelongsToMany
+     * Watchers
+     * @return HasMany
      */
-    public function notifyTo()
+    public function watchers()
     {
-        return $this->belongsToMany(User::class, (new Watcher())->getTable())
-            ->where('user_id', '<>', $this->updated_user_id);
+        return $this->hasMany(Watcher::class, 'ticket_id', 'id');
+    }
+
+    /**
+     * @return array
+     */
+    public function getPriority()
+    {
+        return self::getPriorities()[$this->priority] ?? ['name' => null, 'color' => null];
+    }
+
+    /**
+     * @return array
+     */
+    public function getStatus()
+    {
+        return self::getStatuses()[$this->status] ?? ['name' => null, 'color' => null];
     }
 
     /**

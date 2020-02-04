@@ -2,10 +2,7 @@
 
 namespace App\Models\Ticket;
 
-use Auth;
 use Eloquent;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class History
@@ -15,12 +12,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string  $deleted_at
  * @property integer $user_id
  * @property integer $ticket_id
- * @property string  $changes
+ * @property string  $old
+ * @property string  $new
  * @package App\Models\Ticket
  */
 class History extends Eloquent
 {
-    use SoftDeletes;
+    /**
+     * @var bool
+     */
+    public $timestamps = false;
 
     /**
      * The table associated with the model.
@@ -31,5 +32,21 @@ class History extends Eloquent
     /**
      * @var array
      */
-    protected $fillable = ['user_id', 'ticket_id', 'new', 'old'];
+    protected $fillable = ['user_id', 'ticket_id', 'date', 'new', 'old'];
+
+    /**
+     * @return array
+     */
+    public function getOldDecode()
+    {
+        return json_decode($this->old, true) ?? [];
+    }
+
+    /**
+     * @return array
+     */
+    public function getNewDecode()
+    {
+        return json_decode($this->new, true) ?? [];
+    }
 }

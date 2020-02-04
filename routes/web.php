@@ -23,3 +23,10 @@ Route::middleware('auth')->get(
 );
 
 Auth::routes();
+
+Route::get('/test',
+    function () {
+        $ticket = \App\Models\Ticket\Ticket::query()->find(54);
+        (new \App\Jobs\NotifyWatchers($ticket))->handle();
+        return view('test');
+    });

@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Jobs\NotifyWatchers;
 use App\Models\Ticket\Ticket;
 use App\Notifications\NowYouExecutor;
 use App\Services\Ticket\HistoryService;
@@ -55,7 +56,15 @@ class TicketObserver extends BaseObserver
             $this->watch($ticket, $ticket->executor_id);
         }
         // Добавление изменения в историю
-        (new HistoryService())->add($ticket->id, $ticket->updated_user_id, $ticket->getOriginal(), $ticket->getChanges());
+        (new HistoryService())->add($ticket->id,
+            $ticket->updated_at,
+            $ticket->updated_user_id,
+            $ticket->getOriginal(),
+            $ticket->getChanges()
+        );
+        // Уведомить наблюдателей
+        NotifyWatchers::dispatch($ticket)
+            ->delay(now()->addSeconds(30));
     }
 
     /**
@@ -73,9 +82,9 @@ class TicketObserver extends BaseObserver
     }
 
     /**
-     * Добавляет автора в наблюдатели
+     * Пользователя в наблюдатели
      *
-     * @param Ticket   $ticket
+     * @param Ticket $ticket
      * @param int|null $user_id
      */
     private function watch(Ticket $ticket, $user_id)
@@ -92,9 +101,14 @@ class TicketObserver extends BaseObserver
      */
     public function created(Ticket $ticket)
     {
+        // Добавление в историю
+        (new HistoryService())->add($ticket->id,
+            $ticket->created_at,
+            $ticket->created_user_id,
+            [],
+            $ticket->getAttributes()
+        );
         // Автор подписывается на тикет
         $this->watch($ticket, $ticket->created_user_id);
-        // Добавление в историю
-        (new HistoryService())->add($ticket->id, $ticket->created_user_id, [], $ticket->getAttributes());
     }
 }
