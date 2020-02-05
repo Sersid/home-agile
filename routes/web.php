@@ -26,7 +26,7 @@ Auth::routes();
 
 Route::get('/test',
     function () {
-        $ticket = \App\Models\Ticket\Ticket::query()->find(54);
-        (new \App\Jobs\NotifyWatchers($ticket))->handle();
+        $comment = \App\Models\Ticket\Comment::query()->find(22);
+        (new \App\Jobs\NotifyWatchersComment($comment))->handle();
         return view('test');
     });

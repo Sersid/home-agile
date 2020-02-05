@@ -6,6 +6,7 @@ use App\Models\User;
 use Auth;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -27,7 +28,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property User         $executor
  * @property User         $redactor
  * @property Notification $notification
- * @property Watcher[]    $watchers
+ * @property User[]       $watcherUsers
  * @package App\Models\Ticket
  */
 class Ticket extends Model
@@ -64,58 +65,6 @@ class Ticket extends Model
         'priority',
         'status',
     ];
-
-    /**
-     * Приоритеты
-     * @return array
-     */
-    public static function getPriorities(): array
-    {
-        return [
-            self::PRIORITY_LOW => [
-                'name' => 'Низкий',
-                'color' => 'secondary',
-            ],
-            self::PRIORITY_MEDIUM => [
-                'name' => 'Средний',
-                'color' => 'warning',
-            ],
-            self::PRIORITY_HIGH => [
-                'name' => 'Высокий',
-                'color' => 'danger',
-            ],
-        ];
-    }
-
-    /**
-     * Статусы
-     * @return array
-     */
-    public static function getStatuses(): array
-    {
-        return [
-            self::STATUS_NEW => [
-                'name' => 'Новый',
-                'color' => 'info',
-            ],
-            self::STATUS_IN_WORK => [
-                'name' => 'В работе',
-                'color' => 'warning',
-            ],
-            self::STATUS_BLOCKED => [
-                'name' => 'Заблокирован',
-                'color' => 'danger',
-            ],
-            self::STATUS_DONE => [
-                'name' => 'Выполнен',
-                'color' => 'success',
-            ],
-            self::STATUS_ARCHIVE => [
-                'name' => 'В архиве',
-                'color' => 'secondary',
-            ],
-        ];
-    }
 
     /**
      * Notification
@@ -182,12 +131,12 @@ class Ticket extends Model
     }
 
     /**
-     * Watchers
-     * @return HasMany
+     * Подписчики
+     * @return BelongsToMany
      */
-    public function watchers()
+    public function watcherUsers()
     {
-        return $this->hasMany(Watcher::class, 'ticket_id', 'id');
+        return $this->belongsToMany(User::class, (new Watcher())->getTable(), 'ticket_id', 'user_id');
     }
 
     /**
@@ -199,11 +148,63 @@ class Ticket extends Model
     }
 
     /**
+     * Приоритеты
+     * @return array
+     */
+    public static function getPriorities(): array
+    {
+        return [
+            self::PRIORITY_LOW => [
+                'name' => 'Низкий',
+                'color' => 'secondary',
+            ],
+            self::PRIORITY_MEDIUM => [
+                'name' => 'Средний',
+                'color' => 'warning',
+            ],
+            self::PRIORITY_HIGH => [
+                'name' => 'Высокий',
+                'color' => 'danger',
+            ],
+        ];
+    }
+
+    /**
      * @return array
      */
     public function getStatus()
     {
         return self::getStatuses()[$this->status] ?? ['name' => null, 'color' => null];
+    }
+
+    /**
+     * Статусы
+     * @return array
+     */
+    public static function getStatuses(): array
+    {
+        return [
+            self::STATUS_NEW => [
+                'name' => 'Новый',
+                'color' => 'info',
+            ],
+            self::STATUS_IN_WORK => [
+                'name' => 'В работе',
+                'color' => 'warning',
+            ],
+            self::STATUS_BLOCKED => [
+                'name' => 'Заблокирован',
+                'color' => 'danger',
+            ],
+            self::STATUS_DONE => [
+                'name' => 'Выполнен',
+                'color' => 'success',
+            ],
+            self::STATUS_ARCHIVE => [
+                'name' => 'В архиве',
+                'color' => 'secondary',
+            ],
+        ];
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Jobs\NotifyWatchersComment;
 use App\Models\Ticket\Comment;
 
 /**
@@ -32,5 +33,13 @@ class CommentObserver extends BaseObserver
     public function updating(Comment $comment)
     {
         $this->setRedactor($comment);
+    }
+
+    /**
+     * @param Comment $comment
+     */
+    public function created(Comment $comment)
+    {
+        NotifyWatchersComment::dispatch($comment)->delay(now()->addSeconds(30));
     }
 }

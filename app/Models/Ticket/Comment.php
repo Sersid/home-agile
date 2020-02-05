@@ -2,9 +2,10 @@
 
 namespace App\Models\Ticket;
 
-use Auth;
+use App\Models\User;
 use Eloquent;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -16,6 +17,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string  $text
  * @property integer $created_user_id
  * @property integer $updated_user_id
+ * @property Ticket  $ticket
  */
 class Comment extends Eloquent
 {
@@ -30,6 +32,24 @@ class Comment extends Eloquent
      * @var array
      */
     protected $fillable = ['ticket_id', 'text'];
+
+    /**
+     * Ticket
+     * @return HasOne
+     */
+    public function ticket()
+    {
+        return $this->hasOne(Ticket::class, 'id', 'ticket_id');
+    }
+
+    /**
+     * Author
+     * @return HasOne
+     */
+    public function author()
+    {
+        return $this->hasOne(User::class, 'id', 'created_user_id');
+    }
 
     /**
      * @param int    $ticket_id

@@ -75,7 +75,7 @@ class TicketRepository extends BaseRepository
     public function getForNotify(int $id)
     {
         return $this->query()
-            ->with(['notification', 'watchers', 'watchers.user', 'author', 'redactor', 'executor'])
+            ->with(['notification', 'watcherUsers', 'author', 'redactor', 'executor'])
             ->find($id);
     }
 

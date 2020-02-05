@@ -6,6 +6,7 @@ use App\Models\Ticket\Comment;
 use App\Repositories\BaseRepository;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class CommentRepository
@@ -25,6 +26,18 @@ class CommentRepository extends BaseRepository
             ->where('ticket_id', $id)
             ->orderBy('id', 'desc')
             ->get();
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return Builder|Builder[]|Collection|Model|null
+     */
+    public function getForNotify(int $id)
+    {
+        return $this->query()
+            ->with(['ticket', 'ticket.watcherUsers'])
+            ->find($id);
     }
 
     /**

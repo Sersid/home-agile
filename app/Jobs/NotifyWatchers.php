@@ -6,28 +6,18 @@ use App\Models\Ticket\Ticket;
 use App\Repositories\Ticket\HistoryRepository;
 use App\Repositories\Ticket\TicketRepository;
 use App\Services\Ticket\NotificationService;
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
-use VK\Client\VKApiClient;
 use VK\Exceptions;
 
 /**
- * Уведомляет наблюдателей об изменении тикета
+ * Уведомляет в ВК наблюдателей об изменении тикета
  * @package App\Jobs
  */
-class NotifyWatchers implements ShouldQueue
+class NotifyWatchers extends BaseNotify
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
     /** @var Ticket */
     protected $ticket;
     /** @var TicketRepository */
     protected $ticketRepository;
-    /** @var string|null */
-    protected $token;
     /** @var HistoryRepository */
     protected $historyRepository;
 
@@ -38,10 +28,10 @@ class NotifyWatchers implements ShouldQueue
      */
     public function __construct(Ticket $ticket)
     {
-        $this->token = env('VK_API_ACCESS_TOKEN');
         $this->ticket = $ticket;
         $this->ticketRepository = new TicketRepository();
         $this->historyRepository = new HistoryRepository();
+        parent::__construct();
     }
 
     /**
@@ -75,59 +65,32 @@ class NotifyWatchers implements ShouldQueue
         if ($ticket->updated_at != $this->ticket->updated_at) {
             return;
         }
-        $nowNotified = now();
         $lastNotified = empty($ticket->notification) ? null : $ticket->notification->on_changed;
+        // Обновление даты последнего оповещения
+        (new NotificationService)->saveOnChanged($ticket->id, now());
+        // Получаем все изменения с даты последнего оповещения
         $changes = $this->historyRepository->getChanges($this->ticket->id, $lastNotified);
-        if (!empty($changes)) {
-            foreach ($ticket->watchers as $watcher) {
-                // У наблюдателя должен быть указан VK
-                if (empty($watcher->user->vk)) {
+        if (empty($changes)) {
+            return;
+        }
+        foreach ($ticket->watcherUsers as $user) {
+            // У наблюдателя должен быть указан VK
+            if (empty($user->vk)) {
+                continue;
+            }
+            foreach ($changes as $change) {
+                // Не нужно отправлять автору изменений
+                if ($change['user_id'] == $user->id) {
                     continue;
                 }
-                foreach ($changes as $change) {
-                    //Не нужно отправлять автору изменений
-                    if ($change['user_id'] == $watcher->user_id) {
-                        continue;
-                    }
-                    if (empty($change['old'])) {
-                        $view = view('notifications.vk.new', compact('ticket'));
-                    } else {
-                        $oldTicket = new Ticket($change['old']);
-                        $view = view('notifications.vk.changed', compact('ticket', 'oldTicket', 'change'));
-                    }
-                    $this->send($watcher->user->vk, $view->toHtml());
+                if (empty($change['old'])) {
+                    $view = view('notifications.vk.new', compact('ticket'));
+                } else {
+                    $oldTicket = new Ticket($change['old']);
+                    $view = view('notifications.vk.changed', compact('ticket', 'oldTicket', 'change'));
                 }
+                $this->toVk($user->vk, $view->toHtml());
             }
         }
-        (new NotificationService)->saveOnChanged($ticket->id, $nowNotified);
-    }
-
-    /**
-     * @param $to
-     * @param $message
-     *
-     * @throws Exceptions\Api\VKApiMessagesCantFwdException
-     * @throws Exceptions\Api\VKApiMessagesChatBotFeatureException
-     * @throws Exceptions\Api\VKApiMessagesChatUserNoAccessException
-     * @throws Exceptions\Api\VKApiMessagesContactNotFoundException
-     * @throws Exceptions\Api\VKApiMessagesDenySendException
-     * @throws Exceptions\Api\VKApiMessagesKeyboardInvalidException
-     * @throws Exceptions\Api\VKApiMessagesPrivacyException
-     * @throws Exceptions\Api\VKApiMessagesTooLongForwardsException
-     * @throws Exceptions\Api\VKApiMessagesTooLongMessageException
-     * @throws Exceptions\Api\VKApiMessagesTooManyPostsException
-     * @throws Exceptions\Api\VKApiMessagesUserBlockedException
-     * @throws Exceptions\VKApiException
-     * @throws Exceptions\VKClientException
-     */
-    private function send($to, $message)
-    {
-        $vk = new VKApiClient('5.103');
-        $vk->messages()
-            ->send($this->token, [
-                'peer_id' => $to,
-                'message' => $message,
-                'random_id' => rand(1000000000, 9999999999),
-            ]);
     }
 }
