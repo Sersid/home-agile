@@ -1,5 +1,5 @@
 <template>
-    <b-dropdown :text="status.name" :variant="'outline-' + status.color">
+    <b-dropdown :text="status.name" block :variant="'outline-' + status.color">
         <b-dropdown-item :key="index" @click.prevent="save(index)" href="#" v-for="(s, index) in statuses">
             <span v-if="parseInt(index) === data.status">&blacktriangleright;</span>
             <span :class="'text-' + s.color">{{s.name}}</span>

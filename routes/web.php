@@ -23,10 +23,3 @@ Route::middleware('auth')->get(
 );
 
 Auth::routes();
-
-Route::get('/test',
-    function () {
-        $comment = \App\Models\Ticket\Comment::query()->find(22);
-        (new \App\Jobs\NotifyWatchersComment($comment))->handle();
-        return view('test');
-    });
