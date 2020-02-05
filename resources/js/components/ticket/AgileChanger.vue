@@ -1,5 +1,5 @@
 <template>
-    <b-dropdown :text="agile.title" block variant="outline-default">
+    <b-dropdown :text="agile.title" block right variant="outline-default">
         <b-dropdown-item @click.prevent="save(null)" href="#">
             <span v-if="null === data.agile_id">&blacktriangleright;</span>
             <span>Основная доска</span>

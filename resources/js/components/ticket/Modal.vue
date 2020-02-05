@@ -66,7 +66,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-6 mb-3">
+                            <div class="col-lg-6 col-12 mb-3">
                                 <div class="text-muted mb-2">Доска</div>
                                 <agile-changer :ticket="ticket" @process="showProcessLoader" @saved="updated"/>
                             </div>
