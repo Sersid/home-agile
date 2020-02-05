@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Ticket\Api;
 
 use App\Http\Requests\Ticket\WatchRequest;
-use App\Models\Ticket\Watcher;
+use App\Services\Ticket\WatcherService;
 use Auth;
 
 /**
@@ -15,12 +15,12 @@ class WatchController extends BaseController
     /**
      * Подписка на тикет
      *
-     * @param WatchRequest $request
-     * @param Watcher      $watcher
+     * @param WatchRequest   $request
+     * @param WatcherService $watcher
      *
      * @return array
      */
-    public function watch(WatchRequest $request, Watcher $watcher)
+    public function watch(WatchRequest $request, WatcherService $watcher)
     {
         return ['is_watch' => $watcher->watch($request->get('ticket_id'), Auth::id())];
     }
@@ -28,12 +28,12 @@ class WatchController extends BaseController
     /**
      * Отписка на тикета
      *
-     * @param WatchRequest $request
-     * @param Watcher      $watcher
+     * @param WatchRequest   $request
+     * @param WatcherService $watcher
      *
      * @return array
      */
-    public function unwatch(WatchRequest $request, Watcher $watcher)
+    public function unwatch(WatchRequest $request, WatcherService $watcher)
     {
         return ['is_watch' => !$watcher->unwatch($request->get('ticket_id'), Auth::id())];
     }
