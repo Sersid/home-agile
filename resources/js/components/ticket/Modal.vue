@@ -4,7 +4,7 @@
             <template v-slot:modal-title>
                 <span v-if="showSpinner">Загрузка...</span>
                 <span v-else-if="hasError">Ошибка</span>
-                <span v-else><a href="#">#ticket-{{ticket.id}}</a> <span class="fw-300"><i>Просмотр тикета</i></span></span>
+                <span v-else><span class="text-primary">#ticket-{{ticket.id}}</span> <span class="fw-300"><i>Просмотр тикета</i></span></span>
             </template>
             <div class="d-flex justify-content-center mb-3" v-if="showSpinner">
                 <b-spinner label="Загрузка..." style="width: 8rem; height: 8rem;" type="grow" variant="warning"></b-spinner>
@@ -14,15 +14,21 @@
             </div>
             <div v-else>
                 <div class="card mb-g" v-if="!showEditForm">
-                    <div class="card-body p-3">
-                        <div class="fw-n float-right ml-3">
+                    <div class="card-body">
+                        <div class="fw-n position-absolute pos-top pos-right ml-2">
                             <b-spinner class="mt-1" label="Сохранение..." small v-if="showSaveSpinner" variant="warning"/>
-                            <button @click.prevent="showForm" class="btn btn-outline-default" type="button" v-else>
-                                <span class="text-muted"><i class="fal fa-pen-alt"></i></span>
-                            </button>
+                            <b-dropdown v-else variant="icon" class="fs-lg" right no-caret>
+                                <template v-slot:button-content>
+                                    <i class="far fa-ellipsis-v"></i>
+                                </template>
+                                <b-dropdown-item @click.prevent="showForm">
+                                    <i class="fal fa-pen-alt mr-2"></i>
+                                    Редактировать
+                                </b-dropdown-item>
+                            </b-dropdown>
                         </div>
                         <h5 :class="'text-' + getStatus(ticket.status).color" class="mb-0">
-                            <small class="fs-nano mt-0 mb-2 text-muted">
+                            <small class="fs-nano mt-0 mb-2 text-muted mr-4">
                                 <span>Создала <a href="#">{{author}}</a> {{dateCreate}}</span><span v-if="hasUpdated">, обновил <a href="#">{{redactor}}</a> {{dateUpdate}}</span>
                             </small>
                             <watcher :ticket="ticket" class="mr-1" @process="showProcessLoader" @saved="updated" />
@@ -39,18 +45,6 @@
                     </div>
                 </div>
                 <update-form :ticket="ticket" @cancel="hideForm" @saved="updated" v-if="showEditForm"/>
-
-                <div class="card mb-g">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-6 mb-3">
-                                <div class="text-muted mb-2">Доска</div>
-                                <agile-changer :ticket="ticket" @process="showProcessLoader" @saved="updated"/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="card mb-g">
                     <div class="card-body">
                         <div class="row">
@@ -69,6 +63,12 @@
                             <div class="col-lg-3 col-6 mb-3">
                                 <div class="text-muted mb-2">Статус</div>
                                 <status-changer :ticket="ticket" @process="showProcessLoader" @saved="updated"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6 mb-3">
+                                <div class="text-muted mb-2">Доска</div>
+                                <agile-changer :ticket="ticket" @process="showProcessLoader" @saved="updated"/>
                             </div>
                         </div>
                     </div>

@@ -29,15 +29,11 @@
                 </button>
             </div>
         </form>
-        <div class="p-3 border-faded border-left-0 border-right-0 border-bottom-0" v-if="hasDescription">
-            <vue-markdown :source="description"/>
-        </div>
     </div>
 </template>
 
 <script>
     import {required} from 'vuelidate/lib/validators'
-    import VueMarkdown from 'vue-markdown';
     import AlertError from '../system/AlertError';
 
     export default {
@@ -48,16 +44,13 @@
                 required: true
             }
         },
-        components: {VueMarkdown, AlertError},
+        components: {AlertError},
         created() {
             this.id = this.ticket.id;
             this.title = this.ticket.title;
             this.description = this.ticket.description;
         },
         computed: {
-            hasDescription() {
-                return this.description !== null && this.description.length > 0;
-            },
             rows() {
                 let lines = this.description === null ? 0 : this.description.split("\n").length;
                 return lines > 3 ? lines : 3;
