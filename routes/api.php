@@ -33,6 +33,7 @@ Route::middleware('auth:api')
                 Route::post('/ticket/comments', 'Ticket\Api\CommentController@store');
                 Route::post('/ticket/watch', 'Ticket\Api\WatchController@watch');
                 Route::post('/ticket/unwatch', 'Ticket\Api\WatchController@unwatch');
+                Route::post('/ticket/add-watcher', 'Ticket\Api\WatchController@addWatcher');
             });
         Route::apiResources([
             'ticket' => 'Ticket\Api\TicketController',

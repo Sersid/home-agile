@@ -23,6 +23,21 @@ class WatcherRepository extends BaseRepository
     }
 
     /**
+     * @param int $ticket_id
+     *
+     * @return array
+     */
+    public function getWatchers(int $ticket_id): array
+    {
+        $result = [];
+        $items = self::query()->select(['user_id'])->where(['ticket_id' => $ticket_id])->get();
+        foreach ($items as $item) {
+            $result[] = $item->user_id;
+        }
+        return $result;
+    }
+
+    /**
      * @inheritDoc
      */
     protected function getModelClass()

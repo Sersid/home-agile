@@ -58,11 +58,15 @@ class TicketRepository extends BaseRepository
                 'updated_at',
                 'updated_user_id',
             ])
-            ->withCount('watch as is_watch')
+            ->with('watchers')
             ->find($id)
             ->toArray();
         if (!empty($item)) {
-            $item['is_watch'] = (bool)$item['is_watch'];
+            $watchers = $item['watchers'];
+            $item['watchers'] = [];
+            foreach ($watchers as $watcher) {
+                $item['watchers'][] = $watcher['user_id'];
+            }
         }
         return $item;
     }

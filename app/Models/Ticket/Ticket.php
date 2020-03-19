@@ -121,13 +121,12 @@ class Ticket extends Model
     }
 
     /**
-     * Watcher
-     * @return HasOne
+     * Watchers
+     * @return HasMany
      */
-    public function watch()
+    public function watchers()
     {
-        return $this->hasOne(Watcher::class, 'ticket_id', 'id')
-            ->where(['user_id' => Auth::id()]);
+        return $this->hasMany(Watcher::class, 'ticket_id', 'id');
     }
 
     /**

@@ -31,7 +31,6 @@
                             <small class="fs-nano mt-0 mb-2 text-muted mr-4">
                                 <span>Создала <a href="#">{{author}}</a> {{dateCreate}}</span><span v-if="hasUpdated">, обновил <a href="#">{{redactor}}</a> {{dateUpdate}}</span>
                             </small>
-                            <watcher :ticket="ticket" class="mr-1" @process="showProcessLoader" @saved="updated" />
                             {{ticket.title}}
                         </h5>
                         <div class="mt-3">
@@ -70,6 +69,10 @@
                                 <div class="text-muted mb-2">Доска</div>
                                 <agile-changer :ticket="ticket" @process="showProcessLoader" @saved="updated"/>
                             </div>
+                            <div class="col-lg-6 col-12 mb-3">
+                                <div class="text-muted mb-2">Наблюдатели</div>
+                                <watchers :ticket="ticket" @process="showProcessLoader" @saved="updated" />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -91,7 +94,7 @@
     import TermChanger from './TermChanger';
     import Comments from './Comments';
     import AgileChanger from './AgileChanger';
-    import Watcher from './Watcher';
+    import Watchers from './Watchers';
 
     moment.locale('ru');
 
@@ -106,7 +109,7 @@
             TermChanger,
             Comments,
             AgileChanger,
-            Watcher
+            Watchers
         },
         mixins: [users, statuses],
         props: {
