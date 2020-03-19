@@ -5,7 +5,7 @@
     >
         <span class="d-block card-body p-3">
             <span class="d-block mb-2" v-if="hasTerm">
-                <small :class="wantedTerm ? 'text-danger' : ''" class="text-muted">
+                <small :class="wantedTerm ? 'text-danger' : 'text-muted'">
                     <i class="fal fa-stopwatch mr-1"></i>{{termFormatted}}
                 </small>
             </span>
