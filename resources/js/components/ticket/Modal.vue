@@ -16,7 +16,7 @@
                 <div class="card mb-g" v-if="!showEditForm">
                     <div class="card-body">
                         <div class="fw-n position-absolute pos-top pos-right ml-2">
-                            <b-spinner class="mt-1" label="Сохранение..." small v-if="showSaveSpinner" variant="warning"/>
+                            <b-spinner class="m-2" label="Сохранение..." small v-if="showSaveSpinner" variant="warning"/>
                             <b-dropdown v-else variant="icon" class="fs-lg" right no-caret>
                                 <template v-slot:button-content>
                                     <i class="far fa-ellipsis-v"></i>
@@ -24,6 +24,14 @@
                                 <b-dropdown-item @click.prevent="showForm">
                                     <i class="fal fa-pen-alt mr-2"></i>
                                     Редактировать
+                                </b-dropdown-item>
+                                <b-dropdown-item v-if="isWatch" @click.prevent="changeWatch">
+                                    <i class="fal fa-bell-slash mr-2"></i>
+                                    Не наблюдать
+                                </b-dropdown-item>
+                                <b-dropdown-item v-else @click.prevent="changeWatch">
+                                    <i class="fal fa-bell mr-2"></i>
+                                    Наблюдать
                                 </b-dropdown-item>
                             </b-dropdown>
                         </div>
@@ -162,6 +170,9 @@
             },
             dateUpdate() {
                 return moment(this.ticket.updated_at).calendar().toLowerCase();
+            },
+            isWatch() {
+                return this.ticket.watchers.indexOf(this.$store.state.user.id) >= 0;
             }
         },
         methods: {
@@ -190,13 +201,26 @@
             hideForm() {
                 this.showEditForm = false;
             },
-            updated(ticket) {
+            updateTicket(ticket) {
                 this.ticket = Object.assign( {}, this.ticket, ticket);
+            },
+            updated(ticket) {
+                this.updateTicket(ticket);
                 this.hideForm();
                 this.$emit('updated', this.ticket);
             },
             showProcessLoader(process) {
                 this.showSaveSpinner = process;
+            },
+            changeWatch() {
+                this.showProcessLoader(true);
+                axios.post('/ticket/' + (this.isWatch ? 'unwatch' : 'watch'), {ticket_id: this.ticket.id})
+                    .then(response => {
+                        this.updateTicket(response.data);
+                    })
+                    .finally(() => {
+                        this.showProcessLoader(false);
+                    });
             },
             closeModal() {
                 this.$router.push({

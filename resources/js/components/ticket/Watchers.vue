@@ -28,9 +28,6 @@
         mixins: [users],
         components: {Avatar},
         computed: {
-            isWatch() {
-                return this.ticket.watchers.indexOf(this.$store.state.user.id) >= 0;
-            },
             canAddWatchers() {
                 let result = [];
                 for (let id in this.users) {
@@ -42,16 +39,6 @@
             }
         },
         methods: {
-            change() {
-                this.$emit('process', true);
-                axios.post('/ticket/' + (this.isWatch ? 'unwatch' : 'watch'), {ticket_id: this.ticket.id})
-                    .then(response => {
-                        this.$emit('saved', response.data);
-                    })
-                    .finally(() => {
-                        this.$emit('process', false);
-                    });
-            },
             addWatcher(user_id) {
                 this.$emit('process', true);
                 axios.post('/ticket/add-watcher', {ticket_id: this.ticket.id, user_id: user_id})
