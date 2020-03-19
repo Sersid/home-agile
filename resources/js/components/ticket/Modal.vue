@@ -36,9 +36,6 @@
                             </b-dropdown>
                         </div>
                         <h5 :class="'text-' + getStatus(ticket.status).color" class="mb-0">
-                            <small class="fs-nano mt-0 mb-2 text-muted mr-4">
-                                <span>Создала <a href="#">{{author}}</a> {{dateCreate}}</span><span v-if="hasUpdated">, обновил <a href="#">{{redactor}}</a> {{dateUpdate}}</span>
-                            </small>
                             {{ticket.title}}
                         </h5>
                         <div class="mt-3">
@@ -82,6 +79,12 @@
                                 <watchers :ticket="ticket" @process="showProcessLoader" @saved="updated" />
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="card mb-g">
+                    <div class="card-body text-muted">
+                        <span>{{createdText}} <a href="#">{{author}}</a> {{dateCreate}}</span><span v-if="hasUpdated">,
+                        {{updatedText}} <a href="#">{{redactor}}</a> {{dateUpdate}}</span>
                     </div>
                 </div>
                 <comments :id="ticket.id" @added="$emit('addedComment', ticket.id)"/>
@@ -161,6 +164,12 @@
             },
             author() {
                 return this.getUser(this.ticket.created_user_id).name;
+            },
+            createdText() {
+                return this.isMale(this.ticket.created_user_id) ? 'Создал' : 'Создала';
+            },
+            updatedText() {
+                return this.isMale(this.ticket.updated_user_id) ? 'обновил' : 'обновила';
             },
             dateCreate() {
                 return moment(this.ticket.created_at).calendar().toLowerCase();

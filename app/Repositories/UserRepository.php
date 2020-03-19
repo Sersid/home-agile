@@ -18,7 +18,7 @@ class UserRepository extends BaseRepository
     {
         $return = [];
         $users = $this->query()
-            ->select(['id', 'name'])
+            ->select(['id', 'name', 'sex'])
             ->orderBy('id', 'asc')
             ->get();
         foreach ($users as $user) {
