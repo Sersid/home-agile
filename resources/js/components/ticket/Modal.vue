@@ -49,6 +49,7 @@
                     </div>
                 </div>
                 <update-form :ticket="ticket" @cancel="hideForm" @saved="updated" v-if="showEditForm"/>
+                <checklist :ticket="ticket" />
                 <div class="card mb-g">
                     <div class="card-body">
                         <div class="row">
@@ -106,6 +107,7 @@
     import Comments from './Comments';
     import AgileChanger from './AgileChanger';
     import Watchers from './Watchers';
+    import Checklist from './Checklist';
 
     moment.locale('ru');
 
@@ -120,7 +122,8 @@
             TermChanger,
             Comments,
             AgileChanger,
-            Watchers
+            Watchers,
+            Checklist
         },
         mixins: [users, statuses],
         props: {

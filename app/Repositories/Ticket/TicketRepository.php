@@ -58,7 +58,7 @@ class TicketRepository extends BaseRepository
                 'updated_at',
                 'updated_user_id',
             ])
-            ->with('watchers')
+            ->with(['watchers', 'checklist'])
             ->find($id)
             ->toArray();
         if (!empty($item)) {

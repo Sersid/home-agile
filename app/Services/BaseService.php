@@ -33,7 +33,7 @@ abstract class BaseService
      *
      * @return mixed
      */
-    protected function create($data)
+    public function create($data)
     {
         return $this->model::create($data);
     }
@@ -45,11 +45,21 @@ abstract class BaseService
      *
      * @return Builder|Builder[]|Collection|Model
      */
-    protected function update(int $id, array $attributes = [], array $options = [])
+    public function update(int $id, array $attributes = [], array $options = [])
     {
         $model = $this->model::query()
             ->findOrFail($id);
         $model->update($attributes, $options);
         return $model;
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return int
+     */
+    public function remove(int $id)
+    {
+        return $this->model::destroy($id);
     }
 }

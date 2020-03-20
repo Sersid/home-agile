@@ -139,6 +139,14 @@ class Ticket extends Model
     }
 
     /**
+     * @return HasMany
+     */
+    public function checklist()
+    {
+        return $this->hasMany(Checklist::class, 'ticket_id', 'id');
+    }
+
+    /**
      * @return array
      */
     public function getPriority()

@@ -29,12 +29,16 @@ Route::middleware('auth:api')
                 Route::patch('/ticket/term/{ticket}', 'Ticket\Api\TicketController@term');
                 Route::patch('/ticket/agile/{ticket}', 'Ticket\Api\TicketController@agile');
                 Route::get('/ticket/comments/{ticket}', 'Ticket\Api\CommentController@index');
-                Route::post('/ticket/comments', 'Ticket\Api\CommentController@store');
-                Route::post('/ticket/comments', 'Ticket\Api\CommentController@store');
-                Route::post('/ticket/watch', 'Ticket\Api\WatchController@watch');
-                Route::post('/ticket/unwatch', 'Ticket\Api\WatchController@unwatch');
-                Route::post('/ticket/add-watcher', 'Ticket\Api\WatchController@addWatcher');
             });
+        Route::post('/ticket/comments', 'Ticket\Api\CommentController@store');
+        Route::post('/ticket/watch', 'Ticket\Api\WatchController@watch');
+        Route::post('/ticket/unwatch', 'Ticket\Api\WatchController@unwatch');
+        Route::post('/ticket/add-watcher', 'Ticket\Api\WatchController@addWatcher');
+        Route::post('/ticket/checklist', 'Ticket\Api\ChecklistController@store');
+        Route::where(['id' => '[0-9]+'])->group(function () {
+            Route::patch('/ticket/checklist/{id}', 'Ticket\Api\ChecklistController@update');
+            Route::delete('/ticket/checklist/{id}', 'Ticket\Api\ChecklistController@destroy');
+        });
         Route::apiResources([
             'ticket' => 'Ticket\Api\TicketController',
         ]);

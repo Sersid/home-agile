@@ -1,7 +1,7 @@
 <template>
     <div class="d-flex">
-        <avatar :id="userId" class="mr-1 mt-1" size="sm" v-for="userId in ticket.watchers"/>
-        <b-dropdown class="fs-lg mr-2" no-caret v-if="canAddWatchers.length > 0" variant="icon">
+        <avatar :key="userId" :id="userId" class="mr-1 mt-1" size="sm" v-for="userId in ticket.watchers"/>
+        <b-dropdown class="fs-lg mr-2" no-caret right v-if="canAddWatchers.length > 0" variant="icon">
             <template v-slot:button-content>
                 <i class="fal fa-user-plus" ref="button"></i>
             </template>

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Ticket\Api;
 
-use App\Http\Requests\Ticket\Comment\AddRequest;
+use App\Http\Requests\Ticket\Comment\AddCommentRequest;
 use App\Models\Ticket\Comment;
 use App\Repositories\Ticket\CommentRepository;
 use Illuminate\Database\Eloquent\Builder;
@@ -33,12 +33,12 @@ class CommentController extends BaseController
     /**
      * Store a newly created resource in storage.
      *
-     * @param AddRequest $request
-     * @param Comment    $comment
+     * @param AddCommentRequest $request
+     * @param Comment           $comment
      *
      * @return Comment|Model
      */
-    public function store(AddRequest $request, Comment $comment)
+    public function store(AddCommentRequest $request, Comment $comment)
     {
         return $comment->add($request->get('ticket_id'), $request->get('text'));
     }

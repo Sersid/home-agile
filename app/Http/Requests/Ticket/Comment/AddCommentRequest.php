@@ -5,10 +5,10 @@ namespace App\Http\Requests\Ticket\Comment;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class AddRequest
+ * Class AddCommentRequest
  * @package App\Http\Requests\Ticket\Comment
  */
-class AddRequest extends FormRequest
+class AddCommentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
