@@ -1,6 +1,6 @@
 <?php
+declare(strict_types=1);
 
-use App\Models\Ticket\Ticket;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -16,11 +16,6 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         factory(User::class, 4)
-            ->create()
-            ->each(function ($user) {
-                /* @var User $user */
-                $user->tickets()
-                    ->save(factory(Ticket::class)->make());
-            });
+            ->create();
     }
 }

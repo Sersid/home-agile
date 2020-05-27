@@ -1,0 +1,63 @@
+version: '3'
+services:
+  nginx:
+    container_name: nginx
+    build:
+      context: docker/nginx
+    volumes:
+      - ./:/var/www
+    restart: always
+    depends_on:
+      - php-fpm
+    ports:
+      - "8000:80"
+    networks:
+      - internal
+
+  php-fpm:
+    build:
+      context: docker/php-fpm
+    container_name: php-fpm
+    volumes:
+      - ./:/var/www
+    restart: always
+    environment:
+      XDEBUG_CONFIG: "remote_host=192.168.100.1 remote_enable=1"
+      PHP_IDE_CONFIG: "serverName=Docker"
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - internal
+
+  postgres:
+    image: postgres:alpine
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: "PASSWORD"
+      POSTGRES_USER: "USER"
+      POSTGRES_DB: "DB_NAME"
+    volumes:
+      - /postgesData:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - internal
+
+  redis:
+    image: redis
+    container_name: redis
+    restart: always
+    ports:
+      - "6379:6379"
+    networks:
+      - internal
+
+networks:
+  internal:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.100.0/28

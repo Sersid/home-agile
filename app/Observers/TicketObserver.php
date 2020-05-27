@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Observers;
 
@@ -56,7 +57,8 @@ class TicketObserver extends BaseObserver
             $this->watch($ticket, $ticket->executor_id);
         }
         // Добавление изменения в историю
-        (new HistoryService())->add($ticket->id,
+        (new HistoryService())->add(
+            $ticket->id,
             $ticket->updated_at,
             $ticket->updated_user_id,
             $ticket->getOriginal(),
@@ -84,7 +86,7 @@ class TicketObserver extends BaseObserver
     /**
      * Пользователя в наблюдатели
      *
-     * @param Ticket $ticket
+     * @param Ticket   $ticket
      * @param int|null $user_id
      */
     private function watch(Ticket $ticket, $user_id)
@@ -102,7 +104,8 @@ class TicketObserver extends BaseObserver
     public function created(Ticket $ticket)
     {
         // Добавление в историю
-        (new HistoryService())->add($ticket->id,
+        (new HistoryService())->add(
+            $ticket->id,
             $ticket->created_at,
             $ticket->created_user_id,
             [],

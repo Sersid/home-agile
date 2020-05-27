@@ -2,7 +2,6 @@
 
 namespace App\Observers;
 
-use App\Models\Ticket\Ticket;
 use Auth;
 use Illuminate\Database\Eloquent\Model;
 

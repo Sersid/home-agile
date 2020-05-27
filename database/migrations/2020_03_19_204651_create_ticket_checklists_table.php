@@ -20,7 +20,8 @@ class CreateTicketChecklistsTable extends Migration
             function (Blueprint $table) {
                 $table->bigIncrements('id');
                 $table->timestamps();
-                $table->bigInteger('ticket_id');
+                $table->bigInteger('ticket_id')
+                    ->index();
                 $table->string('title');
                 $table->smallInteger('status')
                     ->default(Checklist::STATUS_UNCHECKED);
@@ -28,8 +29,6 @@ class CreateTicketChecklistsTable extends Migration
                     ->nullable();
                 $table->bigInteger('updated_user_id')
                     ->nullable();
-
-                $table->index('ticket_id', 'index_ticket_id');
             });
     }
 
