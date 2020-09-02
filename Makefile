@@ -13,4 +13,4 @@ migrate-fresh:
 perm:
 	sudo chown ${USER}:${USER} ./* -R
 test:
-	docker-compose exec php-fpm vendor/bin/phpunit
+	docker-compose exec php-fpm vendor/bin/phpunit --testsuite=Expenses
